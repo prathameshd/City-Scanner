@@ -1,22 +1,12 @@
 package com.domain.project;
 
 import java.io.IOException;
-import java.util.Date;
+
 import java.util.List;
 import java.util.Optional;
-import java.util.Properties;
 
-import javax.mail.Message;
 import javax.mail.MessagingException;
-import javax.mail.Multipart;
-import javax.mail.PasswordAuthentication;
-import javax.mail.Session;
-import javax.mail.Transport;
 import javax.mail.internet.AddressException;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeBodyPart;
-import javax.mail.internet.MimeMessage;
-import javax.mail.internet.MimeMultipart;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
@@ -47,6 +37,7 @@ public class UserController {
 
 	}
 
+	//Login Endpoint
 	@GetMapping("/login")
 	public String login(@RequestBody UserEntity user) {
 		String userEmail = user.getEmail();
@@ -69,6 +60,7 @@ public class UserController {
 		}
 	}
 
+	//Signup Endpoint
 	@GetMapping("/signUp")
 	public String saveUser(@RequestBody UserEntity user) {
 		String userEmail = user.getEmail();
@@ -84,6 +76,7 @@ public class UserController {
 		}
 	}
 
+	//Get list of all users
 	@GetMapping("/getAllUsers")
 	public List<UserEntity> getUsers() {
 		return userRepository.findAll();
