@@ -1,10 +1,27 @@
 package com.domain.project;
 
+import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.Properties;
+
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Multipart;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
+import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,6 +36,9 @@ import com.domain.project.repositories.UserRepository;
 public class UserController {
 	@Autowired
 	UserRepository userRepository;
+
+	@Autowired
+	private JavaMailSender javaMailSender;
 
 	@CrossOrigin(origins = "http://localhost:3000")
 	@RequestMapping("/home")
@@ -56,6 +76,7 @@ public class UserController {
 		if (userRepository.findById(userEmail).equals(Optional.empty())) {
 			user.setPassword(passwordEncoderConfig.passwordEncoder().encode(user.getPassword()));
 			userRepository.save(user);
+			// return user.getEmail().toString();
 			return "success";
 
 		} else {
@@ -68,4 +89,17 @@ public class UserController {
 		return userRepository.findAll();
 	}
 
+	// send welcome email to new user
+	@RequestMapping(value = "/welcomeEmail")
+	public String sendEmail(@RequestBody String userEmail) throws AddressException, MessagingException, IOException {
+
+		SimpleMailMessage msg = new SimpleMailMessage();
+		msg.setTo(userEmail);
+
+		msg.setSubject("Welcome to City Scanner");
+		msg.setText("Hello and Welcome to City Scanner!");
+
+		javaMailSender.send(msg);
+		return "Email sent successfully";
+	}
 }

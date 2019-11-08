@@ -14,6 +14,8 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
+
+
 //@EnableJpaRepositories("com.domain.project.*")
 //@ComponentScan({"com.domain.project.*"})
 //@ComponentScan(basePackages = "com.domain.project.entities")
