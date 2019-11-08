@@ -1,10 +1,17 @@
 package com.domain.project;
 
+import java.io.IOException;
+
 import java.util.List;
 import java.util.Optional;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.AddressException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,6 +27,9 @@ public class UserController {
 	@Autowired
 	UserRepository userRepository;
 
+	@Autowired
+	private JavaMailSender javaMailSender;
+
 	@CrossOrigin(origins = "http://localhost:3000")
 	@RequestMapping("/home")
 	public String index() {
@@ -27,6 +37,7 @@ public class UserController {
 
 	}
 
+	//Login Endpoint
 	@GetMapping("/login")
 	public String login(@RequestBody UserEntity user) {
 		String userEmail = user.getEmail();
@@ -49,6 +60,7 @@ public class UserController {
 		}
 	}
 
+	//Signup Endpoint
 	@GetMapping("/signUp")
 	public String saveUser(@RequestBody UserEntity user) {
 		String userEmail = user.getEmail();
@@ -56,6 +68,7 @@ public class UserController {
 		if (userRepository.findById(userEmail).equals(Optional.empty())) {
 			user.setPassword(passwordEncoderConfig.passwordEncoder().encode(user.getPassword()));
 			userRepository.save(user);
+			// return user.getEmail().toString();
 			return "success";
 
 		} else {
@@ -63,9 +76,23 @@ public class UserController {
 		}
 	}
 
+	//Get list of all users
 	@GetMapping("/getAllUsers")
 	public List<UserEntity> getUsers() {
 		return userRepository.findAll();
 	}
 
+	// send welcome email to new user
+	@RequestMapping(value = "/welcomeEmail")
+	public String sendEmail(@RequestBody String userEmail) throws AddressException, MessagingException, IOException {
+
+		SimpleMailMessage msg = new SimpleMailMessage();
+		msg.setTo(userEmail);
+
+		msg.setSubject("Welcome to City Scanner");
+		msg.setText("Hello and Welcome to City Scanner!");
+
+		javaMailSender.send(msg);
+		return "Email sent successfully";
+	}
 }
