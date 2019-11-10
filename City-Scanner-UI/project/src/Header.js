@@ -70,7 +70,6 @@ class Header extends Component {
     );
   }
 const sendLoginData= ()=> {
-  alert("qqq");
   return axios
   ({
     method:'post',
@@ -100,24 +99,9 @@ const createNewUser= ()=> {
 
     if(response['data']=='success')
     {
-      alert(newUserData["email"])
-      console.log(newUserData);
-      return axios
-      ({
-        method:'get',
-        url:'http://localhost:8080/welcomeEmail',
-        headers:{'Access-Control-Allow-Origin':'*'},
-        data:"prathameshd99@gmail.com"
-      })
-      .then((response)=>{
-        console.log(response);
-      }).catch(err=>
-        {
-          console.log(err)
-        })
+      sendEmail(newUserData);
     }
     
-
 
 
     //reload page after login success
@@ -125,6 +109,23 @@ const createNewUser= ()=> {
     {
 
     })
+}
+
+const sendEmail= (user)=> {
+  console.log(user)
+          return axios
+      ({
+        method:'post',
+        url:'http://localhost:8080/welcomeEmail',
+        headers:{'Access-Control-Allow-Origin':'*'},
+        data:user
+      })
+      .then((response)=>{
+        console.log(response);
+      }).catch(err=>
+        {
+          console.log(err)
+        })
 }
 
 var newUserData={
