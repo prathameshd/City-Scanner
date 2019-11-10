@@ -14,6 +14,7 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -30,15 +31,16 @@ public class UserController {
 	@Autowired
 	private JavaMailSender javaMailSender;
 
-	@CrossOrigin(origins = "http://localhost:3000")
+	@CrossOrigin
 	@RequestMapping("/home")
 	public String index() {
 		return "Greetings from Spring Boot!";
 
 	}
 
-	//Login Endpoint
-	@GetMapping("/login")
+	// Login Endpoint
+	@CrossOrigin
+	@PostMapping("/login")
 	public String login(@RequestBody UserEntity user) {
 		String userEmail = user.getEmail();
 		String userPassword = user.getPassword();
@@ -60,15 +62,15 @@ public class UserController {
 		}
 	}
 
-	//Signup Endpoint
-	@GetMapping("/signUp")
+	// Signup Endpoint
+	@CrossOrigin
+	@PostMapping("/signUp")
 	public String saveUser(@RequestBody UserEntity user) {
 		String userEmail = user.getEmail();
 		PasswordEncoderConfig passwordEncoderConfig = new PasswordEncoderConfig();
 		if (userRepository.findById(userEmail).equals(Optional.empty())) {
 			user.setPassword(passwordEncoderConfig.passwordEncoder().encode(user.getPassword()));
 			userRepository.save(user);
-			// return user.getEmail().toString();
 			return "success";
 
 		} else {
@@ -76,18 +78,20 @@ public class UserController {
 		}
 	}
 
-	//Get list of all users
+	// Get list of all users
+	@CrossOrigin
 	@GetMapping("/getAllUsers")
 	public List<UserEntity> getUsers() {
 		return userRepository.findAll();
 	}
 
 	// send welcome email to new user
-	@RequestMapping(value = "/welcomeEmail")
-	public String sendEmail(@RequestBody String userEmail) throws AddressException, MessagingException, IOException {
-
+	@CrossOrigin
+	@GetMapping(value = "/welcomeEmail")
+	public String sendEmail(@RequestBody String data) throws AddressException, MessagingException, IOException {
+		System.out.println(data);
 		SimpleMailMessage msg = new SimpleMailMessage();
-		msg.setTo(userEmail);
+		msg.setTo(data);
 
 		msg.setSubject("Welcome to City Scanner");
 		msg.setText("Hello and Welcome to City Scanner!");
