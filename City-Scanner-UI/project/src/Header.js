@@ -21,10 +21,10 @@ class Header extends Component {
                     &nbsp;&nbsp;&nbsp;
                     <Signup/>
                 </Form>
-              </Navbar> 
+              </Navbar>
             </>
           );
-        }        
+        }
   }
   var userCreds={
     email:"",
@@ -36,17 +36,25 @@ class Header extends Component {
 
     const [loginEmailVal, setEmail] = React.useState("");
     const [loginPasswordVal, setPassword] = React.useState("");
+
     userCreds["email"]=loginEmailVal;
     userCreds["password"]=loginPasswordVal;
-    
+
+    function click()
+    {
+      handleClose();
+      sendLoginData();
+    }
+
+
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
-  
+
     return (
       <>
         <Button variant="outline-info" onClick={handleShow}>
           Login
-        </Button> 
+        </Button>
         <Modal show={show} onHide={handleClose}>
         <Form style = {{padding:'20px'}}>
             <Form.Group controlId="Header">
@@ -56,12 +64,12 @@ class Header extends Component {
               <Form.Label style={{fontSize:18}}>Email address</Form.Label>
               <Form.Control type="email" placeholder="Enter email" onChange={e => setEmail(e.target.value)}/>
               </Form.Group>
-  
+
             <Form.Group controlId="formBasicPassword">
               <Form.Label style={{fontSize:18}}>Password</Form.Label>
               <Form.Control type="password" placeholder="Password" onChange={e => setPassword(e.target.value)}/>
             </Form.Group>
-            <Button style = {{float:'right'}} variant="primary" type="submit" onClick={sendLoginData}>
+            <Button style = {{float:'right'}} variant="primary" type="submit" onClick={click}>
               Login
             </Button>
           </Form>
@@ -78,11 +86,23 @@ const sendLoginData= ()=> {
     data:userCreds
   })
   .then((response)=>{
-    console.log(response);
-    //reload page after login success
+    if(response['data'] == "Incorrect Username")
+    {
+      alert("Please sign up")
+    }
+
+    if(response['data'] == "Login Success")
+    {
+      alert("Succesful login")
+    }
+
+    if(response['data'] == "Incorrect Password")
+    {
+      alert("Wrong Password")
+    }
   }).catch(err=>
     {
-
+      alert("Username or Password is wrong")
     })
 }
 
@@ -95,13 +115,12 @@ const createNewUser= ()=> {
     data:newUserData
   })
   .then((response)=>{
-    console.log(response);
 
     if(response['data']=='success')
     {
       sendEmail(newUserData);
     }
-    
+
 
 
     //reload page after login success
@@ -121,10 +140,9 @@ const sendEmail= (user)=> {
         data:user
       })
       .then((response)=>{
-        console.log(response);
       }).catch(err=>
         {
-          console.log(err)
+
         })
 }
 
@@ -145,7 +163,7 @@ var newUserData={
     const [siginupFirstNameVal, setFirstName] = React.useState("");
     const [siginupLastNameVal, setLastName] = React.useState("");
     const [siginupContactVal, setContact] = React.useState("");
-    
+
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
@@ -154,49 +172,55 @@ var newUserData={
     newUserData["firstName"]=siginupFirstNameVal;
     newUserData["lastName"]=siginupLastNameVal;
     newUserData["contactNumber"]=siginupContactVal;
-  
+
+    function click()
+    {
+      handleClose();
+      createNewUser();
+    }
+
     return (
       <>
         <Button variant="outline-info" onClick={handleShow}>
           Signup
         </Button>
-  
+
         <Modal show={show} onHide={handleClose}>
         <Form style = {{padding:'20px'}}>
               <Form.Group controlId="Header">
                   <h1 style={{textAlign:"center"}}>Sign Up</h1>
               </Form.Group>
             <Form.Row>
-              <Form.Group as={Col} controlId="formGridEmail"> 
+              <Form.Group as={Col} controlId="formGridEmail">
                 <Form.Label style={{fontSize:18}}>Email</Form.Label>
                 <Form.Control type="email" placeholder="Enter email" onChange={e => setEmail(e.target.value)}/>
               </Form.Group>
-          
+
               <Form.Group as={Col} controlId="formGridPassword">
                 <Form.Label style={{fontSize:18}}>Password</Form.Label>
                 <Form.Control type="password" placeholder="Password" onChange={e => setPassword(e.target.value)}/>
               </Form.Group>
             </Form.Row>
-          
+
             <Form.Group controlId="formGridFirstName">
               <Form.Label style={{fontSize:18}}>First Name</Form.Label>
               <Form.Control placeholder="" onChange={e => setFirstName(e.target.value)}/>
             </Form.Group>
-          
+
             <Form.Group controlId="formGridLastName">
               <Form.Label style={{fontSize:18}}>Last Name</Form.Label>
               <Form.Control placeholder="" onChange={e => setLastName(e.target.value)}/>
             </Form.Group>
-          
+
             <Form.Row>
               <Form.Group as={Col} controlId="formGridContact">
                 <Form.Label style={{fontSize:18}}>Contact</Form.Label>
                 <Form.Control onChange={e => setContact(e.target.value)}/>
               </Form.Group>
-          
-            </Form.Row> 
-          
-            <Button style = {{float:'right'}} variant="primary" type="submit" onClick={createNewUser}>
+
+            </Form.Row>
+
+            <Button style = {{float:'right'}} variant="primary" type="submit" onClick={click}>
               Sign Up
             </Button>
           </Form>
@@ -204,5 +228,5 @@ var newUserData={
       </>
     );
   }
- 
+
   export default Header
