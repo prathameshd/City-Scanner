@@ -87,11 +87,10 @@ public class UserController {
 
 	// send welcome email to new user
 	@CrossOrigin
-	@GetMapping(value = "/welcomeEmail")
-	public String sendEmail(@RequestBody String data) throws AddressException, MessagingException, IOException {
-		System.out.println(data);
+	@PostMapping(value = "/welcomeEmail")
+	public String sendEmail(@RequestBody UserEntity user) throws AddressException, MessagingException, IOException {
 		SimpleMailMessage msg = new SimpleMailMessage();
-		msg.setTo(data);
+		msg.setTo(user.getEmail());
 
 		msg.setSubject("Welcome to City Scanner");
 		msg.setText("Hello and Welcome to City Scanner!");

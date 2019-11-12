@@ -21,10 +21,10 @@ class Header extends Component {
                     &nbsp;&nbsp;&nbsp;
                     <Signup/>
                 </Form>
-              </Navbar> 
+              </Navbar>
             </>
           );
-        }        
+        }
   }
   var userCreds={
     email:"",
@@ -45,16 +45,16 @@ class Header extends Component {
       handleClose();
       sendLoginData();
     }
-    
-    
+
+
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
-  
+
     return (
       <>
         <Button variant="outline-info" onClick={handleShow}>
           Login
-        </Button> 
+        </Button>
         <Modal show={show} onHide={handleClose}>
         <Form style = {{padding:'20px'}}>
             <Form.Group controlId="Header">
@@ -64,7 +64,7 @@ class Header extends Component {
               <Form.Label style={{fontSize:18}}>Email address</Form.Label>
               <Form.Control type="email" placeholder="Enter email" onChange={e => setEmail(e.target.value)}/>
               </Form.Group>
-  
+
             <Form.Group controlId="formBasicPassword">
               <Form.Label style={{fontSize:18}}>Password</Form.Label>
               <Form.Control type="password" placeholder="Password" onChange={e => setPassword(e.target.value)}/>
@@ -90,7 +90,7 @@ const sendLoginData= ()=> {
     {
       alert("Please sign up")
     }
-    
+
     if(response['data'] == "Login Success")
     {
       alert("Succesful login")
@@ -115,28 +115,11 @@ const createNewUser= ()=> {
     data:newUserData
   })
   .then((response)=>{
-  
+
     if(response['data']=='success')
     {
-      alert("new user created");
-      return axios
-      ({
-        method:'post',
-        url:'http://localhost:8080/sendmail',
-        headers:{'Access-Control-Allow-Origin':'*'},
-        data:newUserData
-      })
-      .then((response)=>{
-      }).catch(err=>
-        {
-         
-        })
+      sendEmail(newUserData);
     }
-    if(response['data']=='failure')
-    {
-      alert("User already present");
-    } 
-    
 
 
 
@@ -145,6 +128,22 @@ const createNewUser= ()=> {
     {
 
     })
+}
+
+const sendEmail= (user)=> {
+  console.log(user)
+          return axios
+      ({
+        method:'post',
+        url:'http://localhost:8080/welcomeEmail',
+        headers:{'Access-Control-Allow-Origin':'*'},
+        data:user
+      })
+      .then((response)=>{
+      }).catch(err=>
+        {
+
+        })
 }
 
 var newUserData={
@@ -164,7 +163,7 @@ var newUserData={
     const [siginupFirstNameVal, setFirstName] = React.useState("");
     const [siginupLastNameVal, setLastName] = React.useState("");
     const [siginupContactVal, setContact] = React.useState("");
-    
+
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
@@ -179,48 +178,48 @@ var newUserData={
       handleClose();
       createNewUser();
     }
-  
+
     return (
       <>
         <Button variant="outline-info" onClick={handleShow}>
           Signup
         </Button>
-  
+
         <Modal show={show} onHide={handleClose}>
         <Form style = {{padding:'20px'}}>
               <Form.Group controlId="Header">
                   <h1 style={{textAlign:"center"}}>Sign Up</h1>
               </Form.Group>
             <Form.Row>
-              <Form.Group as={Col} controlId="formGridEmail"> 
+              <Form.Group as={Col} controlId="formGridEmail">
                 <Form.Label style={{fontSize:18}}>Email</Form.Label>
                 <Form.Control type="email" placeholder="Enter email" onChange={e => setEmail(e.target.value)}/>
               </Form.Group>
-          
+
               <Form.Group as={Col} controlId="formGridPassword">
                 <Form.Label style={{fontSize:18}}>Password</Form.Label>
                 <Form.Control type="password" placeholder="Password" onChange={e => setPassword(e.target.value)}/>
               </Form.Group>
             </Form.Row>
-          
+
             <Form.Group controlId="formGridFirstName">
               <Form.Label style={{fontSize:18}}>First Name</Form.Label>
               <Form.Control placeholder="" onChange={e => setFirstName(e.target.value)}/>
             </Form.Group>
-          
+
             <Form.Group controlId="formGridLastName">
               <Form.Label style={{fontSize:18}}>Last Name</Form.Label>
               <Form.Control placeholder="" onChange={e => setLastName(e.target.value)}/>
             </Form.Group>
-          
+
             <Form.Row>
               <Form.Group as={Col} controlId="formGridContact">
                 <Form.Label style={{fontSize:18}}>Contact</Form.Label>
                 <Form.Control onChange={e => setContact(e.target.value)}/>
               </Form.Group>
-          
-            </Form.Row> 
-          
+
+            </Form.Row>
+
             <Button style = {{float:'right'}} variant="primary" type="submit" onClick={click}>
               Sign Up
             </Button>
@@ -229,5 +228,5 @@ var newUserData={
       </>
     );
   }
- 
+
   export default Header
