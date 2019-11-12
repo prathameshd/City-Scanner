@@ -36,8 +36,16 @@ class Header extends Component {
 
     const [loginEmailVal, setEmail] = React.useState("");
     const [loginPasswordVal, setPassword] = React.useState("");
+
     userCreds["email"]=loginEmailVal;
     userCreds["password"]=loginPasswordVal;
+
+    function click()
+    {
+      handleClose();
+      sendLoginData();
+    }
+    
     
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
@@ -61,7 +69,7 @@ class Header extends Component {
               <Form.Label style={{fontSize:18}}>Password</Form.Label>
               <Form.Control type="password" placeholder="Password" onChange={e => setPassword(e.target.value)}/>
             </Form.Group>
-            <Button style = {{float:'right'}} variant="primary" type="submit" onClick={sendLoginData}>
+            <Button style = {{float:'right'}} variant="primary" type="submit" onClick={click}>
               Login
             </Button>
           </Form>
@@ -70,7 +78,6 @@ class Header extends Component {
     );
   }
 const sendLoginData= ()=> {
-  alert("qqq");
   return axios
   ({
     method:'post',
@@ -79,11 +86,23 @@ const sendLoginData= ()=> {
     data:userCreds
   })
   .then((response)=>{
-    console.log(response);
-    //reload page after login success
+    if(response['data'] == "Incorrect Username")
+    {
+      alert("Please sign up")
+    }
+    
+    if(response['data'] == "Login Success")
+    {
+      alert("Succesful login")
+    }
+
+    if(response['data'] == "Incorrect Password")
+    {
+      alert("Wrong Password")
+    }
   }).catch(err=>
     {
-
+      alert("Username or Password is wrong")
     })
 }
 
@@ -96,26 +115,27 @@ const createNewUser= ()=> {
     data:newUserData
   })
   .then((response)=>{
-    console.log(response);
-
+  
     if(response['data']=='success')
     {
-      alert(newUserData["email"])
-      console.log(newUserData);
+      alert("new user created");
       return axios
       ({
-        method:'get',
-        url:'http://localhost:8080/welcomeEmail',
+        method:'post',
+        url:'http://localhost:8080/sendmail',
         headers:{'Access-Control-Allow-Origin':'*'},
-        data:"prathameshd99@gmail.com"
+        data:newUserData
       })
       .then((response)=>{
-        console.log(response);
       }).catch(err=>
         {
-          console.log(err)
+         
         })
     }
+    if(response['data']=='failure')
+    {
+      alert("User already present");
+    } 
     
 
 
@@ -153,6 +173,12 @@ var newUserData={
     newUserData["firstName"]=siginupFirstNameVal;
     newUserData["lastName"]=siginupLastNameVal;
     newUserData["contactNumber"]=siginupContactVal;
+
+    function click()
+    {
+      handleClose();
+      createNewUser();
+    }
   
     return (
       <>
@@ -195,7 +221,7 @@ var newUserData={
           
             </Form.Row> 
           
-            <Button style = {{float:'right'}} variant="primary" type="submit" onClick={createNewUser}>
+            <Button style = {{float:'right'}} variant="primary" type="submit" onClick={click}>
               Sign Up
             </Button>
           </Form>
