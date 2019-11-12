@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { HashRouter as Router, Route, Link, NavLink } from "react-router-dom";
 import { MDBCol, MDBIcon, MDBBtn } from "mdbreact";
 import Dashboard from "./Components/Dashboard";
+import CitiesSlider from "./CitiesSlider";
 
 export default class HomeComponent extends Component {
   constructor(props) {
@@ -28,6 +29,7 @@ export default class HomeComponent extends Component {
   render() {
     return (
       <Router>
+      <CitiesSlider/>
         <React.Fragment>
           <div className="search-bar">
             <MDBCol md="6">
@@ -41,7 +43,7 @@ export default class HomeComponent extends Component {
                   value={this.state.username}
                   onChange={this.handleChange}
                 />
-
+                        <Link className="nav-link" to="/temp">temp</Link>
                 <div className="input-group-prepend">
                   <NavLink to="/Dashboard">
                     <MDBBtn
@@ -58,7 +60,7 @@ export default class HomeComponent extends Component {
                 </div>
               </div>
             </MDBCol>
-            <Route exact path="/Dashboard" component={Dashboard}></Route>
+
           </div>
           <h3>{this.state.location}</h3>
         </React.Fragment>
