@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { BrowserRouter as Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { MDBCol, MDBBtn } from "mdbreact";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "bootstrap-css-only/css/bootstrap.min.css";
@@ -47,8 +47,8 @@ export default class SearchBar extends Component {
                   to={{ pathname: "/Dashboard", data: this.state.location }}
                 >
                   <MDBBtn
-                    id="button1"
-                    onClick={() => this._onButtonClick("button1")}
+                    id="searchButton"
+                    onClick={() => this._onButtonClick()}
                     rounded
                     size="md"
                     color="info"
@@ -61,7 +61,6 @@ export default class SearchBar extends Component {
             </div>
           </MDBCol>
         </div>
-        <h3>{this.state.location}</h3>
       </React.Fragment>
     );
   }

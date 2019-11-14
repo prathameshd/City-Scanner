@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 class Dashboard extends Component {
   componentDidMount() {
-    //  alert(this.props.location.data);
     console.log(this.props.location);
   }
   render() {
