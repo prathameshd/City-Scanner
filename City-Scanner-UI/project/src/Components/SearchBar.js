@@ -53,7 +53,7 @@ export default class SearchBar extends Component {
                     size="md"
                     color="info"
                   >
-                    <i class="fas fa-search-location fa-1.5x"></i>
+                    <i className="fas fa-search-location fa-1.5x"></i>
                     {/* Search */}
                   </MDBBtn>
                 </Link>
