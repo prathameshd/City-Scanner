@@ -12,16 +12,17 @@ class Restaurants extends Component {
   {
        return axios
     ({
-      method:'get',
-      url:'https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=18,73&radius=1500000&type=restaurant&keyword=chinese&key=AIzaSyDwz_0zYQuRxD00R6pc-Wuu2nctNnwF5xw',
-      headers: {'Access-Control-Allow-Origin': '*'}
+      method:'post',
+      url:'http://localhost:8080/getRestaurants',
+      headers: {'Access-Control-Allow-Origin': '*'},
+      data:this.props.location
 
     })
     .then((response)=>{
       console.log(response)
     }).catch(err =>
       {
-
+        console.log(err);
       })
   }
 

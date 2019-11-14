@@ -11,7 +11,7 @@ class Header extends Component {
       return (
             <>
                 <Navbar bg="dark" variant="dark" expand="lg">
-                <Navbar.Brand href="#home"><Bounce>City Scanner</Bounce></Navbar.Brand>
+                <Navbar.Brand href="#home">City Scanner</Navbar.Brand>
                 <Nav className="mr-auto">
                   <Nav.Link href="#home">Home</Nav.Link>
                   <Nav.Link href="#features">About Us</Nav.Link>
