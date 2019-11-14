@@ -1,14 +1,23 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
+
 class Dashboard extends Component {
-  componentDidMount() {
-    console.log(this.props.location);
+
+   constructor(props) {
+    super(props);
   }
+
   render() {
     const { data } = this.props.location;
 
     return (
       <>
         <h1>{data}</h1>
+                     <Link
+                  to={{ pathname: "/Restaurants", data: data }}
+                >
+                Food
+                </Link>
       </>
     );
   }
