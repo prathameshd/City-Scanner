@@ -1,11 +1,14 @@
 import React, { Component } from "react";
-import { HashRouter as Router} from "react-router-dom";
+import CitiesSlider from "./CitiesSlider";
+import Flip from "./Flip";
 
 export default class HomeComponent extends Component {
   render() {
     return (
-       <Router>
-      </Router>
+      <React.Fragment>
+        <CitiesSlider />
+        <Flip />
+      </React.Fragment>
     );
   }
 }
