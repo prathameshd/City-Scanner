@@ -1,13 +1,15 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
 import axios from 'axios';
 import Card from '@material-ui/core/Card';
+import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
+import Typography from '@material-ui/core/Typography';
+import Rater from 'react-rater';
+import 'react-rater/lib/react-rater.css';
 import Map from "./Map";
 
 class Restaurants extends Component {
-
    constructor(props) {
     super(props);
     this.state={
@@ -75,23 +77,43 @@ return (
         <h1>Restaurants in {data}</h1>
          <div className="row">
           <div className="col-sm-6  ">
-                         {
-                  this.state.restaurants.map((el,i) => (
-                    <Card key={i} style={{marginBottom: 18, width: 650, height: 150, marginRight: 18, display: 'inline-block', paddingTop: '10px', fontColor: 'black'}}>
-        
-                    <div>{el.price_level}</div> 
-                    <div name="songDetailsRec" style={{height:'inherit'}}>
-                    <div name="titleSongRec"
-                    style= {{textAlign: "center", verticalAlign: "middle", lineHeight: "140px", height:'inherit', fontWeight: "bold", fontSize: 25}}>
-                    {el.name}
-                    {el.rating}
-                    </div>
-
-                    </div>
-                
-                 
-                    </Card>))
-                  }
+          {
+            this.state.restaurants.map((el,i) => (
+            <div style={{display: 'inline-block', marginBottom: 18, marginRight: 18, marginLeft:100, paddingTop: '10px', fontColor: 'black'}}>
+             <Card className="cardsize">
+                   <CardActionArea>
+                     <CardMedia
+                       component="img"
+                       alt="Contemplative Reptile"
+                       height="140"
+                       width='80'
+                       image="https://s3-us-west-2.amazonaws.com/s.cdpn.io/142996/singapore.jpg"
+                       title="Contemplative Reptile"
+                     />
+                     <CardContent style={{display: 'inline-block'}}>
+                       <Typography gutterBottom variant="h5" component="h3">
+                         {el.name}
+                       </Typography>
+                       <Typography gutterBottom variant="h5" component="h1">
+                       <Rater total={5} rating={el.rating} />
+                       </Typography>
+                       <Typography variant="body2" color="textSecondary" component="p">
+                         {el.vicinity}
+                       </Typography>
+                       <Typography variant="body2" color="textSecondary" component="p">
+                         {el.types[0]}
+                         &nbsp;
+                         {el.types[1]}
+                         &nbsp;
+                         {el.types[2]}
+                         &nbsp;
+                         {el.types[3]}
+                       </Typography>
+                     </CardContent>
+                   </CardActionArea>
+                 </Card>
+             </div>))
+   }
           </div>
           <div className="col-sm-6">
                     <Map lat={this.state.lat} long={this.state.long} locations={this.state.locations}/>
@@ -102,34 +124,52 @@ return (
       </div>
     );
 
-              
+
     }
     else
     {
     return (
       <>
         <h1>Restaurants in {data}</h1>
-         
           <div>
                          {
-                  this.state.restaurants.map((el,i) => (
-                    <Card key={i} style={{marginBottom: 18, width: 650, height: 150, marginRight: 18, display: 'inline-block', paddingTop: '10px', fontColor: 'black'}}>
-        
-                    <div>{el.price_level}</div> 
-                    <div name="songDetailsRec" style={{height:'inherit'}}>
-                    <div name="titleSongRec"
-                    style= {{textAlign: "center", verticalAlign: "middle", lineHeight: "140px", height:'inherit', fontWeight: "bold", fontSize: 25}}>
-                    {el.name}
-                    {el.rating}
-                    </div>
-
-                    </div>
-                
-                 
-                    </Card>))
+                           this.state.restaurants.map((el,i) => (
+                           <div style={{display: 'inline-block', marginBottom: 18, marginRight: 18, marginLeft:100, paddingTop: '10px', fontColor: 'black'}}>
+                            <Card className="cardsize">
+                                  <CardActionArea>
+                                    <CardMedia
+                                      component="img"
+                                      alt="Contemplative Reptile"
+                                      height="140"
+                                      width='80'
+                                      image="https://s3-us-west-2.amazonaws.com/s.cdpn.io/142996/singapore.jpg"
+                                      title="Contemplative Reptile"
+                                    />
+                                    <CardContent style={{display: 'inline-block'}}>
+                                      <Typography gutterBottom variant="h5" component="h3">
+                                        {el.name}
+                                      </Typography>
+                                      <Typography gutterBottom variant="h5" component="h1">
+                                      <Rater total={5} rating={el.rating} />
+                                      </Typography>
+                                      <Typography variant="body2" color="textSecondary" component="p">
+                                        {el.vicinity}
+                                      </Typography>
+                                      <Typography variant="body2" color="textSecondary" component="p">
+                                        {el.types[0]}
+                                        &nbsp;
+                                        {el.types[1]}
+                                        &nbsp;
+                                        {el.types[2]}
+                                        &nbsp;
+                                        {el.types[3]}
+                                      </Typography>
+                                    </CardContent>
+                                  </CardActionArea>
+                                </Card>
+                            </div>))
                   }
           </div>
-
 
       </>
     );
