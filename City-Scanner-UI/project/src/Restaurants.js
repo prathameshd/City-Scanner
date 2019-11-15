@@ -12,8 +12,9 @@ class Restaurants extends Component {
     super(props);
     this.state={
       restaurants: [],
-      lat:"18",
-      long:"73"
+      locations:[],
+      lat:" ",
+      long:" "
     };
   }
 
@@ -30,6 +31,27 @@ class Restaurants extends Component {
     .then((response)=>{
             console.log(response.data)
            this.setState({restaurants: response.data.results})
+           this.setState({locations: response.data.results})
+
+
+     return axios
+          ({
+            method:'post',
+            url:'http://localhost:8080/getPosition',
+            headers: {'Access-Control-Allow-Origin': '*'},
+            data:this.props.location
+          })
+          .then((response)=>{
+                  console.log(response.data)
+                 this.setState({lat: response.data.lat})
+                 this.setState({long: response.data.long})
+                console.log("states hanged",this.state)
+
+          }).catch(err =>
+            {
+              console.log(err);
+            })
+
 
     }).catch(err =>
       {
@@ -44,12 +66,46 @@ class Restaurants extends Component {
     {
       window.location.href="/home";
     }
+    else if(this.state.lat!=" " && this.state.long!=" ")
+    {
+
+return (
+      <>
+        <h1>Restaurants in {data}</h1>
+         
+          <Map lat={this.state.lat} long={this.state.long} locations={this.state.locations}/>
+          <div>
+                         {
+                  this.state.restaurants.map((el,i) => (
+                    <Card key={i} style={{marginBottom: 18, width: 650, height: 150, marginRight: 18, display: 'inline-block', paddingTop: '10px', fontColor: 'black'}}>
+        
+                    <div>{el.price_level}</div> 
+                    <div name="songDetailsRec" style={{height:'inherit'}}>
+                    <div name="titleSongRec"
+                    style= {{textAlign: "center", verticalAlign: "middle", lineHeight: "140px", height:'inherit', fontWeight: "bold", fontSize: 25}}>
+                    {el.name}
+                    {el.rating}
+                    </div>
+
+                    </div>
+                
+                 
+                    </Card>))
+                  }
+          </div>
+
+
+      </>
+    );
+
+              
+    }
     else
     {
     return (
       <>
         <h1>Restaurants in {data}</h1>
-         <Map lat={this.state.lat} long={this.state.long}/>
+         
           <div>
                          {
                   this.state.restaurants.map((el,i) => (
