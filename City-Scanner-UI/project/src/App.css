@@ -17,4 +17,35 @@
 .flipping-cards {
   display: flex;
   flex-direction: row;
+  position: absolute;
+  top: 85%;
+  left: 10%;
+}
+
+.card1{
+  position: relative;
+  top: 40%;
+  left: 20%;
+}
+
+.card2{
+  position: absolute;
+  top: 10%;
+  left: 60%;
+}
+
+.card3{
+  position: relative;
+  top: 70%;
+  left: 20%;
+}
+
+.card4{
+  position: absolute;
+  top: 52%;
+  left: 60%;
+}
+.footer{
+  position: absolute;
+  top: 110%;
 }
