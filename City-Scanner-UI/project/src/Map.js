@@ -38,8 +38,8 @@ class MapContainer extends Component {
 
   render() {
 const mapStyles = {
-  width: '100%',
-  height: '35%',
+  width: '80%',
+  height: '20%',
 };
     return (
         

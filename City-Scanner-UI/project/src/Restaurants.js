@@ -70,11 +70,11 @@ class Restaurants extends Component {
     {
 
 return (
-      <>
+      <div className="containter-fluid">
+
         <h1>Restaurants in {data}</h1>
-         
-          <Map lat={this.state.lat} long={this.state.long} locations={this.state.locations}/>
-          <div>
+         <div className="row">
+          <div className="col-sm-6  ">
                          {
                   this.state.restaurants.map((el,i) => (
                     <Card key={i} style={{marginBottom: 18, width: 650, height: 150, marginRight: 18, display: 'inline-block', paddingTop: '10px', fontColor: 'black'}}>
@@ -93,9 +93,13 @@ return (
                     </Card>))
                   }
           </div>
+          <div className="col-sm-6">
+                    <Map lat={this.state.lat} long={this.state.long} locations={this.state.locations}/>
 
+          </div>
 
-      </>
+          </div>
+      </div>
     );
 
               
