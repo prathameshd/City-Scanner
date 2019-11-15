@@ -23,7 +23,7 @@ class App extends Component {
           <Route exact path="/temp" component={temp} />
           <Route exact path="/Restaurants" component={Restaurants} />
 
-          <Route exact path="/home" component={Home} />
+          <Route exact path="/Home" component={Home} />
           <Route exact path="/Dashboard" component={Dashboard} />
           <Route exact path="/Dashcards" component={MediaCard} />
           <Route exact path="/Flip" component={Flip} />

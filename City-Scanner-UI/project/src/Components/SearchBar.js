@@ -44,7 +44,9 @@ export default class SearchBar extends Component {
               />
               <div className="input-group-prepend">
                 <Link
-                  to={{ pathname: "/Dashboard", data: this.state.location }}
+                  
+                  to={{ pathname: "/Dashcards", data: this.state.location }}
+
                 >
                   <MDBBtn
                     id="searchButton"

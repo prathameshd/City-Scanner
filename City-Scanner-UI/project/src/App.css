@@ -5,13 +5,20 @@
   transform: translate(-50%, -50%);
   z-index: 10000;
 }
-
+.top-search-bar {
+  position: absolute;
+  top: 10vh;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10000;
+}
 .search-bar {
   width: 45vw;
 }
 
 .image-container {
   opacity: 0.6;
+  position: relative;
 }
 
 .flipping-cards {
@@ -23,29 +30,33 @@
 }
 
 .card1{
-  position: relative;
-  top: 40%;
+  position: absolute;
+  top: 20%;
   left: 20%;
 }
 
 .card2{
   position: absolute;
-  top: 10%;
+  top: 20%;
   left: 60%;
 }
 
 .card3{
-  position: relative;
+  position: absolute;
   top: 70%;
   left: 20%;
 }
 
 .card4{
   position: absolute;
-  top: 52%;
+  top: 70%;
   left: 60%;
 }
 .footer{
   position: absolute;
   top: 110%;
+}
+
+.bkg{
+  background-image: url(./Events.jpg);
 }

@@ -1,4 +1,5 @@
 import React from 'react';
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
@@ -7,6 +8,9 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import Home from './Home';
+import SearchBar from "./Components/SearchBar";
+
 
 const useStyles = makeStyles({
   card: {
@@ -27,16 +31,21 @@ export default function MediaCard() {
   const classes = useStyles();
 
   return (
-      <div style={{ backgroundImage: 'url("src\images\city.png")',}}>
+    
+    <div>  
+   <div class="top-search-bar">
+    <SearchBar />
+  </div>
     <div className="card1">
-        <br/>
+    <Link to={'/temp'}>   
     <Card className={classes.card}>
       <CardActionArea>
-        <CardMedia
+      <CardMedia
           className={classes.media}
-          image="src/images/resto.jpg"
+          image="https://s3-us-west-2.amazonaws.com/s.cdpn.io/142996/singapore.jpg"
           title="Explore Restaurants"
         />
+  
         <CardContent>
           <Typography gutterBottom variant="h5" component="h2">
             Restaurants
@@ -44,24 +53,27 @@ export default function MediaCard() {
           <Typography variant="body2" color="textSecondary" component="p">
             Food and drink, two things that we all need to survive. But good food and drink is what we need to thrive. 
           </Typography>
+         
         </CardContent>
       </CardActionArea>
       <CardActions>
-        <Button size="small" color="primary">
-          Explore
-        </Button>
-        
+      
+      
+      
+      
       </CardActions>
     </Card>
+    </Link>
+   
     </div>
-    <br/>
+    
 
     <div className="card2">
     <Card className={classes.card}>
       <CardActionArea>
         <CardMedia
           className={classes.media}
-          image="/static/images/cards/contemplative-reptile.jpg"
+          image="https://s3-us-west-2.amazonaws.com/s.cdpn.io/142996/singapore.jpg"
           title="Explore Tourist Spots"
         />
         <CardContent>
@@ -74,20 +86,17 @@ export default function MediaCard() {
         </CardContent>
       </CardActionArea>
       <CardActions>
-        <Button size="small" color="primary">
-          Explore
-        </Button>
-        
       </CardActions>
     </Card>
     </div>
+
 <div className="card3">
-    <br/>
+    
     <Card className={classes.card}>
       <CardActionArea>
         <CardMedia
           className={classes.media}
-          image="/static/images/cards/contemplative-reptile.jpg"
+          image="https://s3-us-west-2.amazonaws.com/s.cdpn.io/142996/singapore.jpg"
           title="Explore Housing"
         />
         <CardContent>
@@ -99,24 +108,20 @@ export default function MediaCard() {
           </Typography>
         </CardContent>
       </CardActionArea>
-      <CardActions>
-        <Button size="small" color="primary">
-          Explore
-        </Button>
-        
+      <CardActions> 
       </CardActions>
     </Card>
     </div>
-    <br/>
+    
 
     <div className="card4">
-    <br/>
+  
     <Card className={classes.card}>
       <CardActionArea>
         <CardMedia
           className={classes.media}
-          image="/static/images/cards/contemplative-reptile.jpg"
-          title="Explore EventsS"
+          image="https://s3-us-west-2.amazonaws.com/s.cdpn.io/142996/singapore.jpg"
+          title="Explore Events"
         />
         <CardContent>
           <Typography gutterBottom variant="h5" component="h2">
@@ -128,14 +133,10 @@ export default function MediaCard() {
         </CardContent>
       </CardActionArea>
       <CardActions>
-        <Button size="small" color="primary">
-          Explore
-        </Button>
-        
       </CardActions>
     </Card>
     </div>
-    <br/>
+    
     </div>
     
   );
