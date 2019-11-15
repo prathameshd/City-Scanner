@@ -7,7 +7,7 @@ import Header from "./Header";
 import temp from "./temp";
 import Dashboard from "./Dashboard";
 import Restaurants from "./Restaurants";
-
+import Map from "./Map";
 import "./App.css";
 import Flip from "./Flip";
 
@@ -18,6 +18,7 @@ class App extends Component {
         <Router>
           <Header />
           <Route exact path="/" component={Home} />
+          <Route exact path="/Map" component={Map} />
 
           <Route exact path="/temp" component={temp} />
           <Route exact path="/Restaurants" component={Restaurants} />

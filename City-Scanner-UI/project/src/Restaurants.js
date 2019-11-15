@@ -4,13 +4,16 @@ import axios from 'axios';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
+import Map from "./Map";
 
 class Restaurants extends Component {
 
    constructor(props) {
     super(props);
     this.state={
-      restaurants: []
+      restaurants: [],
+      lat:"18",
+      long:"73"
     };
   }
 
@@ -32,6 +35,7 @@ class Restaurants extends Component {
       {
         console.log(err);
       })
+
   }
 
   render() {
@@ -45,6 +49,7 @@ class Restaurants extends Component {
     return (
       <>
         <h1>Restaurants in {data}</h1>
+         <Map lat={this.state.lat} long={this.state.long}/>
           <div>
                          {
                   this.state.restaurants.map((el,i) => (
@@ -64,6 +69,7 @@ class Restaurants extends Component {
                     </Card>))
                   }
           </div>
+
 
       </>
     );
