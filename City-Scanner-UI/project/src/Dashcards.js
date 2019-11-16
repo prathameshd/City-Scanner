@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from "react";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
@@ -11,8 +11,12 @@ import Typography from '@material-ui/core/Typography';
 import Home from './Home';
 import SearchBar from "./Components/SearchBar";
 
+class Dashcards extends Component {
 
-const useStyles = makeStyles({
+
+render()
+{
+  /*const useStyles = makeStyles({
   card: {
     background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
     maxWidth: 400,
@@ -25,23 +29,23 @@ const useStyles = makeStyles({
   media: {
     height: 100,
   },
-});
+});*/
+//export default function MediaCard() {
+  //const classes = useStyles();
 
-export default function MediaCard() {
-  const classes = useStyles();
+      const { data } = this.props.location;
 
   return (
-    
     <div>  
    <div class="top-search-bar">
     <SearchBar />
   </div>
     <div className="card1">
-    <Link to={'/temp'}>   
-    <Card className={classes.card}>
+    <Link to={{ pathname: "/Restaurants", data: data }}>   
+    <Card className="">
       <CardActionArea>
       <CardMedia
-          className={classes.media}
+          className=""
           image="https://s3-us-west-2.amazonaws.com/s.cdpn.io/142996/singapore.jpg"
           title="Explore Restaurants"
         />
@@ -69,10 +73,10 @@ export default function MediaCard() {
     
 
     <div className="card2">
-    <Card className={classes.card}>
+    <Card className="">
       <CardActionArea>
         <CardMedia
-          className={classes.media}
+          className=""
           image="https://s3-us-west-2.amazonaws.com/s.cdpn.io/142996/singapore.jpg"
           title="Explore Tourist Spots"
         />
@@ -92,10 +96,10 @@ export default function MediaCard() {
 
 <div className="card3">
     
-    <Card className={classes.card}>
+    <Card className="">
       <CardActionArea>
         <CardMedia
-          className={classes.media}
+          className=""
           image="https://s3-us-west-2.amazonaws.com/s.cdpn.io/142996/singapore.jpg"
           title="Explore Housing"
         />
@@ -116,10 +120,10 @@ export default function MediaCard() {
 
     <div className="card4">
   
-    <Card className={classes.card}>
+    <Card className="">
       <CardActionArea>
         <CardMedia
-          className={classes.media}
+          className=""
           image="https://s3-us-west-2.amazonaws.com/s.cdpn.io/142996/singapore.jpg"
           title="Explore Events"
         />
@@ -141,3 +145,7 @@ export default function MediaCard() {
     
   );
 }
+//}
+}
+
+export default Dashcards;
