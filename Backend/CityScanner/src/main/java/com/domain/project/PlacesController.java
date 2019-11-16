@@ -23,9 +23,10 @@ public class PlacesController {
 		JsonObject coords = new JsonParser().parse(getPosition(cityName)).getAsJsonObject();
 		String lat = coords.get("lat").getAsString();
 		String lng = coords.get("long").getAsString();
+		String APIKEY="AIzaSyAJA71Rtblkd6TpFQvsgsnCbOVUqDCf-nc";
 
 		final String placesAPI = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" + lat + ","
-				+ lng + "&radius=15000&type=restaurant&key=AIzaSyDwz_0zYQuRxD00R6pc-Wuu2nctNnwF5xw";
+				+ lng + "&radius=15000&type=restaurant&key=" + APIKEY;
 		RestTemplate getPlaces = new RestTemplate();
 		String placesResult = getPlaces.getForObject(placesAPI, String.class);
 
@@ -37,14 +38,16 @@ public class PlacesController {
 	@CrossOrigin
 	@PostMapping(value = "/getPosition")
 	public String getPosition(@RequestBody String cityName) {
+		String APIKEY="AIzaSyAJA71Rtblkd6TpFQvsgsnCbOVUqDCf-nc";
+		
 		final String geoCodeAPI = "https://maps.googleapis.com/maps/api/geocode/json?address=" + cityName
-				+ "&key=AIzaSyDwz_0zYQuRxD00R6pc-Wuu2nctNnwF5xw";
-
+				+ "&key="+ APIKEY;
+		System.out.println(geoCodeAPI);
 		RestTemplate getGeocode = new RestTemplate();
 		String responseFromAPI = getGeocode.getForObject(geoCodeAPI, String.class);
 		JsonObject geoCodeResponse = new JsonParser().parse(responseFromAPI).getAsJsonObject();
 		JsonArray geoCodeResultArray = geoCodeResponse.getAsJsonArray("results");
-
+		System.out.println("---------"+ geoCodeResultArray);
 		String lat = geoCodeResultArray.get(0).getAsJsonObject().get("geometry").getAsJsonObject().get("location")
 				.getAsJsonObject().get("lat").toString();
 		String lng = geoCodeResultArray.get(0).getAsJsonObject().get("geometry").getAsJsonObject().get("location")
