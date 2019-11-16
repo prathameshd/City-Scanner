@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 
 import Home from "./Home";
-// import Footer from "./Footer";
+//import Footer from "./Footer";
 import Header from "./Header";
 import temp from "./temp";
 import Dashboard from "./Dashboard";
@@ -10,6 +10,7 @@ import Restaurants from "./Restaurants";
 import Map from "./Map";
 import "./App.css";
 import Flip from "./Flip";
+import MediaCard from "./Dashcards";
 
 class App extends Component {
   render() {
@@ -23,11 +24,12 @@ class App extends Component {
           <Route exact path="/temp" component={temp} />
           <Route exact path="/Restaurants" component={Restaurants} />
 
-          <Route exact path="/home" component={Home} />
+          <Route exact path="/Home" component={Home} />
           <Route exact path="/Dashboard" component={Dashboard} />
+          <Route exact path="/Dashcards" component={MediaCard} />
           <Route exact path="/Flip" component={Flip} />
 
-          {/* <Footer /> */}
+          {/*<Footer />*/} 
         </Router>
       </>
     );
