@@ -22,6 +22,7 @@ class CitiesSlider extends Component {
         <Fade {...fadeProperties}>
           <div className="each-fade">
             <div className="image-container">
+            <h1 style={{top:150,left:350,color:'white',position:'absolute'}}>lets get started..</h1>
               <img
                 src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/142996/singapore.jpg"
                 height="555"
@@ -31,6 +32,7 @@ class CitiesSlider extends Component {
           </div>
           <div className="each-fade">
             <div className="image-container">
+                        <h1 style={{top:150,left:350,color:'black',position:'absolute'}}>find places to stay</h1>
               <img
                 src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/142996/prague.jpg"
                 height="555"
@@ -40,6 +42,7 @@ class CitiesSlider extends Component {
           </div>
           <div className="each-fade">
             <div className="image-container">
+                                    <h1 style={{top:150,left:350,color:'#8B008B',position:'absolute'}}>explore events around town</h1>
               <img
                 src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/142996/paris.jpg"
                 height="555"

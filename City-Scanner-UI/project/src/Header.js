@@ -55,7 +55,7 @@ class Header extends Component {
         <Button variant="outline-info" onClick={handleShow}>
           Login
         </Button>
-        <Modal show={show} onHide={handleClose}>
+        <Modal style={{zIndex:50000}} show={show} onHide={handleClose}>
         <Form style = {{padding:'20px'}}>
             <Form.Group controlId="Header">
                 <h1 style={{textAlign:"center"}}>Login</h1>
@@ -185,7 +185,7 @@ var newUserData={
           Signup
         </Button>
 
-        <Modal show={show} onHide={handleClose}>
+        <Modal style={{zIndex:50000}} show={show} onHide={handleClose}>
         <Form style = {{padding:'20px'}}>
               <Form.Group controlId="Header">
                   <h1 style={{textAlign:"center"}}>Sign Up</h1>
