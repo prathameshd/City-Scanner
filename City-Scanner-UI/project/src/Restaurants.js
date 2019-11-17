@@ -129,49 +129,8 @@ return (
     else
     {
     return (
-      <>
-        <h1>Restaurants in {data}</h1>
-          <div>
-                         {
-                           this.state.restaurants.map((el,i) => (
-                           <div style={{display: 'inline-block', marginBottom: 18, marginRight: 18, marginLeft:100, paddingTop: '10px', fontColor: 'black'}}>
-                            <Card className="cardsize">
-                                  <CardActionArea>
-                                    <CardMedia
-                                      component="img"
-                                      alt="Contemplative Reptile"
-                                      height="140"
-                                      width='80'
-                                      image="https://s3-us-west-2.amazonaws.com/s.cdpn.io/142996/singapore.jpg"
-                                      title="Contemplative Reptile"
-                                    />
-                                    <CardContent style={{display: 'inline-block'}}>
-                                      <Typography gutterBottom variant="h5" component="h3">
-                                        {el.name}
-                                      </Typography>
-                                      <Typography gutterBottom variant="h5" component="h1">
-                                      <Rater total={5} rating={el.rating} />
-                                      </Typography>
-                                      <Typography variant="body2" color="textSecondary" component="p">
-                                        {el.vicinity}
-                                      </Typography>
-                                      <Typography variant="body2" color="textSecondary" component="p">
-                                        {el.types[0]}
-                                        &nbsp;
-                                        {el.types[1]}
-                                        &nbsp;
-                                        {el.types[2]}
-                                        &nbsp;
-                                        {el.types[3]}
-                                      </Typography>
-                                    </CardContent>
-                                  </CardActionArea>
-                                </Card>
-                            </div>))
-                  }
-          </div>
-
-      </>
+    <>
+    </>
     );
   }
 }

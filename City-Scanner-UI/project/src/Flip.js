@@ -17,7 +17,7 @@ export default class Flip extends Component {
           >
             <FrontSide
               style={{
-                backgroundColor: "#17a2b8"
+                backgroundColor: "#FE6B8B"
               }}
             >
               <h2>Restaurants</h2>
@@ -59,7 +59,7 @@ export default class Flip extends Component {
           >
             <FrontSide
               style={{
-                backgroundColor: "#17a2b8"
+                backgroundColor: "#FF8E53"
               }}
             >
               <h2>Tourist Spots</h2>
@@ -80,7 +80,7 @@ export default class Flip extends Component {
           >
             <FrontSide
               style={{
-                backgroundColor: "#17a2b8"
+                backgroundColor: "#8a2be2"
               }}
             >
               <h2>Events</h2>
