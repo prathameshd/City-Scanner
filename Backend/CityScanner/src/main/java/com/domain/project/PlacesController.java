@@ -16,6 +16,23 @@ import com.google.gson.JsonParser;
 @ComponentScan
 public class PlacesController {
 
+	// Retrieve places to visit for given city
+	@CrossOrigin
+	@PostMapping(value = "/getPlaces")
+	public String getPlaces(@RequestBody String cityName) {
+		JsonObject coords = new JsonParser().parse(getPosition(cityName)).getAsJsonObject();
+		String lat = coords.get("lat").getAsString();
+		String lng = coords.get("long").getAsString();
+		String APIKEY="AIzaSyAJA71Rtblkd6TpFQvsgsnCbOVUqDCf-nc";
+
+		final String placesAPI = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" + lat + ","
+				+ lng + "&radius=15000&type=tourist_attraction&key=" + APIKEY;
+		RestTemplate getPlaces = new RestTemplate();
+		String placesResult = getPlaces.getForObject(placesAPI, String.class);
+
+		return placesResult;
+	}
+	
 	// Retrieve restaurants for given city
 	@CrossOrigin
 	@PostMapping(value = "/getRestaurants")
