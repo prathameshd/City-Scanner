@@ -13,7 +13,7 @@ class Places extends Component {
    constructor(props) {
     super(props);
     this.state={
-      restaurants: [],
+      places: [],
       locations:[],
       lat:" ",
       long:" "
@@ -22,20 +22,21 @@ class Places extends Component {
 
   componentDidMount()
   {
+    //Retrieve places from API
        return axios
     ({
       method:'post',
-      url:'http://localhost:8080/getRestaurants',
+      url:'http://localhost:8080/getPlaces',
       headers: {'Access-Control-Allow-Origin': '*'},
       data:this.props.location
 
     })
     .then((response)=>{
             console.log(response.data)
-           this.setState({restaurants: response.data.results})
+           this.setState({places: response.data.results})
            this.setState({locations: response.data.results})
 
-
+          //Get lat, long to set map position
      return axios
           ({
             method:'post',
@@ -74,22 +75,14 @@ class Places extends Component {
 return (
       <div className="containter-fluid">
 
-        <h1>Restaurants in {data}</h1>
+        <h1>Places in {data}</h1>
          <div className="row">
           <div className="col-sm-6  ">
           {
-            this.state.restaurants.map((el,i) => (
-            <div style={{display: 'inline-block', marginBottom: 18, marginRight: 18, marginLeft:100, paddingTop: '10px', fontColor: 'black'}}>
+            this.state.places.map((el,i) => (
+            <div style={{display: 'inline-block',width:350, marginBottom: 18, marginRight: 18, marginLeft:100, paddingTop: '10px', fontColor: 'black'}}>
              <Card className="cardsize">
                    <CardActionArea>
-                     <CardMedia
-                       component="img"
-                       alt="Contemplative Reptile"
-                       height="140"
-                       width='80'
-                       image="https://s3-us-west-2.amazonaws.com/s.cdpn.io/142996/singapore.jpg"
-                       title="Contemplative Reptile"
-                     />
                      <CardContent style={{display: 'inline-block'}}>
                        <Typography gutterBottom variant="h5" component="h3">
                          {el.name}
@@ -130,47 +123,6 @@ return (
     {
     return (
       <>
-        <h1>Restaurants in {data}</h1>
-          <div>
-                         {
-                           this.state.restaurants.map((el,i) => (
-                           <div style={{display: 'inline-block', marginBottom: 18, marginRight: 18, marginLeft:100, paddingTop: '10px', fontColor: 'black'}}>
-                            <Card className="cardsize">
-                                  <CardActionArea>
-                                    <CardMedia
-                                      component="img"
-                                      alt="Contemplative Reptile"
-                                      height="140"
-                                      width='80'
-                                      image="https://s3-us-west-2.amazonaws.com/s.cdpn.io/142996/singapore.jpg"
-                                      title="Contemplative Reptile"
-                                    />
-                                    <CardContent style={{display: 'inline-block'}}>
-                                      <Typography gutterBottom variant="h5" component="h3">
-                                        {el.name}
-                                      </Typography>
-                                      <Typography gutterBottom variant="h5" component="h1">
-                                      <Rater total={5} rating={el.rating} />
-                                      </Typography>
-                                      <Typography variant="body2" color="textSecondary" component="p">
-                                        {el.vicinity}
-                                      </Typography>
-                                      <Typography variant="body2" color="textSecondary" component="p">
-                                        {el.types[0]}
-                                        &nbsp;
-                                        {el.types[1]}
-                                        &nbsp;
-                                        {el.types[2]}
-                                        &nbsp;
-                                        {el.types[3]}
-                                      </Typography>
-                                    </CardContent>
-                                  </CardActionArea>
-                                </Card>
-                            </div>))
-                  }
-          </div>
-
       </>
     );
   }
