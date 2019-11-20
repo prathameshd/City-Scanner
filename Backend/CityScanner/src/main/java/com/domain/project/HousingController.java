@@ -4,7 +4,6 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -12,13 +11,11 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
-@RestController
-@ComponentScan
-public class PlacesController {
+public class HousingController {
 
-	// Retrieve places to visit for given city
+	// Get housing locations for a city
 	@CrossOrigin
-	@PostMapping(value = "/getPlaces")
+	@PostMapping(value = "/getHousing")
 	public String getPlaces(@RequestBody String cityName) {
 		JsonObject coords = new JsonParser().parse(getPosition(cityName)).getAsJsonObject();
 		String lat = coords.get("lat").getAsString();
@@ -26,49 +23,13 @@ public class PlacesController {
 		String APIKEY = "AIzaSyAJA71Rtblkd6TpFQvsgsnCbOVUqDCf-nc";
 
 		final String placesAPI = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" + lat + ","
-				+ lng + "&radius=15000&type=tourist_attraction&key=" + APIKEY;
+				+ lng + "&radius=15000&type=establishment&key=" + APIKEY;
 		System.out.println(placesAPI);
 		RestTemplate getPlaces = new RestTemplate();
 		String placesResult = getPlaces.getForObject(placesAPI, String.class);
 
 		return placesResult;
 	}
-
-	// Retrieve restaurants for given city
-	@CrossOrigin
-	@PostMapping(value = "/getRestaurants")
-	public String getRestaurants(@RequestBody String cityName) {
-		JsonObject coords = new JsonParser().parse(getPosition(cityName)).getAsJsonObject();
-		String lat = coords.get("lat").getAsString();
-		String lng = coords.get("long").getAsString();
-		String APIKEY = "AIzaSyAJA71Rtblkd6TpFQvsgsnCbOVUqDCf-nc";
-
-		final String placesAPI = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" + lat + ","
-				+ lng + "&radius=15000&type=restaurant&key=" + APIKEY;
-		System.out.println(placesAPI);
-		RestTemplate getPlaces = new RestTemplate();
-		String placesResult = getPlaces.getForObject(placesAPI, String.class);
-
-		return placesResult;
-	}
-	
-	// Get housing locations for a city
-		@CrossOrigin
-		@PostMapping(value = "/getHousing")
-		public String getHousing(@RequestBody String cityName) {
-			JsonObject coords = new JsonParser().parse(getPosition(cityName)).getAsJsonObject();
-			String lat = coords.get("lat").getAsString();
-			String lng = coords.get("long").getAsString();
-			String APIKEY = "AIzaSyAJA71Rtblkd6TpFQvsgsnCbOVUqDCf-nc";
-
-			final String placesAPI = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" + lat + ","
-					+ lng + "&radius=15000&type=establishment&keyword=apartment|housing|society&key=" + APIKEY;
-			System.out.println(placesAPI);
-			RestTemplate getPlaces = new RestTemplate();
-			String placesResult = getPlaces.getForObject(placesAPI, String.class);
-
-			return placesResult;
-		}
 
 	// Get coordinates for a city
 	@JsonIgnore
