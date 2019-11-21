@@ -69,6 +69,24 @@ public class PlacesController {
 
 			return placesResult;
 		}
+		
+	// Get groceries or shopping centers for a city
+		@CrossOrigin
+		@PostMapping(value = "/getShopping")
+		public String getShopping(@RequestBody String shop) {
+			JsonObject coords = new JsonParser().parse(getPosition(shop)).getAsJsonObject();
+			String lat = coords.get("lat").getAsString();
+			String lng = coords.get("long").getAsString();
+			String APIKEY = "AIzaSyAJA71Rtblkd6TpFQvsgsnCbOVUqDCf-nc";
+
+			final String placesAPI = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" + lat + ","
+					+ lng + "&radius=15000&type=shopping_mall|grocery_or_supermarket|home_goods_store&key=" + APIKEY;
+			System.out.println(placesAPI);
+			RestTemplate getPlaces = new RestTemplate();
+			String placesResult = getPlaces.getForObject(placesAPI, String.class);
+
+			return placesResult;
+		}
 
 	// Get coordinates for a city
 	@JsonIgnore

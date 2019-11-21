@@ -9,19 +9,51 @@ import Rater from "react-rater";
 import "react-rater/lib/react-rater.css";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import Map from "./Map";
+import temp from "./temp";
 
 class Housing extends Component {
   constructor(props) {
     super(props);
     this.state = {
       establishments: [],
+      shops: [],
       locations: [],
       lat: " ",
       long: " "
     };
+    this.getCoordinates = this.getCoordinates.bind(this);
+    this.getHousing = this.getHousing.bind(this);
+    this.getShops = this.getShops.bind(this);
+  }
+  handleClick = event => {
+    const {
+      target: { value }
+    } = event;
+
+    // And do whatever you need with it's value, for example change state
+    this.setState({ someProperty: value });
+    alert(value);
+  };
+
+  getCoordinates() {
+    return axios({
+      method: "post",
+      url: "http://localhost:8080/getPosition",
+      headers: { "Access-Control-Allow-Origin": "*" },
+      data: this.props.location
+    })
+      .then(response => {
+        console.log(response.data);
+        this.setState({ lat: response.data.lat });
+        this.setState({ long: response.data.long });
+        console.log("states hanged", this.state);
+      })
+      .catch(err => {
+        console.log(err);
+      });
   }
 
-  componentDidMount() {
+  getHousing() {
     return axios({
       method: "post",
       url: "http://localhost:8080/getHousing",
@@ -32,26 +64,37 @@ class Housing extends Component {
         console.log(response.data);
         this.setState({ establishments: response.data.results });
         this.setState({ locations: response.data.results });
-
-        return axios({
-          method: "post",
-          url: "http://localhost:8080/getPosition",
-          headers: { "Access-Control-Allow-Origin": "*" },
-          data: this.props.location
-        })
-          .then(response => {
-            console.log(response.data);
-            this.setState({ lat: response.data.lat });
-            this.setState({ long: response.data.long });
-            console.log("states hanged", this.state);
-          })
-          .catch(err => {
-            console.log(err);
-          });
       })
       .catch(err => {
         console.log(err);
       });
+  }
+
+  getShops() {
+    return axios({
+      method: "post",
+      url: "http://localhost:8080/getShopping",
+      headers: { "Access-Control-Allow-Origin": "*" },
+      data: this.props.location
+    })
+      .then(response => {
+        console.log(response.data);
+        this.setState({ shops: response.data.results });
+        this.setState({
+          locations: this.state.locations.concat(response.data.results)
+        });
+        // this.setState({ locations: response.data.results });
+        console.log("ansn" + this.state.locations);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }
+
+  componentDidMount() {
+    this.getHousing();
+    this.getCoordinates();
+    this.getShops();
   }
 
   render() {
@@ -75,7 +118,12 @@ class Housing extends Component {
                     fontColor: "black"
                   }}
                 >
-                  <Link to={{ pathname: "/Housing-details", data: data }}>
+                  <Link
+                    to={{
+                      pathname: "/Housing-details",
+                      data: this.state.lat && this.state.long
+                    }}
+                  >
                     <Card className="cardsize">
                       <CardActionArea>
                         <CardMedia
