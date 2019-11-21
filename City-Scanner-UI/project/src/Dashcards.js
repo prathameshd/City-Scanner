@@ -10,87 +10,55 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Home from './Home';
 import SearchBar from "./Components/SearchBar";
-
+ 
 class Dashcards extends Component {
-
+ 
   render()
   {
     const { data } = this.props.location;
-
+  
     return (
 
-    <Card className="">
-      <CardActionArea>
+      <div>  
+            <div class="top-search-bar">
+              <SearchBar />
+            </div>
+
+      <div className="card1">
+      <Link to={{ pathname: "/Restaurants", data: data }}>   
+      <Card style={{width:400, height:300, background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',}}>
+        <CardActionArea>
         <CardMedia
-          className=""
-          image="https://s3-us-west-2.amazonaws.com/s.cdpn.io/142996/singapore.jpg"
-          title="Explore Tourist Spots"
-        />
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="h2">
-            Tourist Spots
-          </Typography>
-          <Typography variant="body2" color="textSecondary" component="p">
-          Food and drink, two things that we all need to survive. But good food and drink is what we need to thrive.
-          </Typography>
-        </CardContent>
-      </CardActionArea>
-      <CardActions>
-      </CardActions>
-    </Card>
-    </Link>
-    </div>
-
-<div className="card3">
-            <Link to={{ pathname: "/Housing", data: data }}>
-
-    <Card className="">
-      <CardActionArea>
-        <CardMedia
-          className=""
-          image="https://s3-us-west-2.amazonaws.com/s.cdpn.io/142996/singapore.jpg"
-          title="Explore Housing"
-        />
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="h2">
-            Housing
-          </Typography>
-          <Typography variant="body2" color="textSecondary" component="p">
-            Food and drink, two things that we all need to survive. But good food and drink is what we need to thrive.
-          </Typography>
-        </CardContent>
-      </CardActionArea>
-      <CardActions>
-      </CardActions>
-    </Card>
-        </Link>
-    </div>
-
+            style={{height:150}}
+            image="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR7lHHfCINIxQ9VEQcrAjMNHh8sZP_88WnNbPle1b6-lNymT3kFKA&s"
+            title="Explore Restaurants"
+          />
+    
           <CardContent>
             <Typography gutterBottom variant="h5" component="h2">
               Restaurants
             </Typography>
             <Typography variant="body2" color="textSecondary" component="p">
-              Food and drink, two things that we all need to survive. But good food and drink is what we need to thrive.
+              Food and drink, two things that we all need to survive. But good food and drink is what we need to thrive. 
             </Typography>
-
+           
           </CardContent>
         </CardActionArea>
         <CardActions>
-
-
-
+        
+        
+        
         
         </CardActions>
       </Card>
       </Link>
-
+     
       </div>
-
-
+      
+  
       <div className="card2">
-          <Link to={{ pathname: "/Places", data: data }}>
-
+          <Link to={{ pathname: "/Places", data: data }}>   
+  
       <Card style={{width:400, height:300, background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',}}>
         <CardActionArea>
           <CardMedia
@@ -112,8 +80,9 @@ class Dashcards extends Component {
       </Card>
       </Link>
       </div>
-
+  
   <div className="card3">
+                <Link to={{ pathname: "/Housing", data: data }}>   
 
       <Card style={{width:400, height:300, background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',}}>
         <CardActionArea>
@@ -131,14 +100,15 @@ class Dashcards extends Component {
             </Typography>
           </CardContent>
         </CardActionArea>
-        <CardActions>
+        <CardActions> 
         </CardActions>
       </Card>
+      </Link>
       </div>
-
-
+      
+  
       <div className="card4">
-
+    
       <Card style={{width:400, height:300, background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',}}>
         <CardActionArea>
           <CardMedia
@@ -159,12 +129,12 @@ class Dashcards extends Component {
         </CardActions>
       </Card>
       </div>
-
+      
       </div>
-
+      
     );
   }
   //}
   }
-
+  
   export default Dashcards;

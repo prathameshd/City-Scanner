@@ -24,7 +24,7 @@ class Header extends Component {
                   <link href="./css/landing-page.min.css" rel="stylesheet" />
                   <nav className="navbar navbar-light bg-light static-top">
                     <div className="container">
-                      <a className="navbar-brand" href="#">City Scanner</a>
+                      <a className="navbar-brand" href="/home">City Scanner</a>
                       <Form>
                               <Login/>
                               &nbsp;&nbsp;&nbsp;
