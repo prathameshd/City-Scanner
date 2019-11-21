@@ -18,6 +18,7 @@ class Housing extends Component {
       establishments: [],
       shops: [],
       locations: [],
+      shopLoc: [],
       lat: " ",
       long: " "
     };
@@ -80,11 +81,8 @@ class Housing extends Component {
       .then(response => {
         console.log(response.data);
         this.setState({ shops: response.data.results });
-        this.setState({
-          locations: this.state.locations.concat(response.data.results)
-        });
-        // this.setState({ locations: response.data.results });
-        console.log("ansn" + this.state.locations);
+        this.setState({ shopLoc: response.data.results });
+        console.log("ansn" + this.state.shopLoc);
       })
       .catch(err => {
         console.log(err);
@@ -173,6 +171,7 @@ class Housing extends Component {
                 lat={this.state.lat}
                 long={this.state.long}
                 locations={this.state.locations}
+                shopLoc={this.state.shopLoc}
               />
             </div>
           </div>

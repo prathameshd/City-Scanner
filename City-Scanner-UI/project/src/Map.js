@@ -2,62 +2,88 @@
 
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import { Map, GoogleApiWrapper,Marker } from 'google-maps-react';
+import { Map, GoogleApiWrapper, Marker } from "google-maps-react";
 
 class MapContainer extends Component {
-
-   constructor(props) {
+  constructor(props) {
     super(props);
-      this.state = {
-        showInfoWindow: false
+    this.state = {
+      showInfoWindow: false
     };
   }
-
   handleMouseOver = e => {
-        this.setState({
-            showInfoWindow: true
-        });
-    };
+    this.setState({
+      showInfoWindow: true
+    });
+  };
 
-    handleMouseExit = e => {
-        this.setState({
-            showInfoWindow: false
-        });
-    };
-
+  handleMouseExit = e => {
+    this.setState({
+      showInfoWindow: false
+    });
+  };
 
   displayMarkers = () => {
     return this.props.locations.map((store, index) => {
-      return <Marker key={index} id={index} position={{
-       lat: store.geometry.location.lat,
-       lng: store.geometry.location.lng
-     }} 
-     onClick={() => console.log("You clicked me!")} />
-    })
-  }
+      return (
+        <Marker
+          key={index}
+          id={index}
+          icon={{
+            url: require("./house.png"),
+            scaledSize: { width: 26, height: 26 }
+          }}
+          position={{
+            lat: store.geometry.location.lat,
+            lng: store.geometry.location.lng
+          }}
+          onClick={() => console.log("You clicked me!")}
+        />
+      );
+    });
+  };
+
+  displayMarkers2 = () => {
+    return this.props.shopLoc.map((store, index) => {
+      return (
+        <Marker
+          key={index}
+          id={index}
+          icon={{
+            url: require("./shop.svg"),
+            scaledSize: { width: 20, height: 20 }
+          }}
+          position={{
+            lat: store.geometry.location.lat,
+            lng: store.geometry.location.lng
+          }}
+          onClick={() => console.log("You clicked me!")}
+        />
+      );
+    });
+  };
 
   render() {
-const mapStyles = {
-  width: '80%',
-  height: '20%',
-};
-    return (
-        
+    const mapStyles = {
+      width: "80%",
+      height: "20%"
+    };
 
-          <Map
-          google={this.props.google}
-          zoom={12}
-          style={mapStyles}
-          initialCenter={{ lat: this.props.lat, lng: this.props.long}}
-        >
-                  <Marker position={{ lat: 48.00, lng: -122.00}} />
-                  {this.displayMarkers()}
-        </Map>
-      
+    return (
+      <Map
+        google={this.props.google}
+        zoom={12}
+        style={mapStyles}
+        initialCenter={{ lat: this.props.lat, lng: this.props.long }}
+      >
+        <Marker position={{ lat: 48.0, lng: -122.0 }} />
+        {this.displayMarkers()}
+        {this.displayMarkers2()}
+      </Map>
     );
-}
+  }
 }
 
 export default GoogleApiWrapper({
-  apiKey: 'AIzaSyAJA71Rtblkd6TpFQvsgsnCbOVUqDCf-nc'
+  apiKey: "AIzaSyAJA71Rtblkd6TpFQvsgsnCbOVUqDCf-nc"
 })(MapContainer);
