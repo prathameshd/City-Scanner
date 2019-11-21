@@ -10,13 +10,12 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Home from './Home';
 import SearchBar from "./Components/SearchBar";
- 
+ import ls from 'local-storage'
+
 class Dashcards extends Component {
  
   render()
   {
-    const { data } = this.props.location;
-  
     return (
 
       <div>  
@@ -25,7 +24,7 @@ class Dashcards extends Component {
             </div>
 
       <div className="card1">
-      <Link to={{ pathname: "/Restaurants", data: data }}>   
+      <Link to={{ pathname: "/Restaurants"}}>   
       <Card style={{width:400, height:300, background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',}}>
         <CardActionArea>
         <CardMedia
@@ -57,8 +56,7 @@ class Dashcards extends Component {
       
   
       <div className="card2">
-          <Link to={{ pathname: "/Places", data: data }}>   
-  
+          <Link to={{ pathname: "/Places"}}>     
       <Card style={{width:400, height:300, background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',}}>
         <CardActionArea>
           <CardMedia
@@ -82,7 +80,7 @@ class Dashcards extends Component {
       </div>
   
   <div className="card3">
-                <Link to={{ pathname: "/Housing", data: data }}>   
+                <Link to={{ pathname: "/Housing"}}>   
 
       <Card style={{width:400, height:300, background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',}}>
         <CardActionArea>
