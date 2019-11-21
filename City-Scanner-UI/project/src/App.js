@@ -12,6 +12,8 @@ import "./App.css";
 import Flip from "./Flip";
 import MediaCard from "./Dashcards";
 import Places from "./Places";
+import Housing from "./Housing";
+import Details_housing from "./Details_housing";
 
 class App extends Component {
   render() {
@@ -24,11 +26,13 @@ class App extends Component {
 
           <Route exact path="/temp" component={temp} />
           <Route exact path="/Restaurants" component={Restaurants} />
-      <Route exact path="/Places" component={Places} />
+          <Route exact path="/Places" component={Places} />
           <Route exact path="/Home" component={Home} />
           <Route exact path="/Dashboard" component={Dashboard} />
           <Route exact path="/Dashcards" component={MediaCard} />
           <Route exact path="/Flip" component={Flip} />
+          <Route exact path="/Housing" component={Housing} />
+          <Route exact path="/Housing-details" component={Details_housing} />
 
           {/*<Footer />*/}
         </Router>

@@ -98,7 +98,8 @@ render()
     </div>
 
 <div className="card3">
-    
+            <Link to={{ pathname: "/Housing", data: data }}>   
+
     <Card className="">
       <CardActionArea>
         <CardMedia
@@ -118,6 +119,7 @@ render()
       <CardActions> 
       </CardActions>
     </Card>
+        </Link>
     </div>
     
 

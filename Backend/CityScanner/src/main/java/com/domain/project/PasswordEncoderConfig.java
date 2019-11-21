@@ -9,13 +9,14 @@ public class PasswordEncoderConfig {
 	@Bean
 	public PasswordEncoder passwordEncoder() {
 		return new PasswordEncoder() {
-			//Method to encrypt user password
+			// Method to encrypt user password
 			@Override
 			public String encode(CharSequence rawPassword) {
 				return BCrypt.hashpw(rawPassword.toString(), BCrypt.gensalt(4));
 
 			}
-			//Method to check if password matches
+
+			// Method to check if password matches
 			@Override
 			public boolean matches(CharSequence rawPassword, String encodedPassword) {
 				return BCrypt.checkpw(rawPassword.toString(), encodedPassword);
