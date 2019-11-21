@@ -2,8 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { MDBCol, MDBBtn } from "mdbreact";
 import Header from "./Header";
-
-
+import ls from 'local-storage'
 
 export default class LandingPage extends Component {
 
@@ -22,8 +21,14 @@ export default class LandingPage extends Component {
 
   handleChange = event => {
     this.setState({ location: event.target.value });
+      ls.set('city',event.target.value)
+
   };
 
+componentDidMount()
+{
+  console.log(ls)
+}
   render() {
     return (
             <>
@@ -45,7 +50,7 @@ export default class LandingPage extends Component {
                                 onChange={this.handleChange} />
                         </div>
                           <div className="input-group-prepend">
-                            <Link to={{ pathname: "/Dashcards", data: this.state.location }}>
+                            <Link to={{ pathname: "/Dashcards"}}>
                               <div className="col-12 col-md-15">
                                 <button type="submit" className="btn btn-block btn-lg btn-primary" onChange={{}}>Search</button>
                               </div>                              

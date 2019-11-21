@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { MDBCol, MDBBtn } from "mdbreact";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "bootstrap-css-only/css/bootstrap.min.css";
+ import ls from 'local-storage'
 
 export default class SearchBar extends Component {
   constructor(props) {
@@ -21,10 +22,16 @@ export default class SearchBar extends Component {
 
   handleChange = event => {
     this.setState({ location: event.target.value });
+    ls.set('city',event.target.value)
   };
 
   handleClick(data) {
     console.log(data);
+  }
+
+  componentDidMount()
+  {
+    this.setState({ location: ls.get('city') });
   }
 
   render() {
