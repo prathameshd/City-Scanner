@@ -27,7 +27,6 @@ public class PlacesController {
 
 		final String placesAPI = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" + lat + ","
 				+ lng + "&radius=15000&type=tourist_attraction&key=" + APIKEY;
-		System.out.println(placesAPI);
 		RestTemplate getPlaces = new RestTemplate();
 		String placesResult = getPlaces.getForObject(placesAPI, String.class);
 
@@ -45,30 +44,28 @@ public class PlacesController {
 
 		final String placesAPI = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" + lat + ","
 				+ lng + "&radius=15000&type=restaurant&key=" + APIKEY;
-		System.out.println(placesAPI);
 		RestTemplate getPlaces = new RestTemplate();
 		String placesResult = getPlaces.getForObject(placesAPI, String.class);
 
 		return placesResult;
 	}
-	
+
 	// Get housing locations for a city
-		@CrossOrigin
-		@PostMapping(value = "/getHousing")
-		public String getHousing(@RequestBody String cityName) {
-			JsonObject coords = new JsonParser().parse(getPosition(cityName)).getAsJsonObject();
-			String lat = coords.get("lat").getAsString();
-			String lng = coords.get("long").getAsString();
-			String APIKEY = "AIzaSyAJA71Rtblkd6TpFQvsgsnCbOVUqDCf-nc";
+	@CrossOrigin
+	@PostMapping(value = "/getHousing")
+	public String getHousing(@RequestBody String cityName) {
+		JsonObject coords = new JsonParser().parse(getPosition(cityName)).getAsJsonObject();
+		String lat = coords.get("lat").getAsString();
+		String lng = coords.get("long").getAsString();
 
-			final String placesAPI = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" + lat + ","
-					+ lng + "&radius=15000&type=establishment&keyword=apartment|housing|society&key=" + APIKEY;
-			System.out.println(placesAPI);
-			RestTemplate getPlaces = new RestTemplate();
-			String placesResult = getPlaces.getForObject(placesAPI, String.class);
+		String APIKEY = "AIzaSyAJA71Rtblkd6TpFQvsgsnCbOVUqDCf-nc";
+		final String placesAPI = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" + lat + ","
+				+ lng + "&radius=15000&type=establishment&keyword=apartment|housing|society&key=" + APIKEY;
+		RestTemplate getPlaces = new RestTemplate();
+		String placesResult = getPlaces.getForObject(placesAPI, String.class);
 
-			return placesResult;
-		}
+		return placesResult;
+	}
 
 	// Get coordinates for a city
 	@JsonIgnore
@@ -76,15 +73,13 @@ public class PlacesController {
 	@PostMapping(value = "/getPosition")
 	public String getPosition(@RequestBody String cityName) {
 		String APIKEY = "AIzaSyAJA71Rtblkd6TpFQvsgsnCbOVUqDCf-nc";
-
 		final String geoCodeAPI = "https://maps.googleapis.com/maps/api/geocode/json?address=" + cityName + "&key="
 				+ APIKEY;
-		System.out.println(geoCodeAPI);
 		RestTemplate getGeocode = new RestTemplate();
 		String responseFromAPI = getGeocode.getForObject(geoCodeAPI, String.class);
 		JsonObject geoCodeResponse = new JsonParser().parse(responseFromAPI).getAsJsonObject();
 		JsonArray geoCodeResultArray = geoCodeResponse.getAsJsonArray("results");
-		System.out.println("---------" + geoCodeResultArray);
+
 		String lat = geoCodeResultArray.get(0).getAsJsonObject().get("geometry").getAsJsonObject().get("location")
 				.getAsJsonObject().get("lat").toString();
 		String lng = geoCodeResultArray.get(0).getAsJsonObject().get("geometry").getAsJsonObject().get("location")
