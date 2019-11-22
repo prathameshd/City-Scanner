@@ -26,6 +26,12 @@ class Housing extends Component {
     this.getHousing = this.getHousing.bind(this);
     this.getShops = this.getShops.bind(this);
   }
+
+  componentWillMount()
+  {
+        ls.set('page','housing');
+  }
+
   handleClick = event => {
     const {
       target: { value }

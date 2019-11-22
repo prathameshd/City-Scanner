@@ -21,6 +21,10 @@ class Places extends Component {
     };
   }
 
+componentWillMount()
+{
+      ls.set('page','places');
+}
   componentDidMount()
   {
     //Retrieve places from API
@@ -111,7 +115,7 @@ return (
    }
           </div>
           <div className="col-sm-6">
-                    <Map lat={this.state.lat} long={this.state.long} locations={this.state.locations}/>
+                    <Map lat={this.state.lat} long={this.state.long} locations={this.state.locations} shopLoc={[]}/>
 
           </div>
 
