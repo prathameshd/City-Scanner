@@ -9,7 +9,7 @@ import Rater from "react-rater";
 import "react-rater/lib/react-rater.css";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import Map from "./Map";
- import ls from 'local-storage'
+import ls from "local-storage";
 
 class Housing extends Component {
   constructor(props) {
@@ -19,17 +19,22 @@ class Housing extends Component {
       shops: [],
       locations: [],
       shopLoc: [],
+      busStop: [],
+      busStopLoc: [],
+      atm: [],
+      atmLoc: [],
       lat: " ",
       long: " "
     };
     this.getCoordinates = this.getCoordinates.bind(this);
     this.getHousing = this.getHousing.bind(this);
     this.getShops = this.getShops.bind(this);
+    this.getBusStops = this.getBusStops.bind(this);
+    this.getAtms = this.getAtms.bind(this);
   }
 
-  componentWillMount()
-  {
-        ls.set('page','housing');
+  componentWillMount() {
+    ls.set("page", "housing");
   }
 
   handleClick = event => {
@@ -47,7 +52,7 @@ class Housing extends Component {
       method: "post",
       url: "http://localhost:8080/getPosition",
       headers: { "Access-Control-Allow-Origin": "*" },
-      data:ls.get('city')
+      data: ls.get("city")
     })
       .then(response => {
         console.log(response.data);
@@ -65,7 +70,7 @@ class Housing extends Component {
       method: "post",
       url: "http://localhost:8080/getHousing",
       headers: { "Access-Control-Allow-Origin": "*" },
-      data:ls.get('city')
+      data: ls.get("city")
     })
       .then(response => {
         console.log(response.data);
@@ -82,13 +87,46 @@ class Housing extends Component {
       method: "post",
       url: "http://localhost:8080/getShopping",
       headers: { "Access-Control-Allow-Origin": "*" },
-      data:ls.get('city')
+      data: ls.get("city")
     })
       .then(response => {
         console.log(response.data);
         this.setState({ shops: response.data.results });
         this.setState({ shopLoc: response.data.results });
-        console.log("ansn" + this.state.shopLoc);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }
+
+  getBusStops() {
+    return axios({
+      method: "post",
+      url: "http://localhost:8080/getBusStop",
+      headers: { "Access-Control-Allow-Origin": "*" },
+      data: ls.get("city")
+    })
+      .then(response => {
+        console.log(response.data);
+        this.setState({ busStop: response.data.results });
+        this.setState({ busStopLoc: response.data.results });
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }
+
+  getAtms() {
+    return axios({
+      method: "post",
+      url: "http://localhost:8080/getAtm",
+      headers: { "Access-Control-Allow-Origin": "*" },
+      data: ls.get("city")
+    })
+      .then(response => {
+        console.log(response.data);
+        this.setState({ atm: response.data.results });
+        this.setState({ atmLoc: response.data.results });
       })
       .catch(err => {
         console.log(err);
@@ -99,15 +137,17 @@ class Housing extends Component {
     this.getHousing();
     this.getCoordinates();
     this.getShops();
+    this.getBusStops();
+    this.getAtms();
   }
 
   render() {
-    if (ls.get('city') == null) {
+    if (ls.get("city") == null) {
       window.location.href = "/home";
     } else if (this.state.lat != " " && this.state.long != " ") {
       return (
         <div className="containter-fluid">
-          <h1>Establishments in {ls.get('city')}</h1>
+          <h1>Establishments in {ls.get("city")}</h1>
           <div className="row">
             <div className="col-sm-6  ">
               {this.state.establishments.map((el, i) => (
@@ -121,8 +161,8 @@ class Housing extends Component {
                     fontColor: "black"
                   }}
                 >
-                  <Link to={{ pathname: "/Housing-details"}}>
-                    <Card className="cardsize" >
+                  <Link to={{ pathname: "/Housing-details" }}>
+                    <Card className="cardsize">
                       <CardActionArea>
                         <CardMedia
                           component="img"
@@ -172,6 +212,8 @@ class Housing extends Component {
                 long={this.state.long}
                 locations={this.state.locations}
                 shopLoc={this.state.shopLoc}
+                busStopLoc={this.state.busStopLoc}
+                atmLoc={this.state.atmLoc}
               />
             </div>
           </div>
