@@ -41,7 +41,7 @@ class Housing extends Component {
       method: "post",
       url: "http://localhost:8080/getPosition",
       headers: { "Access-Control-Allow-Origin": "*" },
-      data: this.props.location
+      data:ls.get('city')
     })
       .then(response => {
         console.log(response.data);
@@ -59,7 +59,6 @@ class Housing extends Component {
       method: "post",
       url: "http://localhost:8080/getHousing",
       headers: { "Access-Control-Allow-Origin": "*" },
-      //data: this.props.location
       data:ls.get('city')
     })
       .then(response => {
@@ -77,7 +76,7 @@ class Housing extends Component {
       method: "post",
       url: "http://localhost:8080/getShopping",
       headers: { "Access-Control-Allow-Origin": "*" },
-      data: this.props.location
+      data:ls.get('city')
     })
       .then(response => {
         console.log(response.data);
