@@ -16,44 +16,89 @@ class Housing extends Component {
     super(props);
     this.state = {
       establishments: [],
+      shops: [],
       locations: [],
+      shopLoc: [],
       lat: " ",
       long: " "
     };
+    this.getCoordinates = this.getCoordinates.bind(this);
+    this.getHousing = this.getHousing.bind(this);
+    this.getShops = this.getShops.bind(this);
   }
 
-  componentDidMount() {
+  componentWillMount()
+  {
+        ls.set('page','housing');
+  }
+
+  handleClick = event => {
+    const {
+      target: { value }
+    } = event;
+
+    // And do whatever you need with it's value, for example change state
+    this.setState({ someProperty: value });
+    alert(value);
+  };
+
+  getCoordinates() {
+    return axios({
+      method: "post",
+      url: "http://localhost:8080/getPosition",
+      headers: { "Access-Control-Allow-Origin": "*" },
+      data:ls.get('city')
+    })
+      .then(response => {
+        console.log(response.data);
+        this.setState({ lat: response.data.lat });
+        this.setState({ long: response.data.long });
+        console.log("states hanged", this.state);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }
+
+  getHousing() {
     return axios({
       method: "post",
       url: "http://localhost:8080/getHousing",
       headers: { "Access-Control-Allow-Origin": "*" },
-      //data: this.props.location
       data:ls.get('city')
     })
       .then(response => {
         console.log(response.data);
         this.setState({ establishments: response.data.results });
         this.setState({ locations: response.data.results });
-
-        return axios({
-          method: "post",
-          url: "http://localhost:8080/getPosition",
-          headers: { "Access-Control-Allow-Origin": "*" },
-      data:ls.get('city')
-        })
-          .then(response => {
-            console.log(response.data);
-            this.setState({ lat: response.data.lat });
-            this.setState({ long: response.data.long });
-            console.log("states hanged", this.state);
-          })
-          .catch(err => {
-            console.log(err);
-          });
       })
       .catch(err => {
         console.log(err);
       });
+  }
+
+  getShops() {
+    return axios({
+      method: "post",
+      url: "http://localhost:8080/getShopping",
+      headers: { "Access-Control-Allow-Origin": "*" },
+      data:ls.get('city')
+    })
+      .then(response => {
+        console.log(response.data);
+        this.setState({ shops: response.data.results });
+        this.setState({ shopLoc: response.data.results });
+        console.log("ansn" + this.state.shopLoc);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }
+
+  componentDidMount() {
+    this.getHousing();
+    this.getCoordinates();
+    this.getShops();
   }
 
   render() {
@@ -126,6 +171,7 @@ class Housing extends Component {
                 lat={this.state.lat}
                 long={this.state.long}
                 locations={this.state.locations}
+                shopLoc={this.state.shopLoc}
               />
             </div>
           </div>
