@@ -8,6 +8,7 @@ import Typography from '@material-ui/core/Typography';
 import Rater from 'react-rater';
 import 'react-rater/lib/react-rater.css';
 import Map from "./Map";
+ import ls from 'local-storage'
 
 class Restaurants extends Component {
    constructor(props) {
@@ -27,8 +28,7 @@ class Restaurants extends Component {
       method:'post',
       url:'http://localhost:8080/getRestaurants',
       headers: {'Access-Control-Allow-Origin': '*'},
-      data:this.props.location
-
+      data:ls.get('city')
     })
     .then((response)=>{
             console.log(response.data)
@@ -41,7 +41,7 @@ class Restaurants extends Component {
             method:'post',
             url:'http://localhost:8080/getPosition',
             headers: {'Access-Control-Allow-Origin': '*'},
-            data:this.props.location
+            data:ls.get('city')
           })
           .then((response)=>{
                   console.log(response.data)
@@ -63,8 +63,8 @@ class Restaurants extends Component {
   }
 
   render() {
-    const { data } = this.props.location;
-    if(data==null)
+    //const { data } = this.props.location;
+    if(ls.get('city')==null)
     {
       window.location.href="/home";
     }
@@ -74,7 +74,7 @@ class Restaurants extends Component {
 return (
       <div className="containter-fluid">
 
-        <h1>Restaurants in {data}</h1>
+        <h1>Restaurants in {ls.get('city')}</h1>
          <div className="row">
           <div className="col-sm-6  ">
           {

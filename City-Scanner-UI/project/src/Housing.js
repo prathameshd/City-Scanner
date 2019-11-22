@@ -9,7 +9,7 @@ import Rater from "react-rater";
 import "react-rater/lib/react-rater.css";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import Map from "./Map";
-import temp from "./temp";
+ import ls from 'local-storage'
 
 class Housing extends Component {
   constructor(props) {
@@ -59,7 +59,8 @@ class Housing extends Component {
       method: "post",
       url: "http://localhost:8080/getHousing",
       headers: { "Access-Control-Allow-Origin": "*" },
-      data: this.props.location
+      //data: this.props.location
+      data:ls.get('city')
     })
       .then(response => {
         console.log(response.data);
@@ -96,13 +97,12 @@ class Housing extends Component {
   }
 
   render() {
-    const { data } = this.props.location;
-    if (data == null) {
+    if (ls.get('city') == null) {
       window.location.href = "/home";
     } else if (this.state.lat != " " && this.state.long != " ") {
       return (
         <div className="containter-fluid">
-          <h1>Establishments in {data}</h1>
+          <h1>Establishments in {ls.get('city')}</h1>
           <div className="row">
             <div className="col-sm-6  ">
               {this.state.establishments.map((el, i) => (
@@ -116,13 +116,8 @@ class Housing extends Component {
                     fontColor: "black"
                   }}
                 >
-                  <Link
-                    to={{
-                      pathname: "/Housing-details",
-                      data: this.state.lat && this.state.long
-                    }}
-                  >
-                    <Card className="cardsize">
+                  <Link to={{ pathname: "/Housing-details"}}>
+                    <Card className="cardsize" >
                       <CardActionArea>
                         <CardMedia
                           component="img"

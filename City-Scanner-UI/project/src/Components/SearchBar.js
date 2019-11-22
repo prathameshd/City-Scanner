@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { MDBCol, MDBBtn } from "mdbreact";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "bootstrap-css-only/css/bootstrap.min.css";
+ import ls from 'local-storage'
 
 export default class SearchBar extends Component {
   constructor(props) {
@@ -21,16 +22,22 @@ export default class SearchBar extends Component {
 
   handleChange = event => {
     this.setState({ location: event.target.value });
+    ls.set('city',event.target.value)
   };
 
   handleClick(data) {
     console.log(data);
   }
 
+  componentDidMount()
+  {
+    this.setState({ location: ls.get('city') });
+  }
+
   render() {
     return (
       <React.Fragment>
-        <div className="search-bar">
+        <div className="search-bar" style={{paddingTop:30}}>
           <MDBCol md="12">
             <div className="input-group md-form form-sm form-1 pl-0">
               <input
@@ -42,6 +49,9 @@ export default class SearchBar extends Component {
                 value={this.state.location}
                 onChange={this.handleChange}
               />
+
+              &nbsp;&nbsp;&nbsp;
+
               <div className="input-group-prepend">
                 <Link
                   
@@ -53,7 +63,7 @@ export default class SearchBar extends Component {
                     onClick={() => this._onButtonClick()}
                     rounded
                     size="md"
-                    color="info"
+                    color="primary"
                   >
                     <i className="fas fa-search-location fa-1.5x"></i>
                     {/* Search */}
