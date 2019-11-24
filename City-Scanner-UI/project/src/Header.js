@@ -9,7 +9,117 @@ import localStorage from 'localStorage';
 const Bounce = styled.div`animation: 3s ${keyframes`${bounce}`} infinite`;
 
 class Header extends Component {
+
+    constructor(props) {
+    super(props);
+    this.state = {
+      isLogin:false,
+      showModal:false,
+      email:"",
+      password:""
+    };
+        this.changeState = this.changeState.bind(this);
+         this.sendLoginData = this.sendLoginData.bind(this);
+         this.logout=this.logout.bind(this);
+  }
+
+ handleEmailChange = event => {
+    this.setState({ email: event.target.value });
+  };
+
+   handlePasswordChange = event => {
+    this.setState({ password: event.target.value });
+  };
+
+componentDidMount()
+{
+        //this.setState({isLogin:localStorage.getItem('isLogin')})
+        console.log(localStorage.getItem('isLogin'))
+}
+changeState()
+ {
+    this.setState({showModal:!this.state.showModal})
+  }
+
+logout()
+{
+    localStorage.setItem("isLogin","false")
+      this.setState({isLogin:false,showModal:false})
+      console.log("logout clicked",this.state)
+}
+
+sendLoginData()
+{
+  console.log("--------------",this.state)
+    var userCreds={
+    email:this.state.email,
+    password:this.state.password
+  };
+
+  return axios
+  ({
+    method:'post',
+    url:'http://localhost:8080/login',
+    headers:{'Access-Control-Allow-Origin':'*'},
+    data:userCreds
+  })
+  .then((response)=>{
+    if(response['data'] == "Incorrect Username")
+    {
+      alert("Please sign up")
+    }
+
+    if(response['data'] == "Login Success")
+    {
+      localStorage.setItem("isLogin","true");
+      alert("Succesful login")
+      this.setState({isLogin:true})
+    }
+
+    if(response['data'] == "Incorrect Password")
+    {
+      alert("Wrong Password")
+    }
+  }).catch(err=>
+    {
+      alert(err)
+      console.log(err)
+    })
+}
+
     render() {
+      if(localStorage.getItem("isLogin")=="true")
+      {
+        return(
+        <>
+              <meta charSet="utf-8" />
+                  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+                  <meta name="description" content />
+                  <meta name="author" content />
+                  <title>City Scanner</title>
+                  <link href="./vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+                  <link href="./vendor/fontawesome-free/css/all.min.css" rel="stylesheet" />
+                  <link href="./vendor/simple-line-icons/css/simple-line-icons.css" rel="stylesheet" type="text/css" />
+                  <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css" />
+                  <link href="./css/landing-page.min.css" rel="stylesheet" />
+                  <nav className="navbar navbar-light bg-light static-top">
+                    <div className="container">
+                      <a className="navbar-brand" href="/home">City Scanner</a>
+                      <Form>
+<ul  class="list-inline">
+  <li class="list-inline-item">Welcome</li>
+  <li class="list-inline-item"><Button onClick={this.logout}>Logout</Button></li>
+</ul>
+
+                     
+                                  
+                      </Form>
+                    </div>
+                  </nav>
+            </>
+          );
+      }
+      else{
       return (
             <>
               <meta charSet="utf-8" />
@@ -26,7 +136,31 @@ class Header extends Component {
                     <div className="container">
                       <a className="navbar-brand" href="/home">City Scanner</a>
                       <Form>
-                              <Login/>
+                     
+            
+                      <Button onClick={this.changeState} show={this.state.isLogin}>Login</Button>
+                       
+                       <Modal style={{zIndex:50000}} show={this.state.showModal} onHide={this.changeState}>
+                       <Form style = {{padding:'20px'}}>
+            <Form.Group controlId="Header">
+                <h1 style={{textAlign:"center"}}>Login</h1>
+            </Form.Group>
+            <Form.Group controlId="formBasicEmail">
+              <Form.Label style={{fontSize:18}}>Email address</Form.Label>
+              <Form.Control type="email" placeholder="Enter email"  value={this.state.email}               onChange={this.handleEmailChange} />
+              </Form.Group>
+
+            <Form.Group controlId="formBasicPassword">
+              <Form.Label style={{fontSize:18}}>Password</Form.Label>
+              <Form.Control type="password" placeholder="Password" value={this.state.password} onChange={this.handlePasswordChange}/>
+            </Form.Group>
+            <Button style = {{float:'right'}} variant="primary" type="Button" onClick={this.sendLoginData}>
+              Login
+            </Button>
+          </Form>
+                       </Modal>
+
+
                               &nbsp;&nbsp;&nbsp;
                               <Signup/>
                       </Form>
@@ -34,6 +168,7 @@ class Header extends Component {
                   </nav>
             </>
           );
+        }
         }
   }
   var userCreds={
@@ -49,6 +184,7 @@ class Header extends Component {
 
     userCreds["email"]=loginEmailVal;
     userCreds["password"]=loginPasswordVal;
+
 
     function click()
     {
@@ -89,7 +225,6 @@ class Header extends Component {
   }
   
 const sendLoginData= ()=> {
-  
   return axios
   ({
     method:'post',
@@ -105,6 +240,7 @@ const sendLoginData= ()=> {
 
     if(response['data'] == "Login Success")
     {
+      localStorage.setItem('isLogin',true);
       alert("Succesful login")
     }
 
@@ -114,9 +250,12 @@ const sendLoginData= ()=> {
     }
   }).catch(err=>
     {
-      alert("Username or Password is wrong")
+      alert(err)
+      console.log(err)
     })
 }
+
+
 
 const createNewUser= ()=> {
   return axios
