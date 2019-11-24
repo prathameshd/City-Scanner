@@ -85,6 +85,42 @@ public class PlacesController {
 
 			return placesResult;
 		}
+		
+	// Get bus stops for a city
+		@CrossOrigin
+		@PostMapping(value = "/getBusStop")
+		public String getBusStop(@RequestBody String busStop) {
+			JsonObject coords = new JsonParser().parse(getPosition(busStop)).getAsJsonObject();
+			String lat = coords.get("lat").getAsString();
+			String lng = coords.get("long").getAsString();
+			String APIKEY = "AIzaSyAJA71Rtblkd6TpFQvsgsnCbOVUqDCf-nc";
+
+			final String placesAPI = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" + lat + ","
+					+ lng + "&radius=15000&type=bus_station&key=" + APIKEY;
+			System.out.println(placesAPI);
+			RestTemplate getPlaces = new RestTemplate();
+			String placesResult = getPlaces.getForObject(placesAPI, String.class);
+
+			return placesResult;
+		}
+		
+	// Get atms, banks for a city
+		@CrossOrigin
+		@PostMapping(value = "/getAtm")
+		public String getAtm(@RequestBody String atm) {
+			JsonObject coords = new JsonParser().parse(getPosition(atm)).getAsJsonObject();
+			String lat = coords.get("lat").getAsString();
+			String lng = coords.get("long").getAsString();
+			String APIKEY = "AIzaSyAJA71Rtblkd6TpFQvsgsnCbOVUqDCf-nc";
+
+			final String placesAPI = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" + lat + ","
+					+ lng + "&radius=15000&type=atm|bank&key=" + APIKEY;
+			System.out.println(placesAPI);
+			RestTemplate getPlaces = new RestTemplate();
+			String placesResult = getPlaces.getForObject(placesAPI, String.class);
+
+			return placesResult;
+		}
 
 	// Get coordinates for a city
 	@JsonIgnore
