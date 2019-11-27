@@ -14,13 +14,26 @@ class Header extends Component {
     super(props);
     this.state = {
       isLogin:false,
-      showModal:false,
+      showModal1:false,
+      showModal2:false,
       email:"",
-      password:""
+      password:"",
+      newEmail:"",
+      newPassword:"",
+      newFirstName:"",
+      newLastName:"",
+      newContact:""
     };
         this.changeState = this.changeState.bind(this);
+                this.changeState2 = this.changeState2.bind(this);
+
          this.sendLoginData = this.sendLoginData.bind(this);
          this.logout=this.logout.bind(this);
+                  this.sendEmail=this.sendEmail.bind(this);
+         this.createNewUser=this.createNewUser.bind(this);
+             this.onChange = this.onChange.bind(this);
+
+
   }
 
  handleEmailChange = event => {
@@ -33,18 +46,28 @@ class Header extends Component {
 
 componentDidMount()
 {
-        //this.setState({isLogin:localStorage.getItem('isLogin')})
-        console.log(localStorage.getItem('isLogin'))
 }
+
+ onChange(e){
+    this.setState({ [e.target.name]: e.target.value});
+  }
+
 changeState()
  {
-    this.setState({showModal:!this.state.showModal})
+    this.setState({showModal1:!this.state.showModal1})
+            this.setState({showModal2:false})
+  }
+
+changeState2()
+ {
+    this.setState({showModal2:!this.state.showModal2})
+        this.setState({showModal1:false})
   }
 
 logout()
 {
     localStorage.setItem("isLogin","false")
-      this.setState({isLogin:false,showModal:false})
+      this.setState({isLogin:false,showModal1:false})
       console.log("logout clicked",this.state)
 }
 
@@ -86,6 +109,62 @@ sendLoginData()
       console.log(err)
     })
 }
+
+createNewUser(){
+
+  var newUserData={
+  "email": this.state.newEmail,
+  "password": this.state.newPassword,
+  "firstName": this.state.newFirstName,
+  "lastName": this.state.newLastName,
+  "contactNumber": this.state.newContact,
+  "points": 0
+};
+
+alert(newUserData)
+console.log(newUserData)
+  return axios
+  ({
+    method:'post',
+    url:'http://localhost:8080/signUp',
+    headers:{'Access-Control-Allow-Origin':'*'},
+    data:newUserData
+  })
+  .then((response)=>{
+
+    if(response['data']=='success')
+    {
+      this.sendEmail(newUserData);
+    }
+
+
+
+    //reload page after login success
+  }).catch(err=>
+    {
+
+    })
+}
+
+sendEmail(user){
+  console.log(user)
+          return axios
+      ({
+        method:'post',
+        url:'http://localhost:8080/welcomeEmail',
+        headers:{'Access-Control-Allow-Origin':'*'},
+        data:user
+      })
+      .then((response)=>{
+      }).catch(err=>
+        {
+
+        })
+}
+
+
+
+
 
     render() {
       if(localStorage.getItem("isLogin")=="true")
@@ -140,7 +219,7 @@ sendLoginData()
             
                       <Button onClick={this.changeState} show={this.state.isLogin}>Login</Button>
                        
-                       <Modal style={{zIndex:50000}} show={this.state.showModal} onHide={this.changeState}>
+                       <Modal style={{zIndex:50000}} show={this.state.showModal1} onHide={this.changeState}>
                        <Form style = {{padding:'20px'}}>
             <Form.Group controlId="Header">
                 <h1 style={{textAlign:"center"}}>Login</h1>
@@ -162,7 +241,49 @@ sendLoginData()
 
 
                               &nbsp;&nbsp;&nbsp;
-                              <Signup/>
+                      <Button onClick={this.changeState2} show={this.state.isLogin}>Sign Up</Button>
+
+                              <Modal style={{zIndex:50000}} show={this.state.showModal2} onHide={this.changeState2}>
+        <Form style = {{padding:'20px'}}>
+              <Form.Group controlId="Header">
+                  <h1 style={{textAlign:"center"}}>Sign Up</h1>
+              </Form.Group>
+            <Form.Row>
+              <Form.Group as={Col} controlId="formGridEmail">
+                <Form.Label style={{fontSize:18}}>Email</Form.Label>
+                <Form.Control type="email" placeholder="Enter email"  value={this.state.newEmail}  name="newEmail" onChange={this.onChange} />
+              </Form.Group>
+
+              <Form.Group as={Col} controlId="formGridPassword">
+                <Form.Label style={{fontSize:18}}>Password</Form.Label>
+                <Form.Control type="password" placeholder="Password" value={this.state.newPassword} name="newPassword"  onChange={this.onChange} />
+              </Form.Group>
+            </Form.Row>
+
+            <Form.Group controlId="formGridFirstName">
+              <Form.Label style={{fontSize:18}}>First Name</Form.Label>
+              <Form.Control placeholder="" value={this.state.newFirstName} name="newFirstName" onChange={this.onChange} />
+            </Form.Group>
+
+            <Form.Group controlId="formGridLastName">
+              <Form.Label style={{fontSize:18}}>Last Name</Form.Label>
+              <Form.Control placeholder="" value={this.state.newLastName} name="newLastName" onChange={this.onChange} />
+            </Form.Group>
+
+            <Form.Row>
+              <Form.Group as={Col} controlId="formGridContact">
+                <Form.Label style={{fontSize:18}}>Contact</Form.Label>
+                <Form.Control  value={this.state.newContact} name="newContact"  onChange={this.onChange} />
+              </Form.Group>
+
+            </Form.Row>
+
+            <Button style = {{float:'right'}} variant="primary" type="Button" onClick={this.createNewUser}>
+              Sign Up
+            </Button>
+          </Form>
+        </Modal>
+
                       </Form>
                     </div>
                   </nav>
@@ -175,87 +296,6 @@ sendLoginData()
     email:"",
     password:""
   };
-
-  function Login() {
-    const [show, setShow] = React.useState(false);
-
-    const [loginEmailVal, setEmail] = React.useState("");
-    const [loginPasswordVal, setPassword] = React.useState("");
-
-    userCreds["email"]=loginEmailVal;
-    userCreds["password"]=loginPasswordVal;
-
-
-    function click()
-    {
-      localStorage.setItem('name', userCreds['email']);
-      handleClose();
-      sendLoginData();
-    }
-
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
-
-    return (
-      <>
-        <Button variant="primary" onClick={handleShow}>
-          Login
-        </Button>
-        <Modal style={{zIndex:50000}} show={show} onHide={handleClose}>
-        <Form style = {{padding:'20px'}}>
-            <Form.Group controlId="Header">
-                <h1 style={{textAlign:"center"}}>Login</h1>
-            </Form.Group>
-            <Form.Group controlId="formBasicEmail">
-              <Form.Label style={{fontSize:18}}>Email address</Form.Label>
-              <Form.Control type="email" placeholder="Enter email" onChange={e => setEmail(e.target.value)}/>
-              </Form.Group>
-
-            <Form.Group controlId="formBasicPassword">
-              <Form.Label style={{fontSize:18}}>Password</Form.Label>
-              <Form.Control type="password" placeholder="Password" onChange={e => setPassword(e.target.value)}/>
-            </Form.Group>
-            <Button style = {{float:'right'}} variant="primary" type="submit" onClick={click}>
-              Login
-            </Button>
-          </Form>
-        </Modal>
-      </>
-    );
-  }
-  
-const sendLoginData= ()=> {
-  return axios
-  ({
-    method:'post',
-    url:'http://localhost:8080/login',
-    headers:{'Access-Control-Allow-Origin':'*'},
-    data:userCreds
-  })
-  .then((response)=>{
-    if(response['data'] == "Incorrect Username")
-    {
-      alert("Please sign up")
-    }
-
-    if(response['data'] == "Login Success")
-    {
-      localStorage.setItem('isLogin',true);
-      alert("Succesful login")
-    }
-
-    if(response['data'] == "Incorrect Password")
-    {
-      alert("Wrong Password")
-    }
-  }).catch(err=>
-    {
-      alert(err)
-      console.log(err)
-    })
-}
-
-
 
 const createNewUser= ()=> {
   return axios
