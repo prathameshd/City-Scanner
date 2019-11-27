@@ -37,15 +37,21 @@ class Housing extends Component {
     ls.set("page", "housing");
   }
 
-  handleClick = event => {
-    const {
-      target: { value }
-    } = event;
+  // handleClick = event => {
+  //   const {
+  //     target: { value }
+  //   } = event;
 
-    // And do whatever you need with it's value, for example change state
-    this.setState({ someProperty: value });
-    alert(value);
-  };
+  //   // And do whatever you need with it's value, for example change state
+  //   this.setState({ someProperty: value });
+  //   alert(value);
+  // };
+
+  handleClick(index) {
+    this.setState({ index });
+    ls.set("selectedIndex", index);
+    //console.log("---------------", ls.get("selectedIndex"));
+  }
 
   getCoordinates() {
     return axios({
@@ -161,8 +167,11 @@ class Housing extends Component {
                     fontColor: "black"
                   }}
                 >
-                  <Link to={{ pathname: "/Housing-details" }}>
-                    <Card className="cardsize">
+                  <Link to={{ pathname: "/HousingDetails" }}>
+                    <Card
+                      className="cardsize"
+                      onClick={this.handleClick.bind(this, el)}
+                    >
                       <CardActionArea>
                         <CardMedia
                           component="img"
@@ -186,7 +195,7 @@ class Housing extends Component {
                           >
                             {el.vicinity}
                           </Typography>
-                          {/* <Typography
+                          {/*<Typography
                           variant="body2"
                           color="textSecondary"
                           component="p"
@@ -198,7 +207,7 @@ class Housing extends Component {
                           {el.types[2]}
                           &nbsp;
                           {el.types[3]}
-                        </Typography> */}
+                          </Typography>*/} 
                         </CardContent>
                       </CardActionArea>
                     </Card>

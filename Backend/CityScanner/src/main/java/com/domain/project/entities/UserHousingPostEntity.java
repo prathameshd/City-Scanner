@@ -2,6 +2,8 @@ package com.domain.project.entities;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -15,6 +17,7 @@ import org.springframework.context.annotation.ComponentScan;
 @Table(name = "usershousingpost")
 public class UserHousingPostEntity {
 	
+	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name = "postid")
 	private String postid;
 	
@@ -36,7 +39,6 @@ public class UserHousingPostEntity {
 	@Column(name = "category")
 	private String category;
 	
-	@Id
 	@Column(name = "postsubjectname")
 	private String postsubjectname;
 	
