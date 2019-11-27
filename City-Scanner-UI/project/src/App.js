@@ -32,7 +32,7 @@ class App extends Component {
           <Route exact path="/Dashcards" component={MediaCard} />
           <Route exact path="/Flip" component={Flip} />
           <Route exact path="/Housing" component={Housing} />
-          <Route exact path="/Housing-details" component={Details_housing} />
+          <Route exact path="/HousingDetails" component={Details_housing} />
 
           {/*<Footer />*/}
         </Router>

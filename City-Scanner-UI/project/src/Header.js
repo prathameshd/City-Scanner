@@ -76,7 +76,8 @@ class Header extends Component {
     }
 
     logout() {
-      localStorage.setItem("isLogin", "false")
+      localStorage.setItem("isLogin", "false");
+      localStorage.setItem("currentUser","");
       this.setState({
         isLogin: false,
         showModal1: false
@@ -105,6 +106,7 @@ class Header extends Component {
 
           if (response['data'] == "Login Success") {
             localStorage.setItem("isLogin", "true");
+            localStorage.setItem("currentUser",this.state.email);
             ToastsStore.success("Successful Log In");
             this.setState({
               isLogin: true
