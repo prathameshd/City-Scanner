@@ -11,158 +11,158 @@ const Bounce = styled.div`animation: 3s ${keyframes`${bounce}`} infinite`;
 class Header extends Component {
 
     constructor(props) {
-    super(props);
-    this.state = {
-      isLogin:false,
-      showModal1:false,
-      showModal2:false,
-      email:"",
-      password:"",
-      newEmail:"",
-      newPassword:"",
-      newFirstName:"",
-      newLastName:"",
-      newContact:""
+      super(props);
+      this.state = {
+        isLogin: false,
+        showModal1: false,
+        showModal2: false,
+        email: "",
+        password: "",
+        newEmail: "",
+        newPassword: "",
+        newFirstName: "",
+        newLastName: "",
+        newContact: ""
+      };
+      this.changeState = this.changeState.bind(this);
+      this.changeState2 = this.changeState2.bind(this);
+
+      this.sendLoginData = this.sendLoginData.bind(this);
+      this.logout = this.logout.bind(this);
+      this.sendEmail = this.sendEmail.bind(this);
+      this.createNewUser = this.createNewUser.bind(this);
+      this.onChange = this.onChange.bind(this);
+
+
+    }
+
+    handleEmailChange = event => {
+      this.setState({
+        email: event.target.value
+      });
     };
-        this.changeState = this.changeState.bind(this);
-                this.changeState2 = this.changeState2.bind(this);
 
-         this.sendLoginData = this.sendLoginData.bind(this);
-         this.logout=this.logout.bind(this);
-                  this.sendEmail=this.sendEmail.bind(this);
-         this.createNewUser=this.createNewUser.bind(this);
-             this.onChange = this.onChange.bind(this);
+    handlePasswordChange = event => {
+      this.setState({
+        password: event.target.value
+      });
+    };
 
+    componentDidMount() {}
 
-  }
-
- handleEmailChange = event => {
-    this.setState({ email: event.target.value });
-  };
-
-   handlePasswordChange = event => {
-    this.setState({ password: event.target.value });
-  };
-
-componentDidMount()
-{
-}
-
- onChange(e){
-    this.setState({ [e.target.name]: e.target.value});
-  }
-
-changeState()
- {
-    this.setState({showModal1:!this.state.showModal1})
-            this.setState({showModal2:false})
-  }
-
-changeState2()
- {
-    this.setState({showModal2:!this.state.showModal2})
-        this.setState({showModal1:false})
-  }
-
-logout()
-{
-    localStorage.setItem("isLogin","false")
-      this.setState({isLogin:false,showModal1:false})
-      console.log("logout clicked",this.state)
-}
-
-sendLoginData()
-{
-  console.log("--------------",this.state)
-    var userCreds={
-    email:this.state.email,
-    password:this.state.password
-  };
-
-  return axios
-  ({
-    method:'post',
-    url:'http://localhost:8080/login',
-    headers:{'Access-Control-Allow-Origin':'*'},
-    data:userCreds
-  })
-  .then((response)=>{
-    if(response['data'] == "Incorrect Username")
-    {
-      alert("Please sign up")
+    onChange(e) {
+      this.setState({
+        [e.target.name]: e.target.value
+      });
     }
 
-    if(response['data'] == "Login Success")
-    {
-      localStorage.setItem("isLogin","true");
-      alert("Succesful login")
-      this.setState({isLogin:true})
-    }
-
-    if(response['data'] == "Incorrect Password")
-    {
-      alert("Wrong Password")
-    }
-  }).catch(err=>
-    {
-      alert(err)
-      console.log(err)
-    })
-}
-
-createNewUser(){
-
-  var newUserData={
-  "email": this.state.newEmail,
-  "password": this.state.newPassword,
-  "firstName": this.state.newFirstName,
-  "lastName": this.state.newLastName,
-  "contactNumber": this.state.newContact,
-  "points": 0
-};
-
-alert(newUserData)
-console.log(newUserData)
-  return axios
-  ({
-    method:'post',
-    url:'http://localhost:8080/signUp',
-    headers:{'Access-Control-Allow-Origin':'*'},
-    data:newUserData
-  })
-  .then((response)=>{
-
-    if(response['data']=='success')
-    {
-      this.sendEmail(newUserData);
-    }
-
-
-
-    //reload page after login success
-  }).catch(err=>
-    {
-
-    })
-}
-
-sendEmail(user){
-  console.log(user)
-          return axios
-      ({
-        method:'post',
-        url:'http://localhost:8080/welcomeEmail',
-        headers:{'Access-Control-Allow-Origin':'*'},
-        data:user
+    changeState() {
+      this.setState({
+        showModal1: !this.state.showModal1
       })
-      .then((response)=>{
-      }).catch(err=>
-        {
+      this.setState({
+        showModal2: false
+      })
+    }
+
+    changeState2() {
+      this.setState({
+        showModal2: !this.state.showModal2
+      })
+      this.setState({
+        showModal1: false
+      })
+    }
+
+    logout() {
+      localStorage.setItem("isLogin", "false")
+      this.setState({
+        isLogin: false,
+        showModal1: false
+      })
+    }
+
+    sendLoginData() {
+      var userCreds = {
+        email: this.state.email,
+        password: this.state.password
+      };
+
+      return axios({
+          method: 'post',
+          url: 'http://localhost:8080/login',
+          headers: {
+            'Access-Control-Allow-Origin': '*'
+          },
+          data: userCreds
+        })
+        .then((response) => {
+          if (response['data'] == "Incorrect Username") {
+            alert("Please sign up")
+          }
+
+          if (response['data'] == "Login Success") {
+            localStorage.setItem("isLogin", "true");
+            alert("Succesful login")
+            this.setState({
+              isLogin: true
+            })
+          }
+
+          if (response['data'] == "Incorrect Password") {
+            alert("Wrong Password")
+          }
+        }).catch(err => {
+          alert(err)
+          console.log(err)
+        })
+    }
+
+    createNewUser() {
+
+      var newUserData = {
+        "email": this.state.newEmail,
+        "password": this.state.newPassword,
+        "firstName": this.state.newFirstName,
+        "lastName": this.state.newLastName,
+        "contactNumber": this.state.newContact,
+        "points": 0
+      };
+
+      return axios({
+          method: 'post',
+          url: 'http://localhost:8080/signUp',
+          headers: {
+            'Access-Control-Allow-Origin': '*'
+          },
+          data: newUserData
+        })
+        .then((response) => {
+
+          if (response['data'] == 'success') {
+            this.sendEmail(newUserData);
+            this.changeState2();
+          }
+        }).catch(err => {
 
         })
-}
+    }
 
+    sendEmail(user) {
+      return axios({
+          method: 'post',
+          url: 'http://localhost:8080/welcomeEmail',
+          headers: {
+            'Access-Control-Allow-Origin': '*'
+          },
+          data: user
+        })
+        .then((response) => {
 
+        }).catch(err => {
+
+        })
+    }
 
 
 
@@ -185,13 +185,10 @@ sendEmail(user){
                     <div className="container">
                       <a className="navbar-brand" href="/home">City Scanner</a>
                       <Form>
-<ul  class="list-inline">
-  <li class="list-inline-item">Welcome</li>
-  <li class="list-inline-item"><Button onClick={this.logout}>Logout</Button></li>
-</ul>
-
-                     
-                                  
+                      <ul  class="list-inline">
+                        <li class="list-inline-item">Welcome</li>
+                        <li class="list-inline-item"><Button onClick={this.logout}>Logout</Button></li>
+                      </ul>
                       </Form>
                     </div>
                   </nav>
@@ -215,74 +212,71 @@ sendEmail(user){
                     <div className="container">
                       <a className="navbar-brand" href="/home">City Scanner</a>
                       <Form>
-                     
-            
+
                       <Button onClick={this.changeState} show={this.state.isLogin}>Login</Button>
-                       
                        <Modal style={{zIndex:50000}} show={this.state.showModal1} onHide={this.changeState}>
                        <Form style = {{padding:'20px'}}>
-            <Form.Group controlId="Header">
-                <h1 style={{textAlign:"center"}}>Login</h1>
-            </Form.Group>
-            <Form.Group controlId="formBasicEmail">
-              <Form.Label style={{fontSize:18}}>Email address</Form.Label>
-              <Form.Control type="email" placeholder="Enter email"  value={this.state.email}               onChange={this.handleEmailChange} />
-              </Form.Group>
+                      <Form.Group controlId="Header">
+                          <h1 style={{textAlign:"center"}}>Login</h1>
+                      </Form.Group>
+                      <Form.Group controlId="formBasicEmail">
+                        <Form.Label style={{fontSize:18}}>Email address</Form.Label>
+                        <Form.Control type="email" placeholder="Enter email"  value={this.state.email}               onChange={this.handleEmailChange} />
+                        </Form.Group>
 
-            <Form.Group controlId="formBasicPassword">
-              <Form.Label style={{fontSize:18}}>Password</Form.Label>
-              <Form.Control type="password" placeholder="Password" value={this.state.password} onChange={this.handlePasswordChange}/>
-            </Form.Group>
-            <Button style = {{float:'right'}} variant="primary" type="Button" onClick={this.sendLoginData}>
-              Login
-            </Button>
-          </Form>
-                       </Modal>
+                      <Form.Group controlId="formBasicPassword">
+                        <Form.Label style={{fontSize:18}}>Password</Form.Label>
+                        <Form.Control type="password" placeholder="Password" value={this.state.password} onChange={this.handlePasswordChange}/>
+                      </Form.Group>
+                      <Button style = {{float:'right'}} variant="primary" type="Button" onClick={this.sendLoginData}>
+                        Login
+                      </Button>
+                    </Form>
+                    </Modal>
 
 
-                              &nbsp;&nbsp;&nbsp;
+                      &nbsp;&nbsp;&nbsp;
                       <Button onClick={this.changeState2} show={this.state.isLogin}>Sign Up</Button>
+                  <Modal style={{zIndex:50000}} show={this.state.showModal2} onHide={this.changeState2}>
+                    <Form style = {{padding:'20px'}}>
+                          <Form.Group controlId="Header">
+                              <h1 style={{textAlign:"center"}}>Sign Up</h1>
+                          </Form.Group>
+                        <Form.Row>
+                          <Form.Group as={Col} controlId="formGridEmail">
+                            <Form.Label style={{fontSize:18}}>Email</Form.Label>
+                            <Form.Control type="email" placeholder="Enter email"  value={this.state.newEmail}  name="newEmail" onChange={this.onChange} />
+                          </Form.Group>
 
-                              <Modal style={{zIndex:50000}} show={this.state.showModal2} onHide={this.changeState2}>
-        <Form style = {{padding:'20px'}}>
-              <Form.Group controlId="Header">
-                  <h1 style={{textAlign:"center"}}>Sign Up</h1>
-              </Form.Group>
-            <Form.Row>
-              <Form.Group as={Col} controlId="formGridEmail">
-                <Form.Label style={{fontSize:18}}>Email</Form.Label>
-                <Form.Control type="email" placeholder="Enter email"  value={this.state.newEmail}  name="newEmail" onChange={this.onChange} />
-              </Form.Group>
+                          <Form.Group as={Col} controlId="formGridPassword">
+                            <Form.Label style={{fontSize:18}}>Password</Form.Label>
+                            <Form.Control type="password" placeholder="Password" value={this.state.newPassword} name="newPassword"  onChange={this.onChange} />
+                          </Form.Group>
+                        </Form.Row>
 
-              <Form.Group as={Col} controlId="formGridPassword">
-                <Form.Label style={{fontSize:18}}>Password</Form.Label>
-                <Form.Control type="password" placeholder="Password" value={this.state.newPassword} name="newPassword"  onChange={this.onChange} />
-              </Form.Group>
-            </Form.Row>
+                        <Form.Group controlId="formGridFirstName">
+                          <Form.Label style={{fontSize:18}}>First Name</Form.Label>
+                          <Form.Control placeholder="" value={this.state.newFirstName} name="newFirstName" onChange={this.onChange} />
+                        </Form.Group>
 
-            <Form.Group controlId="formGridFirstName">
-              <Form.Label style={{fontSize:18}}>First Name</Form.Label>
-              <Form.Control placeholder="" value={this.state.newFirstName} name="newFirstName" onChange={this.onChange} />
-            </Form.Group>
+                        <Form.Group controlId="formGridLastName">
+                          <Form.Label style={{fontSize:18}}>Last Name</Form.Label>
+                          <Form.Control placeholder="" value={this.state.newLastName} name="newLastName" onChange={this.onChange} />
+                        </Form.Group>
 
-            <Form.Group controlId="formGridLastName">
-              <Form.Label style={{fontSize:18}}>Last Name</Form.Label>
-              <Form.Control placeholder="" value={this.state.newLastName} name="newLastName" onChange={this.onChange} />
-            </Form.Group>
+                        <Form.Row>
+                          <Form.Group as={Col} controlId="formGridContact">
+                            <Form.Label style={{fontSize:18}}>Contact</Form.Label>
+                            <Form.Control  value={this.state.newContact} name="newContact"  onChange={this.onChange} />
+                          </Form.Group>
 
-            <Form.Row>
-              <Form.Group as={Col} controlId="formGridContact">
-                <Form.Label style={{fontSize:18}}>Contact</Form.Label>
-                <Form.Control  value={this.state.newContact} name="newContact"  onChange={this.onChange} />
-              </Form.Group>
+                        </Form.Row>
 
-            </Form.Row>
-
-            <Button style = {{float:'right'}} variant="primary" type="Button" onClick={this.createNewUser}>
-              Sign Up
-            </Button>
-          </Form>
-        </Modal>
+                        <Button style = {{float:'right'}} variant="primary" type="Button" onClick={this.createNewUser}>
+                          Sign Up
+                        </Button>
+                      </Form>
+                    </Modal>
 
                       </Form>
                     </div>
@@ -291,133 +285,6 @@ sendEmail(user){
           );
         }
         }
-  }
-  var userCreds={
-    email:"",
-    password:""
-  };
-
-const createNewUser= ()=> {
-  return axios
-  ({
-    method:'post',
-    url:'http://localhost:8080/signUp',
-    headers:{'Access-Control-Allow-Origin':'*'},
-    data:newUserData
-  })
-  .then((response)=>{
-
-    if(response['data']=='success')
-    {
-      sendEmail(newUserData);
-    }
-
-
-
-    //reload page after login success
-  }).catch(err=>
-    {
-
-    })
-}
-
-const sendEmail= (user)=> {
-  console.log(user)
-          return axios
-      ({
-        method:'post',
-        url:'http://localhost:8080/welcomeEmail',
-        headers:{'Access-Control-Allow-Origin':'*'},
-        data:user
-      })
-      .then((response)=>{
-      }).catch(err=>
-        {
-
-        })
-}
-
-var newUserData={
-  "email": "",
-  "password": "",
-  "firstName": "",
-  "lastName": "",
-  "contactNumber": "",
-  "points": 0
-};
-
-  function Signup() {
-    const [show, setShow] = React.useState(false);
-
-    const [siginupEmailVal, setEmail] = React.useState("");
-    const [siginupPasswordVal, setPassword] = React.useState("");
-    const [siginupFirstNameVal, setFirstName] = React.useState("");
-    const [siginupLastNameVal, setLastName] = React.useState("");
-    const [siginupContactVal, setContact] = React.useState("");
-
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
-
-    newUserData["email"]=siginupEmailVal;
-    newUserData["password"]=siginupPasswordVal;
-    newUserData["firstName"]=siginupFirstNameVal;
-    newUserData["lastName"]=siginupLastNameVal;
-    newUserData["contactNumber"]=siginupContactVal;
-
-    function click()
-    {
-      handleClose();
-      createNewUser();
-    }
-
-    return (
-      <>
-        <Button variant="primary" onClick={handleShow}>
-          Signup
-        </Button>
-
-        <Modal style={{zIndex:50000}} show={show} onHide={handleClose}>
-        <Form style = {{padding:'20px'}}>
-              <Form.Group controlId="Header">
-                  <h1 style={{textAlign:"center"}}>Sign Up</h1>
-              </Form.Group>
-            <Form.Row>
-              <Form.Group as={Col} controlId="formGridEmail">
-                <Form.Label style={{fontSize:18}}>Email</Form.Label>
-                <Form.Control type="email" placeholder="Enter email" onChange={e => setEmail(e.target.value)}/>
-              </Form.Group>
-
-              <Form.Group as={Col} controlId="formGridPassword">
-                <Form.Label style={{fontSize:18}}>Password</Form.Label>
-                <Form.Control type="password" placeholder="Password" onChange={e => setPassword(e.target.value)}/>
-              </Form.Group>
-            </Form.Row>
-
-            <Form.Group controlId="formGridFirstName">
-              <Form.Label style={{fontSize:18}}>First Name</Form.Label>
-              <Form.Control placeholder="" onChange={e => setFirstName(e.target.value)}/>
-            </Form.Group>
-
-            <Form.Group controlId="formGridLastName">
-              <Form.Label style={{fontSize:18}}>Last Name</Form.Label>
-              <Form.Control placeholder="" onChange={e => setLastName(e.target.value)}/>
-            </Form.Group>
-
-            <Form.Row>
-              <Form.Group as={Col} controlId="formGridContact">
-                <Form.Label style={{fontSize:18}}>Contact</Form.Label>
-                <Form.Control onChange={e => setContact(e.target.value)}/>
-              </Form.Group>
-
-            </Form.Row>
-
-            <Button style = {{float:'right'}} variant="primary" type="submit" onClick={click}>
-              Sign Up
-            </Button>
-          </Form>
-        </Modal>
-      </>
-    );
   }
 
   export default Header
