@@ -133,75 +133,27 @@ class Details_Housing extends Component{
 
         return (
             <>
-    <div className="container" >
-    <h1 style={{textAlign: "center"}}>Housing: {ls.get("selectedIndex")["name"]}</h1>
-
+        <div className="container-fluid" style={{width:'90%'}}>
+  <h1 className="my-4">{ls.get("selectedIndex")["name"]} </h1>
+  <div className="row">
+    <div className="col-md-8" style={{paddingRight:'50px'}}>
+      <img className="img-fluid"                 src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/142996/moscow.jpg" alt="" />
     </div>
-    <div className="address">
-        <h3 style={{color:'pink'}}><u>Address</u>: {ls.get("selectedIndex")["vicinity"]}</h3>
-        <br/>
-        <h2 style={{color: "violet"}}><u>Rating</u>: {ls.get("selectedIndex")["rating"]}/10</h2>
+    <div className="col-md-4">
+      <h3 className="my-3">About</h3>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae. Sed dui lorem, adipiscing in adipiscing et, interdum nec metus. Mauris ultricies, justo eu convallis placerat, felis enim.</p>
+      <h3 className="my-3">Details</h3>
+      <ul>
+        <li>Address: {ls.get("selectedIndex")["vicinity"]}</li>
+        <li>Average Rating:{ls.get("selectedIndex")["rating"]}</li>
+      </ul>
     </div>
-    <div style={{marginLeft:200, marginRight:330}}>
-    <Fade {...fadeProperties}>
+  </div>
+</div>
 
-          <div className="each-fade">
-            <div className="image-container">
-            <h1 style={{top:150,left:350,color:'white',position:'absolute'}}></h1>
-
-              <img
-                src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/142996/singapore.jpg"
-                height="400"
-                width="1000"
-              />
-            </div>
-          </div>
-          <div className="each-fade">
-            <div className="image-container">
-                        <h1 style={{top:150,left:350,color:'black',position:'absolute'}}></h1>
-              <img
-                src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/142996/prague.jpg"
-                height="400"
-                width="1000"
-              />
-            </div>
-          </div>
-          <div className="each-fade">
-            <div className="image-container">
-                                    <h1 style={{top:150,left:350,color:'#8B008B',position:'absolute'}}></h1>
-              <img
-                src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/142996/paris.jpg"
-                height="400"
-                width="1000"
-              />
-            </div>
-          </div>
-          <div className="each-fade">
-            <div className="image-container">
-              <img
-                src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/142996/amsterdam.jpg"
-                height="400"
-                width="1000"
-              />
-            </div>
-          </div>
-          <div className="each-fade">
-            <div className="image-container">
-              <img
-                src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/142996/moscow.jpg"
-                height="400"
-                width="1000"
-              />
-
-            </div>
-
-          </div>
-        </Fade>
-
-        </div>
-        <temp/>
-        <div className="container">
-        <div className="col-sm-12">
+        <div className="container-fluid" style={{width:'90%',marginTop:'4%'}}>
+        <div className="row">
+        <div className="col-md-8">
         {this.state.allComments.map((el, i) => (
             <div
               style={{
@@ -236,18 +188,20 @@ class Details_Housing extends Component{
             </div>
           ))}
         </div>
-        </div>
 
-        <div className="container">
+        <div className="col-md-4">
         <Form>
         <fieldset className="form-group">
-            <label>Comments:</label>
+            <h3>Write a Post:</h3>
             <input className="form-control" type="text" id="comment" name="comment" value={this.state.comment} onChange={this.onChange}/>
         </fieldset>
 
-        <button className="btn btn-success" type="button" onClick={this.addComment}>Comment</button>
+        <button className="btn btn-success" type="button" onClick={this.addComment}>Post</button>
         </Form>
               </div>
+
+        </div>
+        </div>
             </>
         );
     }
