@@ -30,6 +30,7 @@ class Details_Housing extends Component{
       place_details:[],
       allComments:[],
       comment:"",
+      newPostAdded:false
     };
     this.getPlaceDetails = this.getPlaceDetails.bind(this);
     this.addComment = this.addComment.bind(this);
@@ -43,10 +44,7 @@ class Details_Housing extends Component{
     this.fetchComments();
   }
     componentDidMount(){
-        console.log("---------------", ls.get("selectedIndex"));
-        console.log("****",ls.get("selectedIndex")["name"]);
-        //console.log("Photos",ls.get("selectedIndex")["photos"][0]["photo_reference"]);
-        console.log("Place id",ls.get("selectedIndex")["place_id"]);
+        console.log(this.state.newPostAdded)
         this.getPlaceDetails();
     }
 
@@ -104,7 +102,6 @@ class Details_Housing extends Component{
         "datetime": "",
         "category": "Housing",
         "postsubjectname": ls.get("selectedIndex")["name"],
-        "postId": "rest32221",
         "postContent": this.state.comment
     }
       console.log("-----------"+postData["postContent"],postData["username"],postData["postsubjectname"]);
@@ -118,7 +115,10 @@ class Details_Housing extends Component{
         .then(response => {
           console.log("successful post added"+response.data);
           //change state to re render component
-          //this.setState({ place_details: response.data.results });
+          this.setState({
+            newPostAdded: true
+          })
+          console.log("new added"+this.state.newPostAdded);
         })
         .catch(err => {
           console.log("error "+err);
