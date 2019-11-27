@@ -5,6 +5,7 @@ import Modal from 'react-bootstrap/Modal';
 import styled, { keyframes } from 'styled-components';
 import axios from 'axios';
 import localStorage from 'localStorage';
+import {ToastsContainer, ToastsStore} from 'react-toasts';
 
 const Bounce = styled.div`animation: 3s ${keyframes`${bounce}`} infinite`;
 
@@ -80,6 +81,7 @@ class Header extends Component {
         isLogin: false,
         showModal1: false
       })
+      ToastsStore.success("Successful Log Out");
     }
 
     sendLoginData() {
@@ -98,19 +100,19 @@ class Header extends Component {
         })
         .then((response) => {
           if (response['data'] == "Incorrect Username") {
-            alert("Please sign up")
+            ToastsStore.error("Incorrect Credentials. Please Enter Valid Email and Password");
           }
 
           if (response['data'] == "Login Success") {
             localStorage.setItem("isLogin", "true");
-            alert("Succesful login")
+            ToastsStore.success("Successful Log In");
             this.setState({
               isLogin: true
             })
           }
 
           if (response['data'] == "Incorrect Password") {
-            alert("Wrong Password")
+            ToastsStore.error("Incorrect Credentials. Please Enter Valid Email and Password");
           }
         }).catch(err => {
           alert(err)
@@ -170,7 +172,7 @@ class Header extends Component {
       if(localStorage.getItem("isLogin")=="true")
       {
         return(
-        <>
+        <div>
               <meta charSet="utf-8" />
                   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
                   <meta name="description" content />
@@ -192,12 +194,13 @@ class Header extends Component {
                       </Form>
                     </div>
                   </nav>
-            </>
+                  <ToastsContainer store={ToastsStore}/>
+            </div>
           );
       }
       else{
       return (
-            <>
+            <div>
               <meta charSet="utf-8" />
                   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
                   <meta name="description" content />
@@ -281,7 +284,8 @@ class Header extends Component {
                       </Form>
                     </div>
                   </nav>
-            </>
+                  <ToastsContainer store={ToastsStore}/>
+            </div>
           );
         }
         }
