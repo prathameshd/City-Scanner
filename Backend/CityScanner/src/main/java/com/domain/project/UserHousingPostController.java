@@ -28,7 +28,7 @@ public class UserHousingPostController {
 	}
 	
 	@CrossOrigin
-	@GetMapping("/gethouseposts")
+	@PostMapping("/gethouseposts")
 	public List<UserHousingPostEntity> getUserPost(@RequestBody UserHousingPostEntity userPost) {
 		
 		return userPostRepository.findByTitle(userPost.getPostsubjectname());

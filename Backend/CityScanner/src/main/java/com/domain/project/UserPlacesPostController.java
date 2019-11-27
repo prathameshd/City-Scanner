@@ -28,7 +28,7 @@ public class UserPlacesPostController {
 	}
 	
 	@CrossOrigin
-	@GetMapping("/getplacesposts")
+	@PostMapping("/getplacesposts")
 	public List<UserPlacesPostEntity> getUserPost(@RequestBody UserPlacesPostEntity userPost) {
 		
 		return userPostRepository.findByTitle(userPost.getPostsubjectname());

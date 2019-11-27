@@ -30,7 +30,7 @@ public class UserRestaurantPostController {
 	}
 	
 	@CrossOrigin
-	@GetMapping("/getrestaurantposts")
+	@PostMapping("/getrestaurantposts")
 	public List<UserRestaurantPostEntity> getUserPost(@RequestBody UserRestaurantPostEntity userPost) {
 		return userPostRepository.findByTitle(userPost.getPostsubjectname());
 	}
