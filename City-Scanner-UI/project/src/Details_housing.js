@@ -244,6 +244,17 @@ class Details_Housing extends Component{
                     </ul>
                   </div>
 
+                  <div className="container" style={{paddingTop:'4%'}}>
+                            <Map
+                              lat={this.state.lat}
+                              long={this.state.long}
+                              locations={this.state.locations}
+                              shopLoc={this.state.shopLoc}
+                              busStopLoc={this.state.busStopLoc}
+                              atmLoc={this.state.atmLoc}
+                              style={{height:'80% !important'}}
+                            />
+                  </div>
                 </div>
 
             </div>
@@ -285,21 +296,10 @@ class Details_Housing extends Component{
           ))}
         </div>
 
-        
-        
+
+
         <div className="col-md-4">
-        <div className="container">
-                  <Map
-                    lat={this.state.lat}
-                    long={this.state.long}
-                    locations={this.state.locations}
-                    shopLoc={this.state.shopLoc}
-                    busStopLoc={this.state.busStopLoc}
-                    atmLoc={this.state.atmLoc}
-                    style={{height:'80% !important'}}
-                  />
-        </div>
-        <Form style={{paddingTop:250}}>
+        <Form>
         <fieldset className="form-group">
             <h3>Write a Post:</h3>
             <input className="form-control" type="text" id="comment" name="comment" value={this.state.comment} onChange={this.onChange}/>
