@@ -18,8 +18,8 @@ class Dashcards extends Component {
   {
     return (
 
-      <div>  
-            <div class="top-search-bar">
+      <div className="container-fluid">  
+            <div className="top-search-bar">
               <SearchBar />
             </div>
 
