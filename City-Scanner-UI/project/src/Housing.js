@@ -10,6 +10,9 @@ import "react-rater/lib/react-rater.css";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import Map from "./Map";
 import ls from "local-storage";
+import localStorage from 'localStorage';
+import {ToastsContainer, ToastsStore} from 'react-toasts';
+
 
 class Housing extends Component {
   constructor(props) {
@@ -50,7 +53,11 @@ class Housing extends Component {
   handleClick(index) {
     this.setState({ index });
     ls.set("selectedIndex", index);
-    //console.log("---------------", ls.get("selectedIndex"));
+    if (localStorage.getItem('currentUser')!="") {
+      window.location.href="/HousingDetails" 
+    } else {
+      ToastsStore.error("Please login");
+    }
   }
 
   getCoordinates() {
@@ -167,7 +174,6 @@ class Housing extends Component {
                     fontColor: "black"
                   }}
                 >
-                  <Link to={{ pathname: "/HousingDetails" }}>
                     <Card
                       className="cardsize"
                       onClick={this.handleClick.bind(this, el)}
@@ -211,7 +217,6 @@ class Housing extends Component {
                         </CardContent>
                       </CardActionArea>
                     </Card>
-                  </Link>
                 </div>
               ))}
             </div>
