@@ -1,7 +1,7 @@
 package com.domain.project;
 
 import java.util.List;
-
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
@@ -33,4 +33,14 @@ public class UserHousingPostController {
 		
 		return userPostRepository.findByTitle(userPost.getPostsubjectname());
 	}
+	
+	@CrossOrigin
+	@PostMapping("/updateHousePost")
+	public void updateUserPost(@RequestBody UserHousingPostEntity userPost) {
+		Optional<UserHousingPostEntity> post=userPostRepository.findById(userPost.getPostId());
+		post.get().setPostContent(userPost.getPostContent());
+		userPostRepository.save(post.get());
+	}
+	
+	
 }
