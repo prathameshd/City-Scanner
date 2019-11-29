@@ -269,6 +269,7 @@ return axios({
 })
   .then(response => {
     console.log("update success"+response.data);
+    this.changeState();
     //change state to re render component
   })
   .catch(err => {
@@ -280,15 +281,17 @@ return axios({
 
         return (
             <>
-            <Modal style={{zIndex:50000}} show={this.state.showModal1} onHide={this.changeState}>
+            <Modal style={{zIndex:50000,top:'40%'}} show={this.state.showModal1} onHide={this.changeState}>
+            <div className="container" style={{padding:'5%'}}>
             <Form>
             <fieldset className="form-group">
                 <h3>Edit Post:</h3>
                 <input className="form-control" type="text" id="updatedComment" name="updatedComment" value={this.state.updatedComment} onChange={this.onChange}/>
             </fieldset>
 
-            <button className="btn btn-success" type="button" onClick={this.updateComment}>Update</button>
+            <button className="btn btn-success" style={{float:'right'}} type="button" onClick={this.updateComment}>Update</button>
             </Form>
+            </div>
          </Modal>
 
 
