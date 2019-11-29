@@ -12,6 +12,8 @@ import { Fade } from "react-slideshow-image";
 import Map from "./Map";
 import ls from "local-storage";
 import { Form } from 'react-bootstrap';
+import Modal from 'react-bootstrap/Modal';
+
 
 const fadeProperties = {
     duration: 5000,
@@ -40,7 +42,10 @@ class Details_Housing extends Component{
         atm: [],
         atmLoc: [],
         lat: " ",
-        long: " "
+        long: " ",
+        showModal1: false,
+        updatedComment:"",
+        updatedPostId:""
     };
 
     this.getCoordinates = this.getCoordinates.bind(this);
@@ -53,6 +58,8 @@ class Details_Housing extends Component{
     this.addComment = this.addComment.bind(this);
     this.onChange = this.onChange.bind(this);
     this.fetchComments = this.fetchComments.bind(this);
+    this.changeState = this.changeState.bind(this);
+    this.updateComment = this.updateComment.bind(this);
 
 
   }
@@ -219,13 +226,77 @@ class Details_Housing extends Component{
 
     }
 
+    handleClick(index) {
+      console.log(index)
+      if(ls.get("currentUser")==index["username"])
+      this.setState({
+        showModal1: true,
+        updatedComment:index["postContent"],
+        updatedPostId:index["postId"]
+      })
+      //display the modal with info
 
 
+      //console.log("---------------", ls.get("selectedIndex"));
+    }
+
+    changeState() {
+      this.setState({
+        showModal1: !this.state.showModal1
+      })
+    }
+
+updateComment(index){
+//axios call to update this comment
+console.log(index)
+var postData=
+{
+       "username": ls.get("currentUser"),
+       "title": "",
+       "ratings": 0,
+       "datetime": "",
+       "category": "Housing",
+       "postsubjectname": index["postsubjectname"],
+       "postContent": this.state.updatedComment,
+       "postId": this.state.updatedPostId
+}
+console.log("before udpating this is data"+JSON.stringify(postData))
+return axios({
+  method: "post",
+  url: "http://localhost:8080/updateHousePost",
+  headers: { "Access-Control-Allow-Origin": "*" },
+  data: postData
+})
+  .then(response => {
+    console.log("update success"+response.data);
+    this.changeState();
+    //change state to re render component
+  })
+  .catch(err => {
+    console.log("error while updating"+err);
+  });
+}
     render(){
        let Comment=this.state.Comment
 
         return (
             <>
+            <Modal style={{zIndex:50000,top:'40%'}} show={this.state.showModal1} onHide={this.changeState}>
+            <div className="container" style={{padding:'5%'}}>
+            <Form>
+            <fieldset className="form-group">
+                <h3>Edit Post:</h3>
+                <input className="form-control" type="text" id="updatedComment" name="updatedComment" value={this.state.updatedComment} onChange={this.onChange}/>
+            </fieldset>
+
+            <button className="btn btn-success" style={{float:'right'}} type="button" onClick={this.updateComment}>Update</button>
+            </Form>
+            </div>
+         </Modal>
+
+
+
+
             <div style={{ background: "gray url(https://subtlepatterns.com/patterns/geometry2.png)"}}>
             <div className="container-fluid" style={{width:'90%'}}>
             <h1 className="my-4">{ls.get("selectedIndex")["name"]} </h1>
@@ -267,7 +338,7 @@ class Details_Housing extends Component{
         <div className="col-md-8">
         {this.state.allComments.map((el, i) => (
                 <div className="container" style={{paddingBottom:10}}>
-                    <div className="card">
+                    <div className="card" onClick={this.handleClick.bind(this, el)}>
                     <div className="card-body">
                         <div className="row">
                         <div className="col-md-2">
