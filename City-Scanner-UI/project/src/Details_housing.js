@@ -225,6 +225,8 @@ getPlaceDetails() {
 }
 
 addComment() {
+  var data=this.refs.comment.value;
+  console.log(data)
   var postData = {
     "username": ls.get('currentUser'),
     "title": "",
@@ -232,7 +234,7 @@ addComment() {
     "datetime": "",
     "category": "Housing",
     "postsubjectname": ls.get("selectedIndex")["name"],
-    "postContent": this.state.comment
+    "postContent": data
   }
   console.log("-----------" + postData["postContent"], postData["username"], postData["postsubjectname"]);
 
@@ -248,8 +250,11 @@ addComment() {
       console.log("successful post added" + response.data);
       //change state to re render component
       this.setState({
-        newPostAdded: true
+        newPostAdded: true,
+        comment:''
       })
+      this.fetchComments();
+
       console.log("new added" + this.state.newPostAdded);
     })
     .catch(err => {
@@ -298,6 +303,7 @@ updateComment(index) {
     .then(response => {
       console.log("update success" + response.data);
       this.changeState();
+      this.fetchComments();
       //change state to re render component
     })
     .catch(err => {
@@ -327,6 +333,7 @@ deleteComment(index) {
     .then(response => {
       console.log("delete success" + response.data);
       this.changeState();
+      this.fetchComments();
       //change state to re render component
     })
     .catch(err => {
@@ -420,7 +427,6 @@ deleteComment(index) {
                            : null
                          }
                        </div>
-                          }
                         </div>
                         </div>
                     </div>
@@ -435,7 +441,7 @@ deleteComment(index) {
         <Form>
         <fieldset className="form-group">
             <h3>Write a Post:</h3>
-            <input className="form-control" type="text" id="comment" name="comment" value={this.state.comment} onChange={this.onChange}/>
+            <input className="form-control" type="text" ref="comment" id="comment" name="comment"/>
         </fieldset>
 
         <button className="btn btn-success" type="button" onClick={this.addComment}>Post</button>
