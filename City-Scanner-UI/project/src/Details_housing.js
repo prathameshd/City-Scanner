@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import axios from "axios";
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
@@ -25,7 +25,7 @@ const fadeProperties = {
     }
   };
 
-class Details_Housing extends Component{
+class Details_Housing extends PureComponent{
   constructor (props){
     super (props);
     this.state={
@@ -63,12 +63,13 @@ class Details_Housing extends Component{
 
 
   }
+
+  
   componentWillMount()
   {
     this.fetchComments();
   }
     componentDidMount(){
-        console.log(this.state.newPostAdded)
         this.getPlaceDetails();
     }
 
@@ -187,7 +188,6 @@ class Details_Housing extends Component{
         .then(response => {
           console.log(response.data);
           this.setState({ place_details: response.data.results });
-          //this.setState({ locations: response.data.results });
         })
         .catch(err => {
           console.log(err);
@@ -215,10 +215,12 @@ class Details_Housing extends Component{
         .then(response => {
           console.log("successful post added"+response.data);
           //change state to re render component
-          this.setState({
-            newPostAdded: true
-          })
-          console.log("new added"+this.state.newPostAdded);
+          if (this.state.newPostAdded == true) {
+            this.setState({newPostAdded: false });
+          } else {
+            this.setState({newPostAdded: true });
+          }
+          this.fetchComments();
         })
         .catch(err => {
           console.log("error "+err);
@@ -249,6 +251,7 @@ class Details_Housing extends Component{
 updateComment(index){
 //axios call to update this comment
 console.log(index)
+
 var postData=
 {
        "username": ls.get("currentUser"),
@@ -261,6 +264,9 @@ var postData=
        "postId": this.state.updatedPostId
 }
 console.log("before udpating this is data"+JSON.stringify(postData))
+
+var self = this
+
 return axios({
   method: "post",
   url: "http://localhost:8080/updateHousePost",
@@ -270,15 +276,22 @@ return axios({
   .then(response => {
     console.log("update success"+response.data);
     this.changeState();
+    if (self.state.newPostAdded == true) {
+      self.setState({newPostAdded: false });
+    } else {
+      self.setState({newPostAdded: true });
+    }
+    this.fetchComments();
     //change state to re render component
   })
   .catch(err => {
     console.log("error while updating"+err);
   });
 }
+
     render(){
        let Comment=this.state.Comment
-
+        console.log("In rendering----------------",this.state.newPostAdded)
         return (
             <>
             <Modal style={{zIndex:50000,top:'40%'}} show={this.state.showModal1} onHide={this.changeState}>
