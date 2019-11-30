@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import axios from "axios";
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
@@ -25,7 +25,7 @@ const fadeProperties = {
     }
   };
 
-class Details_Housing extends Component{
+class Details_Housing extends PureComponent{
   constructor (props){
     super (props);
     this.state={
@@ -225,6 +225,8 @@ getPlaceDetails() {
 }
 
 addComment() {
+  var data=this.refs.comment.value;
+  console.log(data)
   var postData = {
     "username": ls.get('currentUser'),
     "title": "",
@@ -232,7 +234,7 @@ addComment() {
     "datetime": "",
     "category": "Housing",
     "postsubjectname": ls.get("selectedIndex")["name"],
-    "postContent": this.state.comment
+    "postContent": data
   }
   console.log("-----------" + postData["postContent"], postData["username"], postData["postsubjectname"]);
 
@@ -250,6 +252,9 @@ addComment() {
       this.setState({
         newPostAdded: true
       })
+      this.refs.comment.value="";
+      this.fetchComments();
+
       console.log("new added" + this.state.newPostAdded);
     })
     .catch(err => {
@@ -298,6 +303,7 @@ updateComment(index) {
     .then(response => {
       console.log("update success" + response.data);
       this.changeState();
+      this.fetchComments();
       //change state to re render component
     })
     .catch(err => {
@@ -327,15 +333,17 @@ deleteComment(index) {
     .then(response => {
       console.log("delete success" + response.data);
       this.changeState();
+      this.fetchComments();
       //change state to re render component
     })
     .catch(err => {
       console.log("error while updating" + err);
     });
 }
+
     render(){
        let Comment=this.state.Comment
-
+        console.log("In rendering----------------",this.state.newPostAdded)
         return (
             <>
             <Modal style={{zIndex:50000,top:'40%'}} show={this.state.showModal1} onHide={this.changeState}>
@@ -419,7 +427,6 @@ deleteComment(index) {
                            : null
                          }
                        </div>
-                          }
                         </div>
                         </div>
                     </div>
@@ -434,7 +441,7 @@ deleteComment(index) {
         <Form>
         <fieldset className="form-group">
             <h3>Write a Post:</h3>
-            <input className="form-control" type="text" id="comment" name="comment" value={this.state.comment} onChange={this.onChange}/>
+            <input className="form-control" type="text" ref="comment" id="comment" name="comment"/>
         </fieldset>
 
         <button className="btn btn-success" type="button" onClick={this.addComment}>Post</button>
