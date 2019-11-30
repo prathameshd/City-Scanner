@@ -254,6 +254,7 @@ addComment() {
       })
       this.refs.comment.value="";
       this.fetchComments();
+      this.sendNotifications();
 
       console.log("new added" + this.state.newPostAdded);
     })
@@ -341,6 +342,28 @@ deleteComment(index) {
     });
 }
 
+sendNotifications()
+{
+  var postData = {
+    "email": '',
+    "cityName": localStorage.getItem("city"),
+    "notificationType":"Housing"
+  }
+
+  return axios({
+      method: "post",
+      url: "http://localhost:8080/sendHousingNotifications",
+      headers: {
+        "Access-Control-Allow-Origin": "*"
+      },
+      data: postData
+    })
+    .then(response => {
+
+    })
+    .catch(err => {
+    });
+}
     render(){
        let Comment=this.state.Comment
         console.log("In rendering----------------",this.state.newPostAdded)

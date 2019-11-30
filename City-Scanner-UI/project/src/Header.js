@@ -17,6 +17,7 @@ class Header extends Component {
         isLogin: false,
         showModal1: false,
         showModal2: false,
+        showModal3: false,
         email: "",
         password: "",
         newEmail: "",
@@ -27,13 +28,14 @@ class Header extends Component {
       };
       this.changeState = this.changeState.bind(this);
       this.changeState2 = this.changeState2.bind(this);
+      this.changeState3 = this.changeState3.bind(this);
 
       this.sendLoginData = this.sendLoginData.bind(this);
       this.logout = this.logout.bind(this);
       this.sendEmail = this.sendEmail.bind(this);
       this.createNewUser = this.createNewUser.bind(this);
       this.onChange = this.onChange.bind(this);
-
+      this.subscribeUser= this.subscribeUser.bind(this);
 
     }
 
@@ -168,7 +170,40 @@ class Header extends Component {
         })
     }
 
+    changeState3() {
+      this.setState({
+        showModal3: !this.state.showModal3
+      })
+    }
 
+    subscribeUser(){
+
+      var user=localStorage.getItem("currentUser");
+      var city=localStorage.getItem("city");
+      var type = "Housing";
+      var postData = {
+        "email": localStorage.getItem("currentUser"),
+        "cityName": localStorage.getItem("city"),
+        "notificationType":"Housing"
+      }
+      console.log("**********"+postData)
+
+      return axios({
+          method: "post",
+          url: "http://localhost:8080/addUserForNotifications",
+          headers: {
+            "Access-Control-Allow-Origin": "*"
+          },
+          data: postData
+        })
+        .then(response => {
+          this.changeState3();
+        })
+        .catch(err => {
+          console.log("error " + err);
+        });
+
+    }
 
     render() {
       if(localStorage.getItem("isLogin")=="true")
@@ -192,9 +227,20 @@ class Header extends Component {
                       <Form>
                       <ul  class="list-inline">
                         <li class="list-inline-item">Welcome</li>
+                        <li class="list-inline-item"><Button className="btn btn-error" onClick={this.changeState3}>Notifications</Button></li>
+                        <Modal style={{zIndex:50000,top:'40%'}} show={this.state.showModal3} onHide={this.changeState3}>
+                        <div className="container" style={{padding:'5%'}}>
+                        <h1>modal test</h1>
+                        <button onClick={this.subscribeUser}>Subscribe</button>
+                        </div>
+                     </Modal>
                         <li class="list-inline-item"><Button onClick={this.logout}>Logout</Button></li>
                       </ul>
                       </Form>
+
+
+
+
                     </div>
                   </nav>
                   <ToastsContainer store={ToastsStore}/>
