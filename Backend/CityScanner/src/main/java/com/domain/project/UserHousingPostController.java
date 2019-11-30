@@ -42,5 +42,12 @@ public class UserHousingPostController {
 		userPostRepository.save(post.get());
 	}
 	
+	@CrossOrigin
+	@PostMapping("/deleteHousePost")
+	public void deleteUserPost(@RequestBody UserHousingPostEntity userPost) {
+		//Optional<UserHousingPostEntity> post=userPostRepository.findById(userPost.getPostId());
+		userPostRepository.delete(userPost);
+		System.out.println("delete successful");
+	}
 	
 }

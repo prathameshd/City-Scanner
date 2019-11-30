@@ -60,7 +60,7 @@ class Details_Housing extends Component{
     this.fetchComments = this.fetchComments.bind(this);
     this.changeState = this.changeState.bind(this);
     this.updateComment = this.updateComment.bind(this);
-
+    this.deleteComment = this.deleteComment.bind(this);
 
   }
   componentWillMount()
@@ -260,7 +260,6 @@ var postData=
        "postContent": this.state.updatedComment,
        "postId": this.state.updatedPostId
 }
-console.log("before udpating this is data"+JSON.stringify(postData))
 return axios({
   method: "post",
   url: "http://localhost:8080/updateHousePost",
@@ -276,6 +275,35 @@ return axios({
     console.log("error while updating"+err);
   });
 }
+
+deleteComment(index)
+{
+  var postData=
+  {
+         "username": ls.get("currentUser"),
+         "title": "",
+         "ratings": 0,
+         "datetime": "",
+         "category": "Housing",
+         "postsubjectname": index["postsubjectname"],
+         "postContent": this.state.updatedComment,
+         "postId": this.state.updatedPostId
+  }
+  return axios({
+    method: "post",
+    url: "http://localhost:8080/deleteHousePost",
+    headers: { "Access-Control-Allow-Origin": "*" },
+    data: postData
+  })
+    .then(response => {
+      console.log("delete success"+response.data);
+      this.changeState();
+      //change state to re render component
+    })
+    .catch(err => {
+      console.log("error while updating"+err);
+    });
+}
     render(){
        let Comment=this.state.Comment
 
@@ -288,7 +316,7 @@ return axios({
                 <h3>Edit Post:</h3>
                 <input className="form-control" type="text" id="updatedComment" name="updatedComment" value={this.state.updatedComment} onChange={this.onChange}/>
             </fieldset>
-
+            <button className="btn btn-error" style={{float:'right'}} type="button" onClick={this.deleteComment}>Delete</button>
             <button className="btn btn-success" style={{float:'right'}} type="button" onClick={this.updateComment}>Update</button>
             </Form>
             </div>
@@ -338,7 +366,7 @@ return axios({
         <div className="col-md-8">
         {this.state.allComments.map((el, i) => (
                 <div className="container" style={{paddingBottom:10}}>
-                    <div className="card" onClick={this.handleClick.bind(this, el)}>
+                    <div className="card">
                     <div className="card-body">
                         <div className="row">
                         <div className="col-md-2">
@@ -359,6 +387,13 @@ return axios({
                             <a className="float-right btn btn-outline-primary ml-2"> <i className="fa fa-reply" /> Reply</a>
                             <a className="float-right btn text-white btn-danger"> <i className="fa fa-heart" /> Like</a>
                             </p>
+                            <div>
+                         {ls.get("currentUser")==el.username
+                           ? <button className="float-right btn btn-error" onClick={this.handleClick.bind(this, el)}>Edit</button>
+                           : null
+                         }
+                       </div>
+                          }
                         </div>
                         </div>
                     </div>
