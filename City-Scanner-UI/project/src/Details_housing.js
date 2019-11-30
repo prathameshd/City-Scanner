@@ -60,233 +60,278 @@ class Details_Housing extends PureComponent{
     this.fetchComments = this.fetchComments.bind(this);
     this.changeState = this.changeState.bind(this);
     this.updateComment = this.updateComment.bind(this);
-
+    this.deleteComment = this.deleteComment.bind(this);
 
   }
-
-  
-  componentWillMount()
-  {
-    this.fetchComments();
-  }
-    componentDidMount(){
-        this.getPlaceDetails();
-    }
-
-    fetchComments()
-    {
-      var postData={
-        "postsubjectname": ls.get("selectedIndex")["name"]
-      }
-
-      return axios({
-        method: "post",
-        url: "http://localhost:8080/gethouseposts",
-        headers: { "Access-Control-Allow-Origin": "*" },
-        data: postData
-      })
-        .then(response => {
-          console.log("all comments"+JSON.stringify(response.data));
-          //change state of all comments and re render
-
-          this.setState({ allComments: response.data});
-        })
-        .catch(err => {
-          console.log(err);
-        });
-    }
-
-    onChange(e) {
-      this.setState({
-        [e.target.name]: e.target.value
-      });
-    }
-
-    getCoordinates() {
-        return axios({
-          method: "post",
-          url: "http://localhost:8080/getPosition",
-          headers: { "Access-Control-Allow-Origin": "*" },
-          data: ls.get("city")
-        })
-          .then(response => {
-            console.log(response.data);
-            this.setState({ lat: response.data.lat });
-            this.setState({ long: response.data.long });
-            console.log("states hanged", this.state);
-          })
-          .catch(err => {
-            console.log(err);
-          });
-      }
-
-      getShops() {
-        return axios({
-          method: "post",
-          url: "http://localhost:8080/getShopping",
-          headers: { "Access-Control-Allow-Origin": "*" },
-          data: ls.get("city")
-        })
-          .then(response => {
-            console.log(response.data);
-            this.setState({ shops: response.data.results });
-            this.setState({ shopLoc: response.data.results });
-          })
-          .catch(err => {
-            console.log(err);
-          });
-      }
-
-      getBusStops() {
-        return axios({
-          method: "post",
-          url: "http://localhost:8080/getBusStop",
-          headers: { "Access-Control-Allow-Origin": "*" },
-          data: ls.get("city")
-        })
-          .then(response => {
-            console.log(response.data);
-            this.setState({ busStop: response.data.results });
-            this.setState({ busStopLoc: response.data.results });
-          })
-          .catch(err => {
-            console.log(err);
-          });
-      }
-
-      getAtms() {
-        return axios({
-          method: "post",
-          url: "http://localhost:8080/getAtm",
-          headers: { "Access-Control-Allow-Origin": "*" },
-          data: ls.get("city")
-        })
-          .then(response => {
-            console.log(response.data);
-            this.setState({ atm: response.data.results });
-            this.setState({ atmLoc: response.data.results });
-          })
-          .catch(err => {
-            console.log(err);
-          });
-      }
-
-      componentDidMount() {
-        this.getCoordinates();
-        this.getShops();
-        this.getBusStops();
-        this.getAtms();
-      }
-
-    getPlaceDetails(){
-      return axios({
-        method: "post",
-        url: "http://localhost:8080/getPlaceDetails",
-        headers: { "Access-Control-Allow-Origin": "*" },
-        data: ls.get("selectedIndex")["place_id"]
-      })
-        .then(response => {
-          console.log(response.data);
-          this.setState({ place_details: response.data.results });
-        })
-        .catch(err => {
-          console.log(err);
-        });
-    }
-
-    addComment(){
-      var postData= {
-        "username": ls.get('currentUser'),
-        "title": "",
-        "ratings":0 ,
-        "datetime": "",
-        "category": "Housing",
-        "postsubjectname": ls.get("selectedIndex")["name"],
-        "postContent": this.state.comment
-    }
-      console.log("-----------"+postData["postContent"],postData["username"],postData["postsubjectname"]);
-
-      return axios({
-        method: "post",
-        url: "http://localhost:8080/savehousepost",
-        headers: { "Access-Control-Allow-Origin": "*" },
-        data: postData
-      })
-        .then(response => {
-          console.log("successful post added"+response.data);
-          //change state to re render component
-          if (this.state.newPostAdded == true) {
-            this.setState({newPostAdded: false });
-          } else {
-            this.setState({newPostAdded: true });
-          }
-          this.fetchComments();
-        })
-        .catch(err => {
-          console.log("error "+err);
-        });
-
-    }
-
-    handleClick(index) {
-      console.log(index)
-      if(ls.get("currentUser")==index["username"])
-      this.setState({
-        showModal1: true,
-        updatedComment:index["postContent"],
-        updatedPostId:index["postId"]
-      })
-      //display the modal with info
-
-
-      //console.log("---------------", ls.get("selectedIndex"));
-    }
-
-    changeState() {
-      this.setState({
-        showModal1: !this.state.showModal1
-      })
-    }
-
-updateComment(index){
-//axios call to update this comment
-console.log(index)
-
-var postData=
-{
-       "username": ls.get("currentUser"),
-       "title": "",
-       "ratings": 0,
-       "datetime": "",
-       "category": "Housing",
-       "postsubjectname": index["postsubjectname"],
-       "postContent": this.state.updatedComment,
-       "postId": this.state.updatedPostId
+  componentWillMount() {
+  this.fetchComments();
 }
-console.log("before udpating this is data"+JSON.stringify(postData))
+componentDidMount() {
+  console.log(this.state.newPostAdded)
+  this.getPlaceDetails();
+}
 
-var self = this
+fetchComments() {
+  var postData = {
+    "postsubjectname": ls.get("selectedIndex")["name"]
+  }
 
-return axios({
-  method: "post",
-  url: "http://localhost:8080/updateHousePost",
-  headers: { "Access-Control-Allow-Origin": "*" },
-  data: postData
-})
-  .then(response => {
-    console.log("update success"+response.data);
-    this.changeState();
-    if (self.state.newPostAdded == true) {
-      self.setState({newPostAdded: false });
-    } else {
-      self.setState({newPostAdded: true });
-    }
-    this.fetchComments();
-    //change state to re render component
-  })
-  .catch(err => {
-    console.log("error while updating"+err);
+  return axios({
+      method: "post",
+      url: "http://localhost:8080/gethouseposts",
+      headers: {
+        "Access-Control-Allow-Origin": "*"
+      },
+      data: postData
+    })
+    .then(response => {
+      console.log("all comments" + JSON.stringify(response.data));
+      //change state of all comments and re render
+
+      this.setState({
+        allComments: response.data
+      });
+    })
+    .catch(err => {
+      console.log(err);
+    });
+}
+
+onChange(e) {
+  this.setState({
+    [e.target.name]: e.target.value
   });
+}
+
+getCoordinates() {
+  return axios({
+      method: "post",
+      url: "http://localhost:8080/getPosition",
+      headers: {
+        "Access-Control-Allow-Origin": "*"
+      },
+      data: ls.get("city")
+    })
+    .then(response => {
+      console.log(response.data);
+      this.setState({
+        lat: response.data.lat
+      });
+      this.setState({
+        long: response.data.long
+      });
+      console.log("states hanged", this.state);
+    })
+    .catch(err => {
+      console.log(err);
+    });
+}
+
+getShops() {
+  return axios({
+      method: "post",
+      url: "http://localhost:8080/getShopping",
+      headers: {
+        "Access-Control-Allow-Origin": "*"
+      },
+      data: ls.get("city")
+    })
+    .then(response => {
+      console.log(response.data);
+      this.setState({
+        shops: response.data.results
+      });
+      this.setState({
+        shopLoc: response.data.results
+      });
+    })
+    .catch(err => {
+      console.log(err);
+    });
+}
+
+getBusStops() {
+  return axios({
+      method: "post",
+      url: "http://localhost:8080/getBusStop",
+      headers: {
+        "Access-Control-Allow-Origin": "*"
+      },
+      data: ls.get("city")
+    })
+    .then(response => {
+      console.log(response.data);
+      this.setState({
+        busStop: response.data.results
+      });
+      this.setState({
+        busStopLoc: response.data.results
+      });
+    })
+    .catch(err => {
+      console.log(err);
+    });
+}
+
+getAtms() {
+  return axios({
+      method: "post",
+      url: "http://localhost:8080/getAtm",
+      headers: {
+        "Access-Control-Allow-Origin": "*"
+      },
+      data: ls.get("city")
+    })
+    .then(response => {
+      console.log(response.data);
+      this.setState({
+        atm: response.data.results
+      });
+      this.setState({
+        atmLoc: response.data.results
+      });
+    })
+    .catch(err => {
+      console.log(err);
+    });
+}
+
+componentDidMount() {
+  this.getCoordinates();
+  this.getShops();
+  this.getBusStops();
+  this.getAtms();
+}
+
+getPlaceDetails() {
+  return axios({
+      method: "post",
+      url: "http://localhost:8080/getPlaceDetails",
+      headers: {
+        "Access-Control-Allow-Origin": "*"
+      },
+      data: ls.get("selectedIndex")["place_id"]
+    })
+    .then(response => {
+      console.log(response.data);
+      this.setState({
+        place_details: response.data.results
+      });
+      //this.setState({ locations: response.data.results });
+    })
+    .catch(err => {
+      console.log(err);
+    });
+}
+
+addComment() {
+  var postData = {
+    "username": ls.get('currentUser'),
+    "title": "",
+    "ratings": 0,
+    "datetime": "",
+    "category": "Housing",
+    "postsubjectname": ls.get("selectedIndex")["name"],
+    "postContent": this.state.comment
+  }
+  console.log("-----------" + postData["postContent"], postData["username"], postData["postsubjectname"]);
+
+  return axios({
+      method: "post",
+      url: "http://localhost:8080/savehousepost",
+      headers: {
+        "Access-Control-Allow-Origin": "*"
+      },
+      data: postData
+    })
+    .then(response => {
+      console.log("successful post added" + response.data);
+      //change state to re render component
+      this.setState({
+        newPostAdded: true
+      })
+      console.log("new added" + this.state.newPostAdded);
+    })
+    .catch(err => {
+      console.log("error " + err);
+    });
+
+}
+
+handleClick(index) {
+  console.log(index)
+  if (ls.get("currentUser") == index["username"])
+    this.setState({
+      showModal1: true,
+      updatedComment: index["postContent"],
+      updatedPostId: index["postId"]
+    })
+  }
+
+changeState() {
+  this.setState({
+    showModal1: !this.state.showModal1
+  })
+}
+
+updateComment(index) {
+  //axios call to update this comment
+  console.log(index)
+  var postData = {
+    "username": ls.get("currentUser"),
+    "title": "",
+    "ratings": 0,
+    "datetime": "",
+    "category": "Housing",
+    "postsubjectname": index["postsubjectname"],
+    "postContent": this.state.updatedComment,
+    "postId": this.state.updatedPostId
+  }
+  return axios({
+      method: "post",
+      url: "http://localhost:8080/updateHousePost",
+      headers: {
+        "Access-Control-Allow-Origin": "*"
+      },
+      data: postData
+    })
+    .then(response => {
+      console.log("update success" + response.data);
+      this.changeState();
+      //change state to re render component
+    })
+    .catch(err => {
+      console.log("error while updating" + err);
+    });
+}
+
+deleteComment(index) {
+  var postData = {
+    "username": ls.get("currentUser"),
+    "title": "",
+    "ratings": 0,
+    "datetime": "",
+    "category": "Housing",
+    "postsubjectname": index["postsubjectname"],
+    "postContent": this.state.updatedComment,
+    "postId": this.state.updatedPostId
+  }
+  return axios({
+      method: "post",
+      url: "http://localhost:8080/deleteHousePost",
+      headers: {
+        "Access-Control-Allow-Origin": "*"
+      },
+      data: postData
+    })
+    .then(response => {
+      console.log("delete success" + response.data);
+      this.changeState();
+      //change state to re render component
+    })
+    .catch(err => {
+      console.log("error while updating" + err);
+    });
 }
 
     render(){
@@ -301,14 +346,11 @@ return axios({
                 <h3>Edit Post:</h3>
                 <input className="form-control" type="text" id="updatedComment" name="updatedComment" value={this.state.updatedComment} onChange={this.onChange}/>
             </fieldset>
-
+            <button className="btn btn-error" style={{float:'right'}} type="button" onClick={this.deleteComment}>Delete</button>
             <button className="btn btn-success" style={{float:'right'}} type="button" onClick={this.updateComment}>Update</button>
             </Form>
             </div>
          </Modal>
-
-
-
 
             <div style={{ background: "gray url(https://subtlepatterns.com/patterns/geometry2.png)"}}>
             <div className="container-fluid" style={{width:'90%'}}>
@@ -351,7 +393,7 @@ return axios({
         <div className="col-md-8">
         {this.state.allComments.map((el, i) => (
                 <div className="container" style={{paddingBottom:10}}>
-                    <div className="card" onClick={this.handleClick.bind(this, el)}>
+                    <div className="card">
                     <div className="card-body">
                         <div className="row">
                         <div className="col-md-2">
@@ -372,6 +414,13 @@ return axios({
                             <a className="float-right btn btn-outline-primary ml-2"> <i className="fa fa-reply" /> Reply</a>
                             <a className="float-right btn text-white btn-danger"> <i className="fa fa-heart" /> Like</a>
                             </p>
+                            <div>
+                         {ls.get("currentUser")==el.username
+                           ? <button className="float-right btn btn-error" onClick={this.handleClick.bind(this, el)}>Edit</button>
+                           : null
+                         }
+                       </div>
+                          }
                         </div>
                         </div>
                     </div>
