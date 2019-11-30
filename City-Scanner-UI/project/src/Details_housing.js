@@ -250,9 +250,9 @@ addComment() {
       console.log("successful post added" + response.data);
       //change state to re render component
       this.setState({
-        newPostAdded: true,
-        comment:''
+        newPostAdded: true
       })
+      this.refs.comment.value="";
       this.fetchComments();
 
       console.log("new added" + this.state.newPostAdded);
