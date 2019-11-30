@@ -1,6 +1,7 @@
 package com.domain.project;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
@@ -26,7 +27,10 @@ public class NotificationController {
 	@CrossOrigin
 	@PostMapping("/addUserForNotifications")
 	public void addUserForNotifications(@RequestBody NotificationEntity object) {
+		//to ensure that user has not already enabled notification for same city and category
+		if (notificationRepository.checkForUser(object.getEmail(),object.getNotificationType(),object.getCityName()).isEmpty()){
 		notificationRepository.save(object);
+		}
 	}
 
 	// Method to get all users for current city and notification type

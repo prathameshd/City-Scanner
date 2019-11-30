@@ -13,6 +13,7 @@ import Map from "./Map";
 import ls from "local-storage";
 import { Form } from 'react-bootstrap';
 import Modal from 'react-bootstrap/Modal';
+import {ToastsContainer, ToastsStore} from 'react-toasts';
 
 
 const fadeProperties = {
@@ -67,7 +68,6 @@ class Details_Housing extends PureComponent{
   this.fetchComments();
 }
 componentDidMount() {
-  console.log(this.state.newPostAdded)
   this.getPlaceDetails();
 }
 
@@ -85,7 +85,6 @@ fetchComments() {
       data: postData
     })
     .then(response => {
-      console.log("all comments" + JSON.stringify(response.data));
       //change state of all comments and re render
 
       this.setState({
@@ -113,14 +112,12 @@ getCoordinates() {
       data: ls.get("city")
     })
     .then(response => {
-      console.log(response.data);
       this.setState({
         lat: response.data.lat
       });
       this.setState({
         long: response.data.long
       });
-      console.log("states hanged", this.state);
     })
     .catch(err => {
       console.log(err);
@@ -137,7 +134,6 @@ getShops() {
       data: ls.get("city")
     })
     .then(response => {
-      console.log(response.data);
       this.setState({
         shops: response.data.results
       });
@@ -160,7 +156,6 @@ getBusStops() {
       data: ls.get("city")
     })
     .then(response => {
-      console.log(response.data);
       this.setState({
         busStop: response.data.results
       });
@@ -183,7 +178,6 @@ getAtms() {
       data: ls.get("city")
     })
     .then(response => {
-      console.log(response.data);
       this.setState({
         atm: response.data.results
       });
@@ -213,7 +207,6 @@ getPlaceDetails() {
       data: ls.get("selectedIndex")["place_id"]
     })
     .then(response => {
-      console.log(response.data);
       this.setState({
         place_details: response.data.results
       });
@@ -226,7 +219,6 @@ getPlaceDetails() {
 
 addComment() {
   var data=this.refs.comment.value;
-  console.log(data)
   var postData = {
     "username": ls.get('currentUser'),
     "title": "",
@@ -236,7 +228,6 @@ addComment() {
     "postsubjectname": ls.get("selectedIndex")["name"],
     "postContent": data
   }
-  console.log("-----------" + postData["postContent"], postData["username"], postData["postsubjectname"]);
 
   return axios({
       method: "post",
@@ -247,7 +238,6 @@ addComment() {
       data: postData
     })
     .then(response => {
-      console.log("successful post added" + response.data);
       //change state to re render component
       this.setState({
         newPostAdded: true
@@ -255,8 +245,8 @@ addComment() {
       this.refs.comment.value="";
       this.fetchComments();
       this.sendNotifications();
+      ToastsStore.success("New Post Added");
 
-      console.log("new added" + this.state.newPostAdded);
     })
     .catch(err => {
       console.log("error " + err);
@@ -265,7 +255,6 @@ addComment() {
 }
 
 handleClick(index) {
-  console.log(index)
   if (ls.get("currentUser") == index["username"])
     this.setState({
       showModal1: true,
@@ -282,7 +271,6 @@ changeState() {
 
 updateComment(index) {
   //axios call to update this comment
-  console.log(index)
   var postData = {
     "username": ls.get("currentUser"),
     "title": "",
@@ -302,9 +290,11 @@ updateComment(index) {
       data: postData
     })
     .then(response => {
-      console.log("update success" + response.data);
+
       this.changeState();
       this.fetchComments();
+      ToastsStore.success("Post Updated");
+
       //change state to re render component
     })
     .catch(err => {
@@ -332,13 +322,14 @@ deleteComment(index) {
       data: postData
     })
     .then(response => {
-      console.log("delete success" + response.data);
       this.changeState();
       this.fetchComments();
+      ToastsStore.success("Post Deleted");
+
       //change state to re render component
     })
     .catch(err => {
-      console.log("error while updating" + err);
+      console.log("error while deleting" + err);
     });
 }
 
@@ -362,11 +353,11 @@ sendNotifications()
 
     })
     .catch(err => {
+      console.log("error while sending Notifications" + err);
     });
 }
     render(){
        let Comment=this.state.Comment
-        console.log("In rendering----------------",this.state.newPostAdded)
         return (
             <>
             <Modal style={{zIndex:50000,top:'40%'}} show={this.state.showModal1} onHide={this.changeState}>
@@ -473,6 +464,8 @@ sendNotifications()
 
         </div>
         </div>
+        <ToastsContainer store={ToastsStore}/>
+
             </>
         );
     }
