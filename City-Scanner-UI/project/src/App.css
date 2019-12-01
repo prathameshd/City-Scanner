@@ -1,3 +1,41 @@
+html,
+body,
+#root,
+.App {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.center-housing {
+  position: absolute;
+  top: 60vh;
+  left: 7%;
+  transform: translate(-20%, -20%);
+  color: #fff;
+}
+.center-rest {
+  position: absolute;
+  top: 60vh;
+  left: 32%;
+  transform: translate(-20%, -20%);
+  color: #fff;
+}
+.center-places {
+  position: absolute;
+  top: 60vh;
+  left: 56%;
+  transform: translate(-20%, -20%);
+  color: #fff;
+}
+.center-events {
+  position: absolute;
+  top: 60vh;
+  left: 85%;
+  transform: translate(-20%, -20%);
+  color: #fff;
+}
+
 .center-search-bar {
   position: absolute;
   top: 40vh;
@@ -29,35 +67,35 @@
   left: 10%;
 }
 
-.card1{
+.card1 {
   position: absolute;
   top: 20%;
   left: 20%;
 }
 
-.card2{
+.card2 {
   position: absolute;
   top: 20%;
   left: 60%;
 }
 
-.card3{
+.card3 {
   position: absolute;
   top: 70%;
   left: 20%;
 }
 
-.card4{
+.card4 {
   position: absolute;
   top: 70%;
   left: 60%;
 }
-.footer{
+.footer {
   position: absolute;
   top: 110%;
 }
 
-.bkg{
+.bkg {
   background-image: url(./Events.jpg);
 }
 
@@ -88,7 +126,7 @@
   text-align: center;
 }
 .box:before {
-  content: '';
+  content: "";
   top: 0;
   left: 0;
   background: transparent;
@@ -97,7 +135,7 @@
   box-sizing: border-box;
 }
 .box:after {
-  content: '';
+  content: "";
   top: 0;
   left: 0;
   width: 100%;
@@ -159,7 +197,3 @@
 .box:hover .text {
   transform: rotateY(20deg) skewY(-3deg);
 }
-
-
-
-

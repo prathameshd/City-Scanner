@@ -52,7 +52,7 @@ export default class LandingPage extends Component {
                           />
                         </div>
                         <div className="input-group-prepend">
-                          <Link to={{ pathname: "/Dashcards" }}>
+                          <Link to={{ pathname: "/Dashboard" }}>
                             <div className="col-12 col-md-15">
                               <button
                                 type="submit"
