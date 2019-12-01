@@ -45,7 +45,10 @@ class Details_Housing extends PureComponent{
         long: " ",
         showModal1: false,
         updatedComment:"",
-        updatedPostId:""
+        updatedPostId:"",
+        clicks: 0,
+        show: true,
+        votes:0
     };
 
     this.getCoordinates = this.getCoordinates.bind(this);
@@ -61,8 +64,8 @@ class Details_Housing extends PureComponent{
     this.changeState = this.changeState.bind(this);
     this.updateComment = this.updateComment.bind(this);
     this.deleteComment = this.deleteComment.bind(this);
-
   }
+  
   componentWillMount() {
   this.fetchComments();
 }
@@ -234,7 +237,8 @@ addComment() {
     "datetime": "",
     "category": "Housing",
     "postsubjectname": ls.get("selectedIndex")["name"],
-    "postContent": data
+    "postContent": data,
+    "votes":0
   }
   console.log("-----------" + postData["postContent"], postData["username"], postData["postsubjectname"]);
 
@@ -269,7 +273,8 @@ handleClick(index) {
     this.setState({
       showModal1: true,
       updatedComment: index["postContent"],
-      updatedPostId: index["postId"]
+      updatedPostId: index["postId"],
+      votes:index["votes"]
     })
   }
 
@@ -290,7 +295,8 @@ updateComment(index) {
     "category": "Housing",
     "postsubjectname": index["postsubjectname"],
     "postContent": this.state.updatedComment,
-    "postId": this.state.updatedPostId
+    "postId": this.state.updatedPostId,
+    "votes":this.state.votes
   }
   return axios({
       method: "post",
@@ -311,6 +317,78 @@ updateComment(index) {
     });
 }
 
+
+upvotevote(index) {
+  //axios call to update this comment
+  // this.setState({
+  //   updatedComment: index["postContent"],
+  //   updatedPostId: index["postId"],
+  // })
+  var count = index['votes'] + 1;
+  var postData = {
+    "username": ls.get("currentUser"),
+    "title": "",
+    "ratings": 0,
+    "datetime": "",
+    "category": "Housing",
+    "postsubjectname": index["postsubjectname"],
+    "postContent": index['postContent'],
+    "postId": index['postId'],
+    "votes":count
+  }
+  return axios({
+      method: "post",
+      url: "http://localhost:8080/updateHousePost",
+      headers: {
+        "Access-Control-Allow-Origin": "*"
+      },
+      data: postData
+    })
+    .then(response => {
+      console.log("update success" + response.data);
+      this.fetchComments();
+    })
+    .catch(err => {
+      console.log("error while updating" + err);
+    });
+}
+
+downvotevote(index) {
+
+  var count = index['votes'] - 1;
+
+  this.setState({
+    updatedPostId: index["postId"]
+  })
+
+  var postData = {
+    "username": ls.get("currentUser"),
+    "title": "",
+    "ratings": 0,
+    "datetime": "",
+    "category": "Housing",
+    "postsubjectname": index["postsubjectname"],
+    "postContent":  index['postContent'],
+    "postId":  index['postId'],
+    "votes":count
+  }
+  return axios({
+      method: "post",
+      url: "http://localhost:8080/updateHousePost",
+      headers: {
+        "Access-Control-Allow-Origin": "*"
+      },
+      data: postData
+    })
+    .then(response => {
+      console.log("update success" + response.data);
+      this.fetchComments();
+    })
+    .catch(err => {
+      console.log("error while updating" + err);
+    });
+}
+
 deleteComment(index) {
   var postData = {
     "username": ls.get("currentUser"),
@@ -320,7 +398,7 @@ deleteComment(index) {
     "category": "Housing",
     "postsubjectname": index["postsubjectname"],
     "postContent": this.state.updatedComment,
-    "postId": this.state.updatedPostId
+    "postId": this.state.updatedPostId,
   }
   return axios({
       method: "post",
@@ -419,7 +497,9 @@ deleteComment(index) {
                             <p>{el.postContent}</p>
                             <p>
                             <a className="float-right btn btn-outline-primary ml-2"> <i className="fa fa-reply" /> Reply</a>
-                            <a className="float-right btn text-white btn-danger"> <i className="fa fa-heart" /> Like</a>
+                            <button className="float-right btn text-white btn-danger" onClick={this.downvotevote.bind(this, el)}> <i className="fa fa-heart"/> Dislike</button>
+                            <button className="float-right btn text-white btn-danger" onClick={this.upvotevote.bind(this, el)}> <i className="fa fa-heart"/> Like</button>
+                            <p>{el.votes}</p>
                             </p>
                             <div>
                          {ls.get("currentUser")==el.username

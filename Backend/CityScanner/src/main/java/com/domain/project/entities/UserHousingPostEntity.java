@@ -42,6 +42,17 @@ public class UserHousingPostEntity {
 	@Column(name = "postsubjectname")
 	private String postsubjectname;
 	
+	@Column(name = "votes")
+	private int votes;
+	
+	public int getVotes() {
+		return votes;
+	}
+
+	public void setVotes(int votes) {
+		this.votes = votes;
+	}
+
 	public String getPostsubjectname() {
 		return postsubjectname;
 	}

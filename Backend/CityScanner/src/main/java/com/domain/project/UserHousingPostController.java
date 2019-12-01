@@ -40,8 +40,12 @@ public class UserHousingPostController {
 	@CrossOrigin
 	@PostMapping("/updateHousePost")
 	public void updateUserPost(@RequestBody UserHousingPostEntity userPost) {
+		System.out.println("-------------------------"+userPost.getPostId() + "+++++++++++++++++++++++++++++++++++");
+		System.out.println("-------------------------"+userPost.getVotes() + "+++++++++++++++++++++++++++++++++++");
+		System.out.println("-------------------------"+userPost.getPostContent() + "+++++++++++++++++++++++++++++++++++");
 		Optional<UserHousingPostEntity> post = userPostRepository.findById(userPost.getPostId());
 		post.get().setPostContent(userPost.getPostContent());
+		post.get().setVotes(userPost.getVotes());
 		userPostRepository.save(post.get());
 	}
 
