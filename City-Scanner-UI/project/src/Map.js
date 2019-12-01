@@ -124,7 +124,7 @@ class MapContainer extends Component {
   render() {
     const mapStyles = {
       width: "95%",
-      height: "20%"
+      height: "40%"
     };
 
     return (

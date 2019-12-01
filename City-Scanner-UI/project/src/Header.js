@@ -76,7 +76,8 @@ class Header extends Component {
     }
 
     logout() {
-      localStorage.setItem("isLogin", "false")
+      localStorage.setItem("isLogin", "false");
+      localStorage.setItem("currentUser","");
       this.setState({
         isLogin: false,
         showModal1: false
@@ -105,6 +106,7 @@ class Header extends Component {
 
           if (response['data'] == "Login Success") {
             localStorage.setItem("isLogin", "true");
+            localStorage.setItem("currentUser",this.state.email);
             ToastsStore.success("Successful Log In");
             this.setState({
               isLogin: true
@@ -184,8 +186,9 @@ class Header extends Component {
                   <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css" />
                   <link href="./css/landing-page.min.css" rel="stylesheet" />
                   <nav className="navbar navbar-light bg-light static-top">
-                    <div className="container">
+                    <div className="container-fluid">
                       <a className="navbar-brand" href="/home">City Scanner</a>
+
                       <Form>
                       <ul  class="list-inline">
                         <li class="list-inline-item">Welcome</li>
@@ -212,7 +215,7 @@ class Header extends Component {
                   <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css" />
                   <link href="./css/landing-page.min.css" rel="stylesheet" />
                   <nav className="navbar navbar-light bg-light static-top">
-                    <div className="container">
+                    <div className="container-fluid">
                       <a className="navbar-brand" href="/home">City Scanner</a>
                       <Form>
 
