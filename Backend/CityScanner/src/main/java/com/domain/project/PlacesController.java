@@ -146,5 +146,20 @@ public class PlacesController {
 
 		return coords.toString();
 	}
+	
+	@CrossOrigin
+	@JsonIgnore
+	@PostMapping(value = "/getPlaceDetails")
+	public String  getPlacesDetails(@RequestBody String placeID) {
+		System.out.println("Place id is "+placeID);
+		String APIKEY = "AIzaSyAJA71Rtblkd6TpFQvsgsnCbOVUqDCf-nc";
+		String plcID = placeID.substring(0, 27);
+		System.out.println("Plc id is "+plcID);
+		final String placeDetailsAPI = "https://maps.googleapis.com/maps/api/place/details/json?place_id=" + plcID + "&key=" + APIKEY;
+		System.out.println("Place details are"+placeDetailsAPI);
+		RestTemplate getPlaces = new RestTemplate();
+		String placesResult = getPlaces.getForObject(placeDetailsAPI, String.class);
+		return placesResult;
+	}
 
 }
