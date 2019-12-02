@@ -60,7 +60,6 @@ class Header extends Component {
     };
 
     componentDidMount() {
-      this.getUserNotificationStatus();
       //localStorage.setItem("page","Dashboard")
       console.log(localStorage)
     }
@@ -185,6 +184,7 @@ class Header extends Component {
     }
 
     changeState3() {
+            this.getUserNotificationStatus();
       this.setState({
         showModal3: !this.state.showModal3
       })
@@ -314,6 +314,10 @@ getUserNotificationStatus()
         })
         .then(response => {
           console.log("user notificaiotn status"+JSON.stringify(response.data))
+        this.setState({
+        HousingBoxChecked: false,
+        EventsBoxChecked:false
+      })
 
 for(let i = 0; i < response.data.length; i++){
   //alert(response.data[i].notificationType);
