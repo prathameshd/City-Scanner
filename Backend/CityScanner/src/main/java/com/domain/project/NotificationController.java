@@ -24,13 +24,40 @@ public class NotificationController {
 	@Autowired
 	private JavaMailSender javaMailSender;
 
+	// Method to add user for notifications for a specific city and post type
 	@CrossOrigin
 	@PostMapping("/addUserForNotifications")
 	public void addUserForNotifications(@RequestBody NotificationEntity object) {
-		//to ensure that user has not already enabled notification for same city and category
-		if (notificationRepository.checkForUser(object.getEmail(),object.getNotificationType(),object.getCityName()).isEmpty()){
-		notificationRepository.save(object);
+		// to ensure that user has not already enabled notification for same city and
+		// category
+		if (notificationRepository.checkForUser(object.getEmail(), object.getNotificationType(), object.getCityName())
+				.isEmpty()) {
+			notificationRepository.save(object);
 		}
+	}
+
+	// Method to remove user from notifications
+	@CrossOrigin
+	@PostMapping("/removeUserFromNotifications")
+	public void removeUserFromNotifications(@RequestBody NotificationEntity object) {
+		// to ensure that user has not already enabled notification for same city and
+		// category
+		if (!notificationRepository.checkForUser(object.getEmail(), object.getNotificationType(), object.getCityName())
+				.isEmpty()) {
+			List<NotificationEntity> result = notificationRepository.checkForUser(object.getEmail(),
+					object.getNotificationType(), object.getCityName());
+
+			notificationRepository.deleteById(result.get(0).getNotificationId());
+		}
+	}
+
+	// Method to get user notifications
+	@CrossOrigin
+	@PostMapping("/getUserNotifications")
+	public List<NotificationEntity> getUserNotifications(@RequestBody NotificationEntity object) {
+		List<NotificationEntity> result = notificationRepository.notificationsForUser(object.getEmail(),
+				object.getCityName());
+		return result;
 	}
 
 	// Method to get all users for current city and notification type

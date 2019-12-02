@@ -13,4 +13,8 @@ public interface NotificationRepository extends JpaRepository<NotificationEntity
 	
 	@Query("SELECT DISTINCT u FROM NotificationEntity u WHERE email= ?1 AND notificationtype=?2 AND cityname=?3")
 	List<NotificationEntity> checkForUser(String email,String notificationType, String cityName);
+	
+	@Query("SELECT DISTINCT u FROM NotificationEntity u WHERE email= ?1 AND cityname=?2")
+	List<NotificationEntity> notificationsForUser(String email, String cityName);
+	
 }
