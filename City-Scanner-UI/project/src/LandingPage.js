@@ -24,6 +24,9 @@ export default class LandingPage extends Component {
   };
 
   componentDidMount() {
+
+        ls.remove("city");
+
     console.log(ls);
   }
   render() {

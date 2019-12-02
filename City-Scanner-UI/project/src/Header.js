@@ -380,13 +380,19 @@ for(let i = 0; i < response.data.length; i++){
                         <li class="list-inline-item"><Button className="btn btn-error" onClick={this.changeState3}>Notifications</Button></li>
                         <Modal style={{zIndex:50000,top:'40%'}} show={this.state.showModal3} onHide={this.changeState3}>
                         <div className="container" style={{padding:'5%'}}>
-                        <h3>Manage Email Notifications</h3><br/>
+                        
+                        <h3>Manage Notifications</h3><br/>
+                        <h6>Get Email Notifications</h6>
+                        {localStorage.getItem("city")?
+                        <>
                       <Form>
                       <input type="checkbox" ref="Housingbox" checked={this.state.HousingBoxChecked} name="HousingBoxChecked" onChange={this.changeCheckbox1}/>Housing Posts <br/>
                       <input type="checkbox" ref="Eventsbox" checked={this.state.EventsBoxChecked}  name="EventsBoxChecked" onChange={this.changeCheckbox2}/> Events<br/>
 
-                      </Form> 
-                      <button style={{float:"right"}} className="btn btn-primary" onClick={this.subscribeUser}>Update</button>
+                      </Form>
+                    <button style={{float:"right"}} className="btn btn-primary" onClick={this.subscribeUser}>Update</button> </> :
+                      <p>Start exploring a place to enable notifications</p>
+                    }
                         </div>
                      </Modal>
                         <li class="list-inline-item"><Button onClick={this.logout}>Logout</Button></li>
