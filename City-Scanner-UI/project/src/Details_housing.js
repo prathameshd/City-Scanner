@@ -358,6 +358,8 @@ sendNotifications()
 }
     render(){
        let Comment=this.state.Comment
+        let imageurl="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1000&photoreference="+ls.get("selectedIndex")["photos"][0]["photo_reference"]+"&key=AIzaSyAJA71Rtblkd6TpFQvsgsnCbOVUqDCf-nc"
+
         return (
             <>
             <Modal style={{zIndex:50000,top:'40%'}} show={this.state.showModal1} onHide={this.changeState}>
@@ -378,30 +380,30 @@ sendNotifications()
             <h1 className="my-4">{ls.get("selectedIndex")["name"]} </h1>
             <div className="row">
                 <div className="col-md-8" style={{paddingRight:'50px'}}>
-                <img className="img-fluid" src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/142996/moscow.jpg" alt="" />
+                    <img className="img-fluid" src={imageurl} alt="" />
                 </div>
                 <div className="col-md-4">
-                    <div>
-                    <h3 className="my-3" style={{'font-family': 'cursive'}}>About</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae. Sed dui lorem, adipiscing in adipiscing et, interdum nec metus. Mauris ultricies, justo eu convallis placerat, felis enim.</p>
-                    <h3 className="my-3" style={{'font-family': 'cursive'}}>Details</h3>
-                    <ul>
-                        <li>Address: {ls.get("selectedIndex")["vicinity"]}</li>
-                        <li>Average Rating:{ls.get("selectedIndex")["rating"]}</li>
-                    </ul>
-                  </div>
+                      <div>
+                      <h5 className="my-3" style={{'font-family': 'cursive'}}>About</h5>
+                      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae. Sed dui lorem, adipiscing in adipiscing et, interdum nec metus. Mauris ultricies, justo eu convallis placerat, felis enim.</p>
+                      <h5 className="my-3" style={{'font-family': 'cursive'}}>Details</h5>
+                      <ul>
+                          <li>Address: {ls.get("selectedIndex")["vicinity"]}</li>
+                          <li>Average Rating:{ls.get("selectedIndex")["rating"]}</li>
+                      </ul>
+                    </div>
 
-                  <div className="container" style={{paddingTop:'4%'}}>
-                            <Map
-                              lat={ls.get("selectedIndex")["geometry"]["location"]["lat"]}
-                              long={ls.get("selectedIndex")["geometry"]["location"]["lng"]}
-                              locations={this.state.locations}
-                              shopLoc={this.state.shopLoc}
-                              busStopLoc={this.state.busStopLoc}
-                              atmLoc={this.state.atmLoc}
-                              style={{height:'80% !important'}}
-                            />
-                  </div>
+                      <div className="row" style={{paddingTop:'4%'}}>
+                                <Map
+                                  lat={ls.get("selectedIndex")["geometry"]["location"]["lat"]}
+                                  long={ls.get("selectedIndex")["geometry"]["location"]["lng"]}
+                                  locations={this.state.locations}
+                                  shopLoc={this.state.shopLoc}
+                                  busStopLoc={this.state.busStopLoc}
+                                  atmLoc={this.state.atmLoc}
+                                  style={{height:'80% !important'}}
+                                />
+                      </div>
                 </div>
 
             </div>
