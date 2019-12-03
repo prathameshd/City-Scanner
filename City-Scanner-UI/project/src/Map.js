@@ -134,7 +134,7 @@ class MapContainer extends Component {
         style={mapStyles}
         initialCenter={{ lat: this.props.lat, lng: this.props.long }}
       >
-        <Marker position={{ lat: 48.0, lng: -122.0 }} />
+        <Marker position={{ lat: this.props.lat, lng: this.props.long }} />
         {this.housingMarkers()}
         {this.shopMarkers()}
         {this.busStopMarkers()}

@@ -393,8 +393,8 @@ sendNotifications()
 
                   <div className="container" style={{paddingTop:'4%'}}>
                             <Map
-                              lat={this.state.lat}
-                              long={this.state.long}
+                              lat={ls.get("selectedIndex")["geometry"]["location"]["lat"]}
+                              long={ls.get("selectedIndex")["geometry"]["location"]["lng"]}
                               locations={this.state.locations}
                               shopLoc={this.state.shopLoc}
                               busStopLoc={this.state.busStopLoc}

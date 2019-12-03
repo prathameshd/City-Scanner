@@ -38,7 +38,7 @@ class Header extends Component {
       this.createNewUser = this.createNewUser.bind(this);
       this.onChange = this.onChange.bind(this);
       this.subscribeUser= this.subscribeUser.bind(this);
-            this.toggleSubscription= this.toggleSubscription.bind(this);
+            this.addSubscription= this.addSubscription.bind(this);
             this.removeSubscription= this.removeSubscription.bind(this);
             this.getUserNotificationStatus= this.getUserNotificationStatus.bind(this);
             this.changeCheckbox1= this.changeCheckbox1.bind(this);
@@ -199,13 +199,13 @@ class Header extends Component {
     if(this.refs.Housingbox.checked==true)
     {
       var tempType="Housing";
-      this.toggleSubscription(tempType);
+      this.addSubscription(tempType);
     }
 
     if(this.refs.Eventsbox.checked==true)
     {
       var tempType="Events";
-      this.toggleSubscription(tempType);
+      this.addSubscription(tempType);
     }
 
     if(this.refs.Housingbox.checked==false)
@@ -247,7 +247,7 @@ class Header extends Component {
 
     }
 
-    toggleSubscription(tempType)
+    addSubscription(tempType)
     {
       var postData = {
         "email": localStorage.getItem("currentUser"),
