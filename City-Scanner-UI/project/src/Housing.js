@@ -53,11 +53,7 @@ class Housing extends Component {
   handleClick(index) {
     this.setState({ index });
     ls.set("selectedIndex", index);
-    if (localStorage.getItem('currentUser')!="") {
-      window.location.href="/HousingDetails" 
-    } else {
-      ToastsStore.error("Please login");
-    }
+          window.location.href="/HousingDetails" 
   }
 
   getCoordinates() {

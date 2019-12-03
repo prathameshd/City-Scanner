@@ -98,6 +98,8 @@ class Header extends Component {
         showModal1: false
       })
       ToastsStore.success("Successful Log Out");
+                  window.location.reload();
+
     }
 
     sendLoginData() {
@@ -123,6 +125,8 @@ class Header extends Component {
             localStorage.setItem("isLogin", "true");
             localStorage.setItem("currentUser",this.state.email);
             ToastsStore.success("Successful Log In");
+            window.location.reload();
+
             this.setState({
               isLogin: true
             })
