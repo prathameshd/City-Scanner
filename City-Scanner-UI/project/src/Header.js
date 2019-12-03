@@ -83,7 +83,7 @@ class Header extends Component {
         showModal1: false
       })
       ToastsStore.success("Successful Log Out");
-                  window.location.reload();
+          window.location.href="/Home" 
 
     }
 
