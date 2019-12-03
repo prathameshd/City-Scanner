@@ -374,7 +374,17 @@ deleteComment(index) {
                     <ul>
                         <li>Address: {ls.get("selectedIndex")["vicinity"]}</li>
                         <li>Average Rating:{ls.get("selectedIndex")["rating"]}</li>
+                        
                     </ul>
+                    {this.state.shops.map((el, i) => (
+                      <div>
+                        <p>
+                          Photo: {el.photo_reference}
+                        </p>
+                      </div>
+
+                    ))}
+                    
                   </div>
 
                   <div className="container" style={{paddingTop:'4%'}}>
