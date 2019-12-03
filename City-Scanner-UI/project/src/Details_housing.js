@@ -396,6 +396,8 @@ deleteComment(index) {
 
 
         <div className="container-fluid" style={{width:'90%',marginTop:'4%'}}>
+        {ls.get("currentUser") !=""?
+
         <div className="row">
         <div className="col-md-8">
         {this.state.allComments.map((el, i) => (
@@ -448,7 +450,11 @@ deleteComment(index) {
         </Form>
               </div>
 
+        </div>:
+        <div className="row">
+        <h3>Login to see all posts</h3>
         </div>
+      }
         </div>
             </>
         );
