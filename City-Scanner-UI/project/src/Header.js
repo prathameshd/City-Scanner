@@ -98,7 +98,7 @@ class Header extends Component {
         showModal1: false
       })
       ToastsStore.success("Successful Log Out");
-          window.location.href="/Home" 
+          window.location.reload(); 
 
     }
 
@@ -380,8 +380,8 @@ for(let i = 0; i < response.data.length; i++){
 
                       <Form>
                       <ul  class="list-inline">
-                        <li class="list-inline-item">Welcome</li>
-                        <li class="list-inline-item"><Button className="btn btn-error" onClick={this.changeState3}>Notifications</Button></li>
+                                                <li class="list-inline-item"><a className="btn btn-error" >Profile</a></li>
+                        <li class="list-inline-item"><a className="btn btn-error" onClick={this.changeState3}>Notifications</a></li>
                         <Modal style={{zIndex:50000,top:'40%'}} show={this.state.showModal3} onHide={this.changeState3}>
                         <div className="container" style={{padding:'5%'}}>
                         
@@ -399,7 +399,7 @@ for(let i = 0; i < response.data.length; i++){
                     }
                         </div>
                      </Modal>
-                        <li class="list-inline-item"><Button onClick={this.logout}>Logout</Button></li>
+                        <li class="list-inline-item"><a className="btn btn-error" onClick={this.logout}>Logout</a></li>
                       </ul>
                       </Form>
 
@@ -430,7 +430,7 @@ for(let i = 0; i < response.data.length; i++){
                       <a className="navbar-brand" href="/home">City Scanner</a>
                       <Form>
 
-                      <Button onClick={this.changeState} show={this.state.isLogin}>Login</Button>
+                      <a className="btn btn-error" onClick={this.changeState} show={this.state.isLogin}>Login</a>
                        <Modal style={{zIndex:50000}} show={this.state.showModal1} onHide={this.changeState}>
                        <Form style = {{padding:'20px'}}>
                       <Form.Group controlId="Header">
@@ -453,7 +453,7 @@ for(let i = 0; i < response.data.length; i++){
 
 
                       &nbsp;&nbsp;&nbsp;
-                      <Button onClick={this.changeState2} show={this.state.isLogin}>Sign Up</Button>
+                      <a className="btn btn-error" onClick={this.changeState2} show={this.state.isLogin}>Sign Up</a>
                   <Modal style={{zIndex:50000}} show={this.state.showModal2} onHide={this.changeState2}>
                     <Form style = {{padding:'20px'}}>
                           <Form.Group controlId="Header">
