@@ -17,22 +17,32 @@ class Header extends Component {
         isLogin: false,
         showModal1: false,
         showModal2: false,
+        showModal3: false,
         email: "",
         password: "",
         newEmail: "",
         newPassword: "",
         newFirstName: "",
         newLastName: "",
-        newContact: ""
+        newContact: "",
+        HousingBoxChecked:false,
+        EventsBoxChecked:false
       };
       this.changeState = this.changeState.bind(this);
       this.changeState2 = this.changeState2.bind(this);
+      this.changeState3 = this.changeState3.bind(this);
 
       this.sendLoginData = this.sendLoginData.bind(this);
       this.logout = this.logout.bind(this);
       this.sendEmail = this.sendEmail.bind(this);
       this.createNewUser = this.createNewUser.bind(this);
       this.onChange = this.onChange.bind(this);
+      this.subscribeUser= this.subscribeUser.bind(this);
+            this.addSubscription= this.addSubscription.bind(this);
+            this.removeSubscription= this.removeSubscription.bind(this);
+            this.getUserNotificationStatus= this.getUserNotificationStatus.bind(this);
+            this.changeCheckbox1= this.changeCheckbox1.bind(this);
+            this.changeCheckbox2= this.changeCheckbox2.bind(this);
 
 
     }
@@ -49,7 +59,12 @@ class Header extends Component {
       });
     };
 
-    componentDidMount() {}
+    componentDidMount() {
+      //localStorage.setItem("page","Dashboard")
+      console.log(localStorage)
+    }
+
+
 
     onChange(e) {
       this.setState({
@@ -83,6 +98,8 @@ class Header extends Component {
         showModal1: false
       })
       ToastsStore.success("Successful Log Out");
+          window.location.href="/Home" 
+
     }
 
     sendLoginData() {
@@ -108,6 +125,8 @@ class Header extends Component {
             localStorage.setItem("isLogin", "true");
             localStorage.setItem("currentUser",this.state.email);
             ToastsStore.success("Successful Log In");
+            window.location.reload();
+
             this.setState({
               isLogin: true
             })
@@ -168,7 +187,177 @@ class Header extends Component {
         })
     }
 
+    changeState3() {
+            this.getUserNotificationStatus();
+      this.setState({
+        showModal3: !this.state.showModal3
+      })
+    }
 
+    subscribeUser(){
+//    alert(this.refs.Housingbox.checked);
+    if(this.refs.Housingbox.checked==true)
+    {
+      var tempType="Housing";
+      this.addSubscription(tempType);
+    }
+
+    if(this.refs.Eventsbox.checked==true)
+    {
+      var tempType="Events";
+      this.addSubscription(tempType);
+    }
+
+    if(this.refs.Housingbox.checked==false)
+    {
+      var tempType="Housing";
+      this.removeSubscription(tempType);
+    }
+
+    if(this.refs.Eventsbox.checked==false)
+    {
+      var tempType="Events";
+      this.removeSubscription(tempType);
+    }
+
+      // var user=localStorage.getItem("currentUser");
+      // var city=localStorage.getItem("city");
+      // var type = "Housing";
+      // var postData = {
+      //   "email": localStorage.getItem("currentUser"),
+      //   "cityName": localStorage.getItem("city"),
+      //   "notificationType":"Housing"
+      // }
+      // console.log("**********"+postData)
+
+      // return axios({
+      //     method: "post",
+      //     url: "http://localhost:8080/addUserForNotifications",
+      //     headers: {
+      //       "Access-Control-Allow-Origin": "*"
+      //     },
+      //     data: postData
+      //   })
+      //   .then(response => {
+      //     this.changeState3();
+      //   })
+      //   .catch(err => {
+      //     console.log("error " + err);
+      //   });
+
+    }
+
+    addSubscription(tempType)
+    {
+      var postData = {
+        "email": localStorage.getItem("currentUser"),
+        "cityName": localStorage.getItem("city"),
+        "notificationType":tempType
+      }
+
+      return axios({
+          method: "post",
+          url: "http://localhost:8080/addUserForNotifications",
+          headers: {
+            "Access-Control-Allow-Origin": "*"
+          },
+          data: postData
+        })
+        .then(response => {
+                this.setState({
+        showModal3: false
+      })
+        ToastsStore.success("Notifications Successfully Updated");
+
+        })
+        .catch(err => {
+          console.log("error " + err);
+        });
+    }
+
+    removeSubscription(tempType)
+    {
+      var postData = {
+        "email": localStorage.getItem("currentUser"),
+        "cityName": localStorage.getItem("city"),
+        "notificationType":tempType
+      }
+      return axios({
+          method: "post",
+          url: "http://localhost:8080/removeUserFromNotifications",
+          headers: {
+            "Access-Control-Allow-Origin": "*"
+          },
+          data: postData
+        })
+        .then(response => {
+                          this.setState({
+        showModal3: false
+      })
+                  ToastsStore.success("Notifications Successfully Updated");
+        })
+        .catch(err => {
+          console.log("error " + err);
+        });
+    }
+
+getUserNotificationStatus()
+{
+        var postData = {
+        "email": localStorage.getItem("currentUser"),
+        "cityName": localStorage.getItem("city"),
+        "notificationType":""
+      }
+        return axios({
+          method: "post",
+          url: "http://localhost:8080/getUserNotifications",
+          headers: {
+            "Access-Control-Allow-Origin": "*"
+          },
+          data: postData
+        })
+        .then(response => {
+          console.log("user notificaiotn status"+JSON.stringify(response.data))
+        this.setState({
+        HousingBoxChecked: false,
+        EventsBoxChecked:false
+      })
+
+for(let i = 0; i < response.data.length; i++){
+  //alert(response.data[i].notificationType);
+  if(response.data[i].notificationType=='Housing')
+  {
+      this.setState({
+        HousingBoxChecked: true
+      })
+   }
+
+     if(response.data[i].notificationType=='Events')
+  {
+      this.setState({
+        EventsBoxChecked: true
+      })
+   }
+
+  //console.log(JSON.stringify(response.data[i].notificationType));
+}
+        })
+        .catch(err => {
+          console.log("error " + err);
+        });
+}
+
+  changeCheckbox1() {
+      this.setState({
+        HousingBoxChecked: !this.state.HousingBoxChecked
+      });
+    }
+
+      changeCheckbox2() {
+      this.setState({
+        EventsBoxChecked: !this.state.EventsBoxChecked
+      });
+    }
 
     render() {
       if(localStorage.getItem("isLogin")=="true")
@@ -192,9 +381,31 @@ class Header extends Component {
                       <Form>
                       <ul  class="list-inline">
                         <li class="list-inline-item">Welcome</li>
+                        <li class="list-inline-item"><Button className="btn btn-error" onClick={this.changeState3}>Notifications</Button></li>
+                        <Modal style={{zIndex:50000,top:'40%'}} show={this.state.showModal3} onHide={this.changeState3}>
+                        <div className="container" style={{padding:'5%'}}>
+                        
+                        <h3>Manage Notifications</h3><br/>
+                        <h6>Get Email Notifications</h6>
+                        {localStorage.getItem("city")?
+                        <>
+                      <Form>
+                      <input type="checkbox" ref="Housingbox" checked={this.state.HousingBoxChecked} name="HousingBoxChecked" onChange={this.changeCheckbox1}/>Housing Posts <br/>
+                      <input type="checkbox" ref="Eventsbox" checked={this.state.EventsBoxChecked}  name="EventsBoxChecked" onChange={this.changeCheckbox2}/> Events<br/>
+
+                      </Form>
+                    <button style={{float:"right"}} className="btn btn-primary" onClick={this.subscribeUser}>Update</button> </> :
+                      <p>Start exploring a place to enable notifications</p>
+                    }
+                        </div>
+                     </Modal>
                         <li class="list-inline-item"><Button onClick={this.logout}>Logout</Button></li>
                       </ul>
                       </Form>
+
+
+
+
                     </div>
                   </nav>
                   <ToastsContainer store={ToastsStore}/>
