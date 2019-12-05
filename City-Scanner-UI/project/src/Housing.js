@@ -10,9 +10,8 @@ import "react-rater/lib/react-rater.css";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import Map from "./Map";
 import ls from "local-storage";
-import localStorage from 'localStorage';
-import {ToastsContainer, ToastsStore} from 'react-toasts';
-
+import localStorage from "localStorage";
+import { ToastsContainer, ToastsStore } from "react-toasts";
 
 class Housing extends Component {
   constructor(props) {
@@ -53,7 +52,7 @@ class Housing extends Component {
   handleClick(index) {
     this.setState({ index });
     ls.set("selectedIndex", index);
-          window.location.href="/HousingDetails" 
+          window.location.href="/HousingDetails"
   }
 
   getCoordinates() {
@@ -155,10 +154,22 @@ class Housing extends Component {
       window.location.href = "/home";
     } else if (this.state.lat != " " && this.state.long != " ") {
       return (
-        <div className="containter-fluid">
+        <div
+          className="containter-fluid"
+          style={{
+            overflowX: "hidden"
+          }}
+        >
           <h1>Establishments in {ls.get("city")}</h1>
           <div className="row">
-            <div className="col-sm-6" style={{overflowY: 'scroll', height:'1200px',}}>
+            <div
+              className="col-sm-6"
+              style={{
+                overflowY: "scroll",
+                overflowX: "hidden",
+                height: "1200px"
+              }}
+            >
               {this.state.establishments.map((el, i) => (
                 <div
                   style={{
@@ -167,41 +178,54 @@ class Housing extends Component {
                     marginRight: 12,
                     marginLeft: 100,
                     paddingTop: "10px",
-                    fontColor: "black",
+                    fontColor: "black"
                   }}
                 >
-                    <Card
-                      onClick={this.handleClick.bind(this, el)}
-                    >         
-                              <CardActionArea >
-                              <div>
-                                  <div className="card float-right" style={{width:600}}>
-                                    <div className="row">
-                                      <div className="col-sm-5">
-                                        <img className="d-block w-100" src="https://picsum.photos/150?image=641" alt="" />
-                                      </div>
-                                      <div className="col-sm-7" style={{marginTop:10}}>
-                                        <div className="card-block">
-                                        <Typography gutterBottom variant="h5" component="h3">
-                                            {el.name}
-                                          </Typography>
-                                          <Typography gutterBottom variant="h5" component="h1">
-                                            <Rater total={5} rating={el.rating} />
-                                          </Typography>
-                                          <Typography
-                                            variant="body2"
-                                            color="textSecondary"
-                                            component="p"
-                                          >
-                                            {el.vicinity}
-                                          </Typography>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                                </CardActionArea>
-                      {/* <CardActionArea>
+                  <Card onClick={this.handleClick.bind(this, el)}>
+                    <CardActionArea>
+                      <div>
+                        <div
+                          className="card float-right"
+                          style={{ width: 600 }}
+                        >
+                          <div className="row">
+                            <div className="col-sm-5">
+                              <img
+                                className="d-block w-100"
+                                src="https://picsum.photos/150?image=641"
+                                alt=""
+                              />
+                            </div>
+                            <div className="col-sm-7" style={{ marginTop: 10 }}>
+                              <div className="card-block">
+                                <Typography
+                                  gutterBottom
+                                  variant="h5"
+                                  component="h3"
+                                >
+                                  {el.name}
+                                </Typography>
+                                <Typography
+                                  gutterBottom
+                                  variant="h5"
+                                  component="h1"
+                                >
+                                  <Rater total={5} rating={el.rating} />
+                                </Typography>
+                                <Typography
+                                  variant="body2"
+                                  color="textSecondary"
+                                  component="p"
+                                >
+                                  {el.vicinity}
+                                </Typography>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </CardActionArea>
+                    {/* <CardActionArea>
                         <CardMedia
                           component="img"
                           alt="Contemplative Reptile"
@@ -236,14 +260,17 @@ class Housing extends Component {
                           {el.types[2]}
                           &nbsp;
                           {el.types[3]}
-                          </Typography> 
+                          </Typography>
                         </CardContent>
                       </CardActionArea> */}
-                    </Card>
+                  </Card>
                 </div>
               ))}
             </div>
-            <div className="col-sm-6" style={{height:1205}}>
+            <div
+              className="col-sm-6"
+              style={{ height: 1205, overflowX: "hidden" }}
+            >
               <Map
                 lat={this.state.lat}
                 long={this.state.long}
