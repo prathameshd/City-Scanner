@@ -2,6 +2,7 @@ package com.domain.project;
 
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -120,6 +121,22 @@ public class PlacesController {
 			String placesResult = getPlaces.getForObject(placesAPI, String.class);
 
 			return placesResult;
+		}
+		
+	// Get events for a city
+		@CrossOrigin
+		@PostMapping(value = "/getEvent")
+		public String getEvent(@RequestBody String event) {
+			JsonObject coords = new JsonParser().parse(getPosition(event)).getAsJsonObject();
+			String lat = coords.get("lat").getAsString();
+			String lng = coords.get("long").getAsString();
+			String APIKEY = "GLxqEVHtALzHBKjax1d9knHafTr5wtmd";
+			final String placesAPI = "https://app.ticketmaster.com/discovery/v2/events?apikey=" + APIKEY +"&latlong=" + lat + "," + lng + "&radius=15000";
+			System.out.println(placesAPI);
+		    RestTemplate getPlaces = new RestTemplate(); String placesResult =
+		    getPlaces.getForObject(placesAPI, String.class);
+		 
+		    return placesResult;
 		}
 
 	// Get coordinates for a city
