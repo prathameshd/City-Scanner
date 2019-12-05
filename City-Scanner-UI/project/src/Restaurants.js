@@ -21,6 +21,11 @@ class Restaurants extends Component {
     };
   }
 
+  handleClick(index) {
+    this.setState({ index });
+    ls.set("selectedIndex", index);
+          window.location.href="/RestaurantDetails" 
+  }
   componentWillMount() {
     ls.set("page", "restaurants");
   }
@@ -59,6 +64,7 @@ class Restaurants extends Component {
 
   render() {
     //const { data } = this.props.location;
+    //let imageurl="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1000&photoreference="+ls.get("selectedIndex")["photos"][0]["photo_reference"]+"&key=AIzaSyAJA71Rtblkd6TpFQvsgsnCbOVUqDCf-nc"
     if (ls.get("city") == null) {
       window.location.href = "/home";
     } else if (this.state.lat != " " && this.state.long != " ") {
@@ -78,45 +84,35 @@ class Restaurants extends Component {
                     fontColor: "black"
                   }}
                 >
-                  <Card className="cardsize">
-                    <CardActionArea>
-                      <CardMedia
-                        component="img"
-                        alt="Contemplative Reptile"
-                        height="140"
-                        width="80"
-                        image="https://s3-us-west-2.amazonaws.com/s.cdpn.io/142996/singapore.jpg"
-                        title="Contemplative Reptile"
-                      />
-                      <CardContent style={{ display: "inline-block" }}>
-                        <Typography gutterBottom variant="h5" component="h3">
-                          {el.name}
-                        </Typography>
-                        <Typography gutterBottom variant="h5" component="h1">
-                          <Rater total={5} rating={el.rating} />
-                        </Typography>
-                        <Typography
-                          variant="body2"
-                          color="textSecondary"
-                          component="p"
-                        >
-                          {el.vicinity}
-                        </Typography>
-                        <Typography
-                          variant="body2"
-                          color="textSecondary"
-                          component="p"
-                        >
-                          {el.types[0]}
-                          &nbsp;
-                          {el.types[1]}
-                          &nbsp;
-                          {el.types[2]}
-                          &nbsp;
-                          {el.types[3]}
-                        </Typography>
-                      </CardContent>
-                    </CardActionArea>
+                  <Card onClick={this.handleClick.bind(this, el)} >
+                  <CardActionArea >
+                              <div>
+                                  <div className="card float-right" style={{width:600}}>
+                                    <div className="row">
+                                      <div className="col-sm-5">
+                                        <img className="d-block w-100" src="https://assets.simpleviewinc.com/simpleview/image/fetch/c_fill,dpr_1.0,h_354,q_50,w_532/https://assets.simpleviewinc.com/simpleview/image/upload/crm/parkcity/350Mainparkcityutah0_5e959c55-5056-b3a8-4964d648b5bf9e85.jpg" alt="" />
+                                      </div>
+                                      <div className="col-sm-7" style={{marginTop:10}}>
+                                        <div className="card-block">
+                                        <Typography gutterBottom variant="h5" component="h3">
+                                            {el.name}
+                                          </Typography>
+                                          <Typography gutterBottom variant="h5" component="h1">
+                                            <Rater total={5} rating={el.rating} />
+                                          </Typography>
+                                          <Typography
+                                            variant="body2"
+                                            color="textSecondary"
+                                            component="p"
+                                          >
+                                            {el.vicinity}
+                                          </Typography>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                </CardActionArea>
                   </Card>
                 </div>
               ))}

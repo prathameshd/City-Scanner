@@ -16,6 +16,7 @@ import Modal from 'react-bootstrap/Modal';
 import {ToastsContainer, ToastsStore} from 'react-toasts';
 
 
+
 const fadeProperties = {
     duration: 5000,
     transitionDuration: 500,
@@ -46,7 +47,9 @@ class Details_Housing extends PureComponent{
         long: " ",
         showModal1: false,
         updatedComment:"",
-        updatedPostId:""
+        updatedPostId:"",
+        image1:"",
+        image2:""
     };
 
     this.getCoordinates = this.getCoordinates.bind(this);
@@ -195,6 +198,7 @@ componentDidMount() {
   this.getShops();
   this.getBusStops();
   this.getAtms();
+  this.getPlaceDetails();
 }
 
 getPlaceDetails() {
@@ -207,8 +211,14 @@ getPlaceDetails() {
       data: ls.get("selectedIndex")["place_id"]
     })
     .then(response => {
+      console.log("Place det",response.data.result.photos[0]["photo_reference"])
       this.setState({
-        place_details: response.data.results
+        place_details: response.data.result,
+        image1:response.data.result.photos[0]["photo_reference"],
+        image2:response.data.result.photos[1]["photo_reference"],
+        image3:response.data.result.photos[2]["photo_reference"],
+        image4:response.data.result.photos[3]["photo_reference"],
+        image5:response.data.result.photos[4]["photo_reference"],
       });
       //this.setState({ locations: response.data.results });
     })
@@ -358,7 +368,24 @@ sendNotifications()
 }
     render(){
        let Comment=this.state.Comment
-        let imageurl="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1000&photoreference="+ls.get("selectedIndex")["photos"][0]["photo_reference"]+"&key=AIzaSyAJA71Rtblkd6TpFQvsgsnCbOVUqDCf-nc"
+       //let opening_hours=this.state.place_details.opening_hours
+      //let ref1=this.state.place_details.photos[""0""].photo_reference
+      const info=  this.state.place_details
+      
+      console.log("asvsv",info)
+     // let ref1=[]
+      //let ref2=[]
+      //let ref3=[]
+      // for(var i=0; i<info[0].photos.length; i++){
+      //   ref1.push(info[0].photos[i].photo_reference)
+      //   ref2.push(info[0].photos[i].photo_reference)
+      //   ref3.push(info[0].photos[i].photo_reference)
+      // }
+        let imageurl1="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1000&photoreference="+this.state.image1+"&key=AIzaSyAJA71Rtblkd6TpFQvsgsnCbOVUqDCf-nc"
+        let imageurl2="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1000&photoreference="+this.state.image2+"&key=AIzaSyAJA71Rtblkd6TpFQvsgsnCbOVUqDCf-nc"
+        let imageurl3="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1000&photoreference="+this.state.image3+"&key=AIzaSyAJA71Rtblkd6TpFQvsgsnCbOVUqDCf-nc"
+        let imageurl4="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1000&photoreference="+this.state.image4+"&key=AIzaSyAJA71Rtblkd6TpFQvsgsnCbOVUqDCf-nc"
+        let imageurl5="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1000&photoreference="+this.state.image5+"&key=AIzaSyAJA71Rtblkd6TpFQvsgsnCbOVUqDCf-nc"
 
         return (
             <>
@@ -377,20 +404,70 @@ sendNotifications()
 
             <div style={{ background: "gray url(https://subtlepatterns.com/patterns/geometry2.png)"}}>
             <div className="container-fluid" style={{width:'90%'}}>
-            <h1 className="my-4">{ls.get("selectedIndex")["name"]} </h1>
+            <h1 className="my-4">{ls.get("selectedIndex")["name"]} </h1><br/><br/>
             <div className="row">
-                <div className="col-md-8" style={{paddingRight:'50px'}}>
-                    <img className="img-fluid" src={imageurl} alt="" />
+                <div className="col-md-7" style={{paddingRight:'50px'}}>
+
+          <Fade >     
+          <div >
+            <div className="image-container">
+            
+              <img
+                src={imageurl1}
+                height="555"
+                width="1550"
+              />
+            </div>
+          </div>
+          <div >
+            <div className="image-container">
+                        
+              <img
+                src={imageurl2}
+                height="555"
+                width="1550"
+              />
+            </div>
+          </div>
+          <div >
+            <div className="image-container">
+               <img
+                src={imageurl3}
+                height="555"
+                width="1550"
+              />
+            </div>
+          </div>
+          <div >
+            <div className="image-container">
+              <img
+                src={imageurl4}
+                height="555"
+                width="1550"
+              />
+            </div>
+          </div>
+          <div >
+            <div className="image-container">
+              <img
+                src={imageurl5}
+                height="555"
+                width="1550"
+              />
+            </div>
+          </div>
+        </Fade>
+                    
                 </div>
-                <div className="col-md-4">
+                <div className="col-md-5">
                       <div>
-                      <h5 className="my-3" style={{'font-family': 'cursive'}}>About</h5>
-                      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae. Sed dui lorem, adipiscing in adipiscing et, interdum nec metus. Mauris ultricies, justo eu convallis placerat, felis enim.</p>
                       <h5 className="my-3" style={{'font-family': 'cursive'}}>Details</h5>
-                      <ul>
-                          <li>Address: {ls.get("selectedIndex")["vicinity"]}</li>
-                          <li>Average Rating:{ls.get("selectedIndex")["rating"]}</li>
-                      </ul>
+                      <img style={{height:'7%', width:'7%'}} src="https://www.freeiconspng.com/uploads/orange-localization-icon-11.png"/>  {this.state.place_details.formatted_address}<br/>
+                      <br/><img style={{height:'7%', width:'7%'}} src="https://iconsplace.com/wp-content/uploads/_icons/ffa500/256/png/phone-icon-11-256.png"/>  {this.state.place_details.formatted_phone_number}<br/>
+                      <br/><img style={{height:'7%', width:'7%'}} src="https://www.flaticon.es/premium-icon/icons/svg/1178/1178509.svg"/>  {this.state.place_details.rating} / 5 <br/>
+                      <br/><img style={{height:'7%', width:'7%'}} src="https://www.pngtube.com/myfile/detail/176-1761461_website-vector-icon-png-png-download-worldwide-shipping.png"/>  {this.state.place_details.website}<br/>
+                      <br/><img style={{height:'7%', width:'7%'}} src="https://resources.iacademy.com/49/1110/4440/1464979022/Icon_HoursOfOperationSign-01.png"/>  {this.state.opening_hours==null ? 'Not Available' : this.state.opening_hours}<br/>
+                      
                     </div>
 
                       <div className="row" style={{paddingTop:'4%'}}>
@@ -401,7 +478,7 @@ sendNotifications()
                                   shopLoc={this.state.shopLoc}
                                   busStopLoc={this.state.busStopLoc}
                                   atmLoc={this.state.atmLoc}
-                                  style={{height:'80% !important'}}
+                                  style={{height:'100% !important', width:'60%'}}
                                 />
                       </div>
                 </div>
@@ -411,11 +488,11 @@ sendNotifications()
         </div>
 
 
-        <div className="container-fluid" style={{width:'90%',marginTop:'4%'}}>
+        <div className="container-fluid" style={{width:'80%',marginTop:'4%'}}>
         {ls.get("currentUser") !=""?
 
         <div className="row">
-        <div className="col-md-8">
+        <div className="col-md-7">
         {this.state.allComments.map((el, i) => (
                 <div className="container" style={{paddingBottom:10}}>
                     <div className="card">
@@ -468,7 +545,10 @@ sendNotifications()
 
         </div>:
         <div className="row">
-        <h3>Login to see all posts</h3>
+          <font face="verdana" color="skyblue">
+         <h4> The residents of {ls.get("city")} will help you. Find their reviews about '{this.state.place_details.name}'.</h4>
+         <h3>LOGIN TO SEE POSTS</h3>
+         </font>
         </div>
       }
         </div>

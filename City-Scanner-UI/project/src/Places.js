@@ -20,6 +20,11 @@ class Places extends Component {
       long: " "
     };
   }
+  handleClick(index) {
+    this.setState({ index });
+    ls.set("selectedIndex", index);
+          window.location.href="/PlaceDetails" 
+  }
 
   componentWillMount() {
     ls.set("page", "places");
@@ -63,19 +68,19 @@ class Places extends Component {
 
   render() {
     //const { data } = this.props.location;
+    //let imageurl="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1000&photoreference="+ls.get("selectedIndex")["photos"][0]["photo_reference"]+"&key=AIzaSyAJA71Rtblkd6TpFQvsgsnCbOVUqDCf-nc"
     if (ls.get("city") == null) {
       window.location.href = "/home";
     } else if (this.state.lat != " " && this.state.long != " ") {
       return (
         <div className="containter-fluid">
-          <h1>Places in {ls.get("city")}</h1>
+          <h1>Spots to visit in {ls.get("city")}</h1>
           <div className="row">
             <div className="col-sm-6  ">
               {this.state.places.map((el, i) => (
                 <div
                   style={{
                     display: "inline-block",
-                    width: 350,
                     marginBottom: 18,
                     marginRight: 18,
                     marginLeft: 100,
@@ -83,37 +88,35 @@ class Places extends Component {
                     fontColor: "black"
                   }}
                 >
-                  <Card className="cardsize">
-                    <CardActionArea>
-                      <CardContent style={{ display: "inline-block" }}>
-                        <Typography gutterBottom variant="h5" component="h3">
-                          {el.name}
-                        </Typography>
-                        <Typography gutterBottom variant="h5" component="h1">
-                          <Rater total={5} rating={el.rating} />
-                        </Typography>
-                        <Typography
-                          variant="body2"
-                          color="textSecondary"
-                          component="p"
-                        >
-                          {el.vicinity}
-                        </Typography>
-                        <Typography
-                          variant="body2"
-                          color="textSecondary"
-                          component="p"
-                        >
-                          {el.types[0]}
-                          &nbsp;
-                          {el.types[1]}
-                          &nbsp;
-                          {el.types[2]}
-                          &nbsp;
-                          {el.types[3]}
-                        </Typography>
-                      </CardContent>
-                    </CardActionArea>
+                  <Card onClick={this.handleClick.bind(this, el)}>
+                  <CardActionArea >
+                              <div>
+                                  <div className="card float-right" style={{width:600}}>
+                                    <div className="row">
+                                      <div className="col-sm-5">
+                                        <img className="d-block w-100" src="https://s27363.pcdn.co/wp-content/uploads/2017/02/Tigers-Nest-Bhutan.jpg.optimal.jpg" alt="" />
+                                      </div>
+                                      <div className="col-sm-7" style={{marginTop:10}}>
+                                        <div className="card-block">
+                                        <Typography gutterBottom variant="h5" component="h3">
+                                            {el.name}
+                                          </Typography>
+                                          <Typography gutterBottom variant="h5" component="h1">
+                                            <Rater total={5} rating={el.rating} />
+                                          </Typography>
+                                          <Typography
+                                            variant="body2"
+                                            color="textSecondary"
+                                            component="p"
+                                          >
+                                            {el.vicinity}
+                                          </Typography>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                </CardActionArea>
                   </Card>
                 </div>
               ))}

@@ -14,7 +14,9 @@ import MediaCard from "./Dashcards";
 import Places from "./Places";
 import Housing from "./Housing";
 import Events from "./Events";
-import Details_housing from "./Details_housing";
+import Details_Housing from "./Details_housing";
+import Details_Restaurant from "./Details_restaurants";
+import Details_Place from "./Details_places";
 class App extends Component {
   render() {
     return (
@@ -32,7 +34,9 @@ class App extends Component {
           <Route exact path="/Dashcards" component={MediaCard} />
           <Route exact path="/Flip" component={Flip} />
           <Route exact path="/Housing" component={Housing} />
-          <Route exact path="/HousingDetails" component={Details_housing} />
+          <Route exact path="/HousingDetails" component={Details_Housing} />
+          <Route exact path="/RestaurantDetails" component={Details_Restaurant}/>
+          <Route exact path="/PlaceDetails" component={Details_Place}/>
           <Route exact path="/Events" component={Events} />
 
 

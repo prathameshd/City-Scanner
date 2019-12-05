@@ -151,6 +151,8 @@ class Housing extends Component {
   }
 
   render() {
+    //let image="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1000&photoreference="+el.photo_reference+"&key=AIzaSyAJA71Rtblkd6TpFQvsgsnCbOVUqDCf-nc"
+    //let imageurl="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1000&photoreference="+ls.get("selectedIndex")["photos"][0]["photo_reference"]+"&key=AIzaSyAJA71Rtblkd6TpFQvsgsnCbOVUqDCf-nc" 
     if (ls.get("city") == null) {
       window.location.href = "/home";
     } else if (this.state.lat != " " && this.state.long != " ") {
@@ -160,6 +162,7 @@ class Housing extends Component {
           <div className="row">
             <div className="col-sm-6" style={{overflowY: 'scroll', height:'1200px',}}>
               {this.state.establishments.map((el, i) => (
+                
                 <div
                   style={{
                     display: "inline-block",
@@ -172,13 +175,13 @@ class Housing extends Component {
                 >
                     <Card
                       onClick={this.handleClick.bind(this, el)}
-                    >         
+                    >        
                               <CardActionArea >
                               <div>
                                   <div className="card float-right" style={{width:600}}>
                                     <div className="row">
                                       <div className="col-sm-5">
-                                        <img className="d-block w-100" src="https://picsum.photos/150?image=641" alt="" />
+                                        <img className="d-block w-100" src="https://959online.com/wp-content/uploads/2019/11/iStock_110819_LeBronHomes.jpg" alt="" />
                                       </div>
                                       <div className="col-sm-7" style={{marginTop:10}}>
                                         <div className="card-block">
