@@ -6,7 +6,7 @@ import Typography from "@material-ui/core/Typography";
 import Rater from "react-rater";
 import "react-rater/lib/react-rater.css";
 import ls from "local-storage";
-import { Form, Button, Col, Nav, Navbar, useState} from "react-bootstrap";
+import { Form, Button, Col, Nav, Navbar, useState,Tab,Tabs} from "react-bootstrap";
 import Modal from 'react-bootstrap/Modal';
 
 class Events extends Component {
@@ -27,7 +27,8 @@ class Events extends Component {
 			eventImage:'',
 			eventDate:'',
 			eventStartTime:'',
-			eventEndTime:''
+			eventEndTime:'',
+			eventCity:''
     };
     this.getCoordinates = this.getCoordinates.bind(this);
     this.getEvents = this.getEvents.bind(this);
@@ -133,6 +134,7 @@ class Events extends Component {
     		    		"eventDate":this.state.eventDate,
 
     		"eventAddress":this.state.eventAddress,
+    		"eventCity":ls.get("city"),
     		"eventContact":this.state.eventContact,
     		"eventStartTime":this.state.eventStartTime,
     		"eventEndTime":this.state.eventEndTime,
@@ -165,10 +167,83 @@ class Events extends Component {
     } else if (this.state.lat != " " && this.state.long != " ") {
       return (
         <div className="containter-fluid">
-          <h1>Events in {ls.get("city")}</h1>
-					<div className="row">
+        <div className="row">
+                  <div className="col-sm-9"><h3>Events around {ls.get("city")}</h3>
+                  </div>
+                  <div className="col-sm-3">
+        			{ls.get("currentUser")!=""?
+					<Button style={{float:"right"}} className="btn btn-primary" onClick={this.changeState3}>Create Your Event</Button>:null}
+					</div>
+        </div>
 
-					<Button className="btn btn-primary" onClick={this.changeState3}>Create Event</Button>
+        <div className="row">
+        <Tabs defaultActiveKey="home" id="uncontrolled-tab-example">
+		  <Tab eventKey="home" title="Explore">
+<div className="row">
+            {this.state.events.map((el, i) => (
+              <div
+                style={{
+                  display: "inline-block",
+                  marginBottom: 5,
+                  marginRight: 12,
+                  marginLeft: 100,
+                  paddingTop: "10px",
+                  fontColor: "black"
+                }}
+              >
+                <Card>
+                  <CardActionArea>
+                    <div>
+                      <div className="card float-right" style={{ width: 400 }}>
+                        <div className="row">
+                          <div className="col-sm-5">
+                            <img
+                              className="d-block w-100"
+                              src="https://picsum.photos/150?image=641"
+                              alt=""
+                            />
+                          </div>
+                          <div className="col-sm-7" style={{ marginTop: 10 }}>
+                            <div className="card-block">
+                              <Typography
+                                gutterBottom
+                                variant="h5"
+                                component="h3"
+                              >
+                                {el.name}
+                              </Typography>
+                              <Typography
+                                gutterBottom
+                                variant="h5"
+                                component="h1"
+                              >
+                                <Rater total={5} rating={el.rating} />
+                              </Typography>
+                              <Typography
+                                variant="body2"
+                                color="textSecondary"
+                                component="p"
+                              >
+                                {el.vicinity}
+                              </Typography>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </CardActionArea>
+                </Card>
+              </div>
+            ))}
+          </div>
+
+          </Tab>
+		  <Tab eventKey="profile" title="Events Around You">
+		  </Tab>
+			</Tabs>
+        </div>
+					<div className="row">
+		
 
 				<Modal style={{zIndex:50000,top:'5%'}} show={this.state.showModal3} onHide={this.changeState3}>
 				<div className="container" style={{padding:'5%'}}>
@@ -230,63 +305,7 @@ class Events extends Component {
 				</Modal>
 					</div>
 
-          <div className="row">
-            {this.state.events.map((el, i) => (
-              <div
-                style={{
-                  display: "inline-block",
-                  marginBottom: 5,
-                  marginRight: 12,
-                  marginLeft: 100,
-                  paddingTop: "10px",
-                  fontColor: "black"
-                }}
-              >
-                <Card>
-                  <CardActionArea>
-                    <div>
-                      <div className="card float-right" style={{ width: 400 }}>
-                        <div className="row">
-                          <div className="col-sm-5">
-                            <img
-                              className="d-block w-100"
-                              src="https://picsum.photos/150?image=641"
-                              alt=""
-                            />
-                          </div>
-                          <div className="col-sm-7" style={{ marginTop: 10 }}>
-                            <div className="card-block">
-                              <Typography
-                                gutterBottom
-                                variant="h5"
-                                component="h3"
-                              >
-                                {el.name}
-                              </Typography>
-                              <Typography
-                                gutterBottom
-                                variant="h5"
-                                component="h1"
-                              >
-                                <Rater total={5} rating={el.rating} />
-                              </Typography>
-                              <Typography
-                                variant="body2"
-                                color="textSecondary"
-                                component="p"
-                              >
-                                {el.vicinity}
-                              </Typography>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </CardActionArea>
-                </Card>
-              </div>
-            ))}
-          </div>
+          
         </div>
       );
     } else {

@@ -35,6 +35,9 @@ public class EventEntity {
 	@Column(name = "address")
 	private String eventAddress;
 
+	@Column(name = "city")
+	private String eventCity;
+
 	@Column(name = "contact")
 	private String eventContact;
 
@@ -55,7 +58,13 @@ public class EventEntity {
 		this.eventId = eventId;
 	}
 
+	public String getEventCity() {
+		return eventCity;
+	}
 
+	public void setEventCity(String eventCity) {
+		this.eventCity = eventCity;
+	}
 
 	public String getUserEmail() {
 		return userEmail;
