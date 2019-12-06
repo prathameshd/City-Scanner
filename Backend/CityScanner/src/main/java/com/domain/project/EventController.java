@@ -1,5 +1,7 @@
 package com.domain.project;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -26,7 +28,6 @@ public class EventController {
 	@CrossOrigin
 	@PostMapping("/addEvent")
 	public void addEvent(@RequestBody EventEntity object) {
-		System.out.println(object.getUserEmail() + object.getEventDescription());
 		eventRepository.save(object);
 	}
 
@@ -38,6 +39,13 @@ public class EventController {
 		return file.getOriginalFilename();
 		// redirectAttributes.addFlashAttribute("message",
 		// "You successfully uploaded " + file.getOriginalFilename() + "!");
+	}
+
+	// Method to get all events for a city
+	@CrossOrigin
+	@PostMapping("/getEventsForCity")
+	public List<EventEntity> getEventsForCity(@RequestBody String cityName) {
+		return eventRepository.findByCityName(cityName);
 	}
 
 }
