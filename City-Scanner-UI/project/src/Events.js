@@ -28,7 +28,8 @@ class Events extends Component {
 			eventDate:'',
 			eventStartTime:'',
 			eventEndTime:'',
-			eventCity:''
+			eventCity:'',
+			userEvents:[]
     };
     this.getCoordinates = this.getCoordinates.bind(this);
     this.getEvents = this.getEvents.bind(this);
@@ -37,6 +38,7 @@ class Events extends Component {
 		this.changeState3=this.changeState3.bind(this);
 		this.onChange=this.onChange.bind(this);
 		this.createEvent=this.createEvent.bind(this);
+				this.getUserEvents=this.getUserEvents.bind(this);
   }
 
   componentWillMount() {
@@ -80,6 +82,7 @@ class Events extends Component {
   componentDidMount() {
     this.getCoordinates();
     this.getEvents();
+    this.getUserEvents();
   }
 
 	onFileChangeHandler = (e) => {
@@ -157,9 +160,35 @@ class Events extends Component {
         }).catch(err => {
 
         })
-
-
     }
+
+    getUserEvents()
+    {
+    	console.log("cityyyyyyyy"+ls.get('city'))
+    	    	      return axios({
+          method: 'post',
+          url: 'http://localhost:8080/getEventsForCity',
+          headers: {
+            'Access-Control-Allow-Origin': '*'
+          },
+          data: ls.get('city')
+        })
+        .then((response) => {
+        	console.log("user events"+JSON.stringify(response))
+        	      this.setState({
+        userEvents: response.data
+      })
+
+        }).catch(err => {
+
+        })
+    }
+
+      handleClick(index) {
+   
+    ls.set("selectedIndex", index);
+          window.location.href="/EventDetails"
+  }
 
   render() {
     if (ls.get("city") == null) {
@@ -191,7 +220,7 @@ class Events extends Component {
                   fontColor: "black"
                 }}
               >
-                <Card>
+                                <Card onClick={this.handleClick.bind(this, el)}>
                   <CardActionArea>
                     <div>
                       <div className="card float-right" style={{ width: 400 }}>
@@ -239,6 +268,72 @@ class Events extends Component {
 
           </Tab>
 		  <Tab eventKey="profile" title="Events Around You">
+
+
+
+
+<div className="row">
+            {this.state.userEvents.map((el, i) => (
+              <div
+                style={{
+                  display: "inline-block",
+                  marginBottom: 5,
+                  marginRight: 12,
+                  marginLeft: 100,
+                  paddingTop: "10px",
+                  fontColor: "black"
+                }}
+              >
+                <Card>
+                  <CardActionArea>
+                    <div>
+                      <div className="card float-right" style={{ width: 400 }}>
+                        <div className="row">
+                          <div className="col-sm-5">
+                            <img
+                              className="d-block w-100"
+                              src="https://picsum.photos/150?image=641"
+                              alt=""
+                            />
+                          </div>
+                          <div className="col-sm-7" style={{ marginTop: 10 }}>
+                            <div className="card-block">
+                              <Typography
+                                gutterBottom
+                                variant="h5"
+                                component="h3"
+                              >
+                                {el.eventTitle}
+                              </Typography>
+                              <Typography
+                                gutterBottom
+                                variant="h5"
+                                component="h1"
+                              >
+                                <Rater total={5} rating={el.rating} />
+                              </Typography>
+                              <Typography
+                                variant="body2"
+                                color="textSecondary"
+                                component="p"
+                              >
+                              </Typography>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </CardActionArea>
+                </Card>
+              </div>
+            ))}
+          </div>
+
+
+
+
+
+
 		  </Tab>
 			</Tabs>
         </div>
