@@ -42,6 +42,8 @@ public class UserHousingPostController {
 	public void updateUserPost(@RequestBody UserHousingPostEntity userPost) {
 		Optional<UserHousingPostEntity> post = userPostRepository.findById(userPost.getPostId());
 		post.get().setPostContent(userPost.getPostContent());
+		post.get().setUpvotes(userPost.getUpvotes());
+		post.get().setDownvotes(userPost.getDownvotes());
 		userPostRepository.save(post.get());
 	}
 
