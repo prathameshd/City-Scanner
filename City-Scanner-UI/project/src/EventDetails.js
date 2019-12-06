@@ -35,6 +35,7 @@ class EventDetails extends Component{
     this.fetchComments()
   }
 
+//Method to get all comments for this event
   fetchComments() {
   var postData = {
     "postsubjectname": ls.get("selectedIndex")["name"]
@@ -60,6 +61,7 @@ class EventDetails extends Component{
     });
 }
 
+//Method to add new Comment under current event
 addComment() {
   var data=this.refs.comment.value;
   var postData = {
@@ -97,6 +99,7 @@ addComment() {
 
 }
 
+//Method to send notifications when a new post is added
 sendNotifications()
 {
   var postData = {
@@ -219,8 +222,6 @@ sendNotifications()
       }
         </div>
         <ToastsContainer store={ToastsStore}/>
-
-
 
         </>
         );
