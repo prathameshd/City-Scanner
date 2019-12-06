@@ -19,7 +19,7 @@ class Events extends Component {
       long: " ",
 			selectedFile: '',
 			imageName:'',
-			showModal3:false,
+			showModal:false,
 			eventTitle:'',
 			eventDescription:'',
 			eventContact:'',
@@ -35,7 +35,7 @@ class Events extends Component {
     this.getEvents = this.getEvents.bind(this);
 		this.onFileChangeHandler= this.onFileChangeHandler.bind(this);
 		this.uploadImage=this.uploadImage.bind(this);
-		this.changeState3=this.changeState3.bind(this);
+		this.displayModalBox=this.displayModalBox.bind(this);
 		this.onChange=this.onChange.bind(this);
 		this.createEvent=this.createEvent.bind(this);
 				this.getUserEvents=this.getUserEvents.bind(this);
@@ -53,16 +53,15 @@ class Events extends Component {
       data: ls.get("city")
     })
       .then(response => {
-        console.log(response.data);
         this.setState({ lat: response.data.lat });
         this.setState({ long: response.data.long });
-        console.log("states hanged", this.state);
       })
       .catch(err => {
         console.log(err);
       });
   }
 
+//Method to retrieve events in city from API
   getEvents() {
     return axios({
       method: "post",
@@ -71,7 +70,6 @@ class Events extends Component {
       data: ls.get("city")
     })
       .then(response => {
-        console.log(response.data);
         this.setState({ events: response.data._embedded.events });
         this.setState({ locations: response.data.results });
       })
@@ -79,6 +77,7 @@ class Events extends Component {
         console.log(err);
       });
   }
+
   componentDidMount() {
     this.getCoordinates();
     this.getEvents();
@@ -94,12 +93,14 @@ class Events extends Component {
 
     };
 
+//Method to change states
         onChange(e) {
       this.setState({
         [e.target.name]: e.target.value
       });
     }
 
+//Method to upload image when new event is being created
     uploadImage()
     {
     	const formData = new FormData();
@@ -122,12 +123,14 @@ class Events extends Component {
         })
     }
 
-        changeState3() {
+//Method to toggle Create event modal box
+        displayModalBox() {
       this.setState({
-        showModal3: !this.state.showModal3
+        showModal: !this.state.showModal
       })
     }
 
+//Method to create new event by user
     createEvent()
     {
     	var postData={
@@ -145,7 +148,6 @@ class Events extends Component {
 
     	}
 
-    	console.log("data for adding event"+JSON.stringify(postData))
 
     	      return axios({
           method: 'post',
@@ -162,9 +164,9 @@ class Events extends Component {
         })
     }
 
+//Method to get all user created events for city
     getUserEvents()
     {
-    	console.log("cityyyyyyyy"+ls.get('city'))
     	    	      return axios({
           method: 'post',
           url: 'http://localhost:8080/getEventsForCity',
@@ -184,6 +186,7 @@ class Events extends Component {
         })
     }
 
+//Method to redirect to Event Details page
       handleClick(index) {
    
     ls.set("selectedIndex", index);
@@ -201,7 +204,7 @@ class Events extends Component {
                   </div>
                   <div className="col-sm-3">
         			{ls.get("currentUser")!=""?
-					<Button style={{float:"right"}} className="btn btn-primary" onClick={this.changeState3}>Create Your Event</Button>:null}
+					<Button style={{float:"right"}} className="btn btn-primary" onClick={this.displayModalBox}>Create Your Event</Button>:null}
 					</div>
         </div>
 
@@ -340,7 +343,7 @@ class Events extends Component {
 					<div className="row">
 		
 
-				<Modal style={{zIndex:50000,top:'5%'}} show={this.state.showModal3} onHide={this.changeState3}>
+				<Modal style={{zIndex:50000,top:'5%'}} show={this.state.showModal} onHide={this.displayModalBox}>
 				<div className="container" style={{padding:'5%'}}>
 				<Form style = {{padding:'20px'}}>
 				<Form.Group controlId="Header">
