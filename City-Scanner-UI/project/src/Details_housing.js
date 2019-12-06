@@ -46,7 +46,10 @@ class Details_Housing extends PureComponent{
         long: " ",
         showModal1: false,
         updatedComment:"",
-        updatedPostId:""
+        updatedPostId:"",
+        isliked:false,
+        upvotes:0,
+        downvotes:0,
     };
 
     this.getCoordinates = this.getCoordinates.bind(this);
@@ -226,7 +229,9 @@ addComment() {
     "datetime": "",
     "category": "Housing",
     "postsubjectname": ls.get("selectedIndex")["name"],
-    "postContent": data
+    "postContent": data,
+    "upvotes":0,
+    "downvotes":0
   }
 
   return axios({
@@ -255,11 +260,14 @@ addComment() {
 }
 
 handleClick(index) {
+  console.log(index)
   if (ls.get("currentUser") == index["username"])
     this.setState({
       showModal1: true,
       updatedComment: index["postContent"],
-      updatedPostId: index["postId"]
+      updatedPostId: index["postId"],
+      upvotes:index["upvotes"],
+      downvotes:index["downvotes"]
     })
   }
 
@@ -279,7 +287,9 @@ updateComment(index) {
     "category": "Housing",
     "postsubjectname": index["postsubjectname"],
     "postContent": this.state.updatedComment,
-    "postId": this.state.updatedPostId
+    "postId": this.state.updatedPostId,
+    "upvotes":this.state.upvotes,
+    "downvotes":this.state.downvotes,
   }
   return axios({
       method: "post",
@@ -294,8 +304,6 @@ updateComment(index) {
       this.changeState();
       this.fetchComments();
       ToastsStore.success("Post Updated");
-
-      //change state to re render component
     })
     .catch(err => {
       console.log("error while updating" + err);
@@ -311,7 +319,9 @@ deleteComment(index) {
     "category": "Housing",
     "postsubjectname": index["postsubjectname"],
     "postContent": this.state.updatedComment,
-    "postId": this.state.updatedPostId
+    "postId": this.state.updatedPostId,
+    "upvotes":this.state.upvotes,
+    "downvotes":this.state.downvotes
   }
   return axios({
       method: "post",
@@ -333,12 +343,81 @@ deleteComment(index) {
     });
 }
 
+
+upvote(index) {
+  var count = index['upvotes'] + 1;
+  var postData = {
+    "username": ls.get("currentUser"),
+    "title": "",
+    "ratings": 0,
+    "datetime": "",
+    "category": "Housing",
+    "postsubjectname": index["postsubjectname"],
+    "postContent": index['postContent'],
+    "postId": index['postId'],
+    "upvotes":count,
+    "downvotes":index['downvotes']
+  }
+  return axios({
+      method: "post",
+      url: "http://localhost:8080/updateHousePost",
+      headers: {
+        "Access-Control-Allow-Origin": "*"
+      },
+      data: postData
+    })
+    .then(response => {
+      console.log("update success" + response.data);
+      this.fetchComments();
+    })
+    .catch(err => {
+      console.log("error while updating" + err);
+    });
+}
+
+downvote(index) {
+
+  var count = index['downvotes'] + 1;
+
+  this.setState({
+    updatedPostId: index["postId"]
+  })
+
+  var postData = {
+    "username": ls.get("currentUser"),
+    "title": "",
+    "ratings": 0,
+    "datetime": "",
+    "category": "Housing",
+    "postsubjectname": index["postsubjectname"],
+    "postContent":  index['postContent'],
+    "postId":  index['postId'],
+    "downvotes":count,
+    "upvotes":index['upvotes']
+  }
+  return axios({
+      method: "post",
+      url: "http://localhost:8080/updateHousePost",
+      headers: {
+        "Access-Control-Allow-Origin": "*"
+      },
+      data: postData
+    })
+    .then(response => {
+      console.log("update success" + response.data);
+      this.fetchComments();
+    })
+    .catch(err => {
+      console.log("error while updating" + err);
+    });
+}
+
 sendNotifications()
 {
   var postData = {
     "email": '',
     "cityName": localStorage.getItem("city"),
-    "notificationType":"Housing"
+    "notificationType":"Housing",
   }
 
   return axios({
@@ -433,10 +512,14 @@ sendNotifications()
                             </p>
                             <div className="clearfix" />
                             <p>{el.postContent}</p>
-                            <p>
-                            <a className="float-right btn btn-outline-primary ml-2"> <i className="fa fa-reply" /> Reply</a>
-                            <a className="float-right btn text-white btn-danger"> <i className="fa fa-heart" /> Like</a>
-                            </p>
+                              <div className="like grow" style={{float:'left', bottom:'0px'}}>
+                                <i className="fa fa-thumbs-up fa-2x like" aria-hidden="true" onClick={this.upvote.bind(this, el)}/>
+                              {el.upvotes}
+                              </div>
+                              <div className="dislike grow" style={{float:'left', bottom:'0px'}}>
+                                <i className="fa fa-thumbs-down fa-2x like" aria-hidden="true" onClick={this.downvote.bind(this, el)}/>
+                            {el.downvotes}
+                            </div>
                             <div>
                          {ls.get("currentUser")==el.username
                            ? <button className="float-right btn btn-error" onClick={this.handleClick.bind(this, el)}>Edit</button>
