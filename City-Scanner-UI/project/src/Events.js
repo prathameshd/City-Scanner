@@ -19,7 +19,7 @@ class Events extends Component {
       long: " ",
 			selectedFile: '',
 			imageName:'',
-			showModal3:false,
+			showModal:false,
 			eventTitle:'',
 			eventDescription:'',
 			eventContact:'',
@@ -28,15 +28,17 @@ class Events extends Component {
 			eventDate:'',
 			eventStartTime:'',
 			eventEndTime:'',
-			eventCity:''
+			eventCity:'',
+			userEvents:[]
     };
     this.getCoordinates = this.getCoordinates.bind(this);
     this.getEvents = this.getEvents.bind(this);
 		this.onFileChangeHandler= this.onFileChangeHandler.bind(this);
 		this.uploadImage=this.uploadImage.bind(this);
-		this.changeState3=this.changeState3.bind(this);
+		this.displayModalBox=this.displayModalBox.bind(this);
 		this.onChange=this.onChange.bind(this);
 		this.createEvent=this.createEvent.bind(this);
+				this.getUserEvents=this.getUserEvents.bind(this);
   }
 
   componentWillMount() {
@@ -51,16 +53,15 @@ class Events extends Component {
       data: ls.get("city")
     })
       .then(response => {
-        console.log(response.data);
         this.setState({ lat: response.data.lat });
         this.setState({ long: response.data.long });
-        console.log("states hanged", this.state);
       })
       .catch(err => {
         console.log(err);
       });
   }
 
+//Method to retrieve events in city from API
   getEvents() {
     return axios({
       method: "post",
@@ -69,7 +70,6 @@ class Events extends Component {
       data: ls.get("city")
     })
       .then(response => {
-        console.log(response.data);
         this.setState({ events: response.data._embedded.events });
         this.setState({ locations: response.data.results });
       })
@@ -77,9 +77,11 @@ class Events extends Component {
         console.log(err);
       });
   }
+
   componentDidMount() {
     this.getCoordinates();
     this.getEvents();
+    this.getUserEvents();
   }
 
 	onFileChangeHandler = (e) => {
@@ -91,12 +93,14 @@ class Events extends Component {
 
     };
 
+//Method to change states
         onChange(e) {
       this.setState({
         [e.target.name]: e.target.value
       });
     }
 
+//Method to upload image when new event is being created
     uploadImage()
     {
     	const formData = new FormData();
@@ -119,12 +123,14 @@ class Events extends Component {
         })
     }
 
-        changeState3() {
+//Method to toggle Create event modal box
+        displayModalBox() {
       this.setState({
-        showModal3: !this.state.showModal3
+        showModal: !this.state.showModal
       })
     }
 
+//Method to create new event by user
     createEvent()
     {
     	var postData={
@@ -142,7 +148,6 @@ class Events extends Component {
 
     	}
 
-    	console.log("data for adding event"+JSON.stringify(postData))
 
     	      return axios({
           method: 'post',
@@ -157,9 +162,36 @@ class Events extends Component {
         }).catch(err => {
 
         })
-
-
     }
+
+//Method to get all user created events for city
+    getUserEvents()
+    {
+    	    	      return axios({
+          method: 'post',
+          url: 'http://localhost:8080/getEventsForCity',
+          headers: {
+            'Access-Control-Allow-Origin': '*'
+          },
+          data: ls.get('city')
+        })
+        .then((response) => {
+        	console.log("user events"+JSON.stringify(response))
+        	      this.setState({
+        userEvents: response.data
+      })
+
+        }).catch(err => {
+
+        })
+    }
+
+//Method to redirect to Event Details page
+      handleClick(index) {
+   
+    ls.set("selectedIndex", index);
+          window.location.href="/EventDetails"
+  }
 
   render() {
     if (ls.get("city") == null) {
@@ -172,7 +204,7 @@ class Events extends Component {
                   </div>
                   <div className="col-sm-3">
         			{ls.get("currentUser")!=""?
-					<Button style={{float:"right"}} className="btn btn-primary" onClick={this.changeState3}>Create Your Event</Button>:null}
+					<Button style={{float:"right"}} className="btn btn-primary" onClick={this.displayModalBox}>Create Your Event</Button>:null}
 					</div>
         </div>
 
@@ -191,7 +223,7 @@ class Events extends Component {
                   fontColor: "black"
                 }}
               >
-                <Card>
+                                <Card onClick={this.handleClick.bind(this, el)}>
                   <CardActionArea>
                     <div>
                       <div className="card float-right" style={{ width: 400 }}>
@@ -239,13 +271,79 @@ class Events extends Component {
 
           </Tab>
 		  <Tab eventKey="profile" title="Events Around You">
+
+
+
+
+<div className="row">
+            {this.state.userEvents.map((el, i) => (
+              <div
+                style={{
+                  display: "inline-block",
+                  marginBottom: 5,
+                  marginRight: 12,
+                  marginLeft: 100,
+                  paddingTop: "10px",
+                  fontColor: "black"
+                }}
+              >
+                <Card>
+                  <CardActionArea>
+                    <div>
+                      <div className="card float-right" style={{ width: 400 }}>
+                        <div className="row">
+                          <div className="col-sm-5">
+                            <img
+                              className="d-block w-100"
+                              src="https://picsum.photos/150?image=641"
+                              alt=""
+                            />
+                          </div>
+                          <div className="col-sm-7" style={{ marginTop: 10 }}>
+                            <div className="card-block">
+                              <Typography
+                                gutterBottom
+                                variant="h5"
+                                component="h3"
+                              >
+                                {el.eventTitle}
+                              </Typography>
+                              <Typography
+                                gutterBottom
+                                variant="h5"
+                                component="h1"
+                              >
+                                <Rater total={5} rating={el.rating} />
+                              </Typography>
+                              <Typography
+                                variant="body2"
+                                color="textSecondary"
+                                component="p"
+                              >
+                              </Typography>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </CardActionArea>
+                </Card>
+              </div>
+            ))}
+          </div>
+
+
+
+
+
+
 		  </Tab>
 			</Tabs>
         </div>
 					<div className="row">
 		
 
-				<Modal style={{zIndex:50000,top:'5%'}} show={this.state.showModal3} onHide={this.changeState3}>
+				<Modal style={{zIndex:50000,top:'5%'}} show={this.state.showModal} onHide={this.displayModalBox}>
 				<div className="container" style={{padding:'5%'}}>
 				<Form style = {{padding:'20px'}}>
 				<Form.Group controlId="Header">
