@@ -21,15 +21,29 @@ class EventDetails extends Component{
     this.state={
             allComments:[],
             upvotes:0,
-            downvotes:0
+            downvotes:0,
+        showModal1: false,
+        updatedComment:"",
+        updatedPostId:"",
 
     };
     this.fetchComments = this.fetchComments.bind(this);
     this.addComment = this.addComment.bind(this);
+        this.changeState = this.changeState.bind(this);
+    this.updateComment = this.updateComment.bind(this);
+    this.deleteComment = this.deleteComment.bind(this);
+        this.onChange = this.onChange.bind(this);
+
    // this.sendNotifications = this.sendNotifications.bind(this);
 
 
   }
+
+onChange(e) {
+  this.setState({
+    [e.target.name]: e.target.value
+  });
+}
 
   componentDidMount()
   {
@@ -144,16 +158,16 @@ upvote(index) {
     "title": "",
     "ratings": 0,
     "datetime": "",
-    "category": "Housing",
+    "category": "Events",
     "postsubjectname": index["postsubjectname"],
-    "postContent": index['postContent'],
-    "postId": index['postId'],
+    "postcontent": index['postcontent'],
+    "postid": index['postid'],
     "upvotes":count,
     "downvotes":index['downvotes']
   }
   return axios({
       method: "post",
-      url: "http://localhost:8080/updateHousePost",
+      url: "http://localhost:8080/updateEventPost",
       headers: {
         "Access-Control-Allow-Origin": "*"
       },
@@ -173,7 +187,7 @@ downvote(index) {
   var count = index['downvotes'] + 1;
 
   this.setState({
-    updatedPostId: index["postId"]
+    updatedPostId: index["postid"]
   })
 
   var postData = {
@@ -181,16 +195,16 @@ downvote(index) {
     "title": "",
     "ratings": 0,
     "datetime": "",
-    "category": "Housing",
+    "category": "Events",
     "postsubjectname": index["postsubjectname"],
-    "postContent":  index['postContent'],
+    "postContent":  index['postcontent'],
     "postId":  index['postId'],
     "downvotes":count,
     "upvotes":index['upvotes']
   }
   return axios({
       method: "post",
-      url: "http://localhost:8080/updateHousePost",
+      url: "http://localhost:8080/updateEventPost",
       headers: {
         "Access-Control-Allow-Origin": "*"
       },
@@ -210,18 +224,106 @@ handleClick(index) {
   if (ls.get("currentUser") == index["username"])
     this.setState({
       showModal1: true,
-      updatedComment: index["postContent"],
-      updatedPostId: index["postId"],
+      updatedComment: index["postcontent"],
+      updatedPostId: index["postid"],
       upvotes:index["upvotes"],
       downvotes:index["downvotes"]
     })
   }
+
+changeState() {
+  this.setState({
+    showModal1: !this.state.showModal1
+  })
+}
+
+updateComment(index) {
+  //axios call to update this comment
+  var postData = {
+    "username": ls.get("currentUser"),
+    "title": "",
+    "ratings": 0,
+    "datetime": "",
+    "category": "Events",
+    "postsubjectname": index["postsubjectname"],
+    "postcontent": this.state.updatedComment,
+    "postid": this.state.updatedPostId,
+    "upvotes":this.state.upvotes,
+    "downvotes":this.state.downvotes,
+  }
+  console.log("fffffffffffff"+JSON.stringify(postData))
+  return axios({
+      method: "post",
+      url: "http://localhost:8080/updateEventPost",
+      headers: {
+        "Access-Control-Allow-Origin": "*"
+      },
+      data: postData
+    })
+    .then(response => {
+
+      this.changeState();
+      this.fetchComments();
+      ToastsStore.success("Post Updated");
+    })
+    .catch(err => {
+      console.log("error while updating" + err);
+    });
+}
+
+deleteComment(index) {
+  var postData = {
+    "username": ls.get("currentUser"),
+    "title": "",
+    "ratings": 0,
+    "datetime": "",
+    "category": "Restaurant",
+    "postsubjectname": index["postsubjectname"],
+    "postcontent": this.state.updatedComment,
+    "postid": this.state.updatedPostId,
+    "upvotes":this.state.upvotes,
+    "downvotes":this.state.downvotes
+  }
+  return axios({
+      method: "post",
+      url: "http://localhost:8080/deleteRestaurantPost",
+      headers: {
+        "Access-Control-Allow-Origin": "*"
+      },
+      data: postData
+    })
+    .then(response => {
+      this.changeState();
+      this.fetchComments();
+      ToastsStore.success("Post Deleted");
+
+      //change state to re render component
+    })
+    .catch(err => {
+      console.log("error while deleting" + err);
+    });
+}
+
 
   render()
   {
     let imagePath="./EventImages/"+ls.get("selectedIndex")["eventImage"]
     return(
         <>
+
+                    <Modal style={{zIndex:50000,top:'40%'}} show={this.state.showModal1} onHide={this.changeState}>
+            <div className="container" style={{padding:'5%'}}>
+            <Form>
+            <fieldset className="form-group">
+                <h3>Edit Post:</h3>
+                <input className="form-control" type="text" id="updatedComment" name="updatedComment" value={this.state.updatedComment} onChange={this.onChange}/>
+            </fieldset>
+            <button className="btn btn-error" style={{float:'right'}} type="button" onClick={this.deleteComment}>Delete</button>
+            <button className="btn btn-success" style={{float:'right'}} type="button" onClick={this.updateComment}>Update</button>
+            </Form>
+            </div>
+         </Modal>
+
             <div style={{ background: "gray url(https://subtlepatterns.com/patterns/geometry2.png)"}}>
             <div className="container-fluid" style={{width:'90%'}}>
             <h1 className="my-4">{ls.get("selectedIndex")["name"]} {ls.get("selectedIndex")["eventTitle"]}</h1>
