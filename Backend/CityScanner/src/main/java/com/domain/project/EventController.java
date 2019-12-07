@@ -44,8 +44,8 @@ public class EventController {
 	// Method to get all events for a city
 	@CrossOrigin
 	@PostMapping("/getEventsForCity")
-	public List<EventEntity> getEventsForCity(@RequestBody String cityName) {
-		return eventRepository.findByCityName(cityName);
+	public List<EventEntity> getEventsForCity(@RequestBody EventEntity cityName) {
+		return eventRepository.findByCityName(cityName.getEventCity());
 	}
 
 }
