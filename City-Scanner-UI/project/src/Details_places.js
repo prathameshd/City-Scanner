@@ -26,7 +26,7 @@ const fadeProperties = {
     }
   };
 
-class Details_Restaurant extends PureComponent{
+class Details_Places extends PureComponent{
   constructor (props){
     super (props);
     this.state={
@@ -70,7 +70,7 @@ fetchComments() {
 
   return axios({
       method: "post",
-      url: "http://localhost:8080/getrestaurantposts",
+      url: "http://localhost:8080/getPlacePosts",
       headers: {
         "Access-Control-Allow-Origin": "*"
       },
@@ -149,7 +149,7 @@ addComment() {
     "title": "",
     "ratings": 0,
     "datetime": "",
-    "category": "Restaurant",
+    "category": "Places",
     "postsubjectname": ls.get("selectedIndex")["name"],
     "postContent": data,
     "upvotes":0,
@@ -158,7 +158,7 @@ addComment() {
 
   return axios({
       method: "post",
-      url: "http://localhost:8080/saverestaurantpost",
+      url: "http://localhost:8080/savePlacesPost",
       headers: {
         "Access-Control-Allow-Origin": "*"
       },
@@ -206,7 +206,7 @@ updateComment(index) {
     "title": "",
     "ratings": 0,
     "datetime": "",
-    "category": "Restaurant",
+    "category": "Places",
     "postsubjectname": index["postsubjectname"],
     "postContent": this.state.updatedComment,
     "postId": this.state.updatedPostId,
@@ -215,7 +215,7 @@ updateComment(index) {
   }
   return axios({
       method: "post",
-      url: "http://localhost:8080/updateRestaurantPost",
+      url: "http://localhost:8080/updatePlacesPost",
       headers: {
         "Access-Control-Allow-Origin": "*"
       },
@@ -238,7 +238,7 @@ deleteComment(index) {
     "title": "",
     "ratings": 0,
     "datetime": "",
-    "category": "Restaurant",
+    "category": "Places",
     "postsubjectname": index["postsubjectname"],
     "postContent": this.state.updatedComment,
     "postId": this.state.updatedPostId,
@@ -247,7 +247,7 @@ deleteComment(index) {
   }
   return axios({
       method: "post",
-      url: "http://localhost:8080/deleteRestaurantPost",
+      url: "http://localhost:8080/deletePlacesPost",
       headers: {
         "Access-Control-Allow-Origin": "*"
       },
@@ -273,7 +273,7 @@ upvote(index) {
     "title": "",
     "ratings": 0,
     "datetime": "",
-    "category": "Restaurant",
+    "category": "Places",
     "postsubjectname": index["postsubjectname"],
     "postContent": index['postContent'],
     "postId": index['postId'],
@@ -282,7 +282,7 @@ upvote(index) {
   }
   return axios({
       method: "post",
-      url: "http://localhost:8080/updateRestaurantPost",
+      url: "http://localhost:8080/updatePlacesPost",
       headers: {
         "Access-Control-Allow-Origin": "*"
       },
@@ -310,7 +310,7 @@ downvote(index) {
     "title": "",
     "ratings": 0,
     "datetime": "",
-    "category": "Restaurant",
+    "category": "Places",
     "postsubjectname": index["postsubjectname"],
     "postContent":  index['postContent'],
     "postId":  index['postId'],
@@ -319,7 +319,7 @@ downvote(index) {
   }
   return axios({
       method: "post",
-      url: "http://localhost:8080/updateRestaurantPost",
+      url: "http://localhost:8080/updatePlacesPost",
       headers: {
         "Access-Control-Allow-Origin": "*"
       },
@@ -481,4 +481,4 @@ downvote(index) {
         );
     }
 }
-export default Details_Restaurant;
+export default Details_Places;

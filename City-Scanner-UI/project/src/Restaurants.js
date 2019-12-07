@@ -72,7 +72,12 @@ class Restaurants extends Component {
         <div className="containter-fluid">
           <h1>Restaurants in {ls.get("city")}</h1>
           <div className="row">
-            <div className="col-sm-6  ">
+            <div className="col-sm-6  "
+            style={{
+              overflowY: "scroll",
+              overflowX: "hidden",
+              height: "1200px"
+            }}>
               {this.state.restaurants.map((el, i) => (
                 <div
                   style={{

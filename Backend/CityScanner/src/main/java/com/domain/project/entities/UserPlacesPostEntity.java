@@ -15,6 +15,7 @@ import org.springframework.context.annotation.ComponentScan;
 @EntityScan
 @Table(name = "usersplacespost")
 public class UserPlacesPostEntity {
+	
 	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name = "postid")
 	private String postid;
@@ -40,6 +41,28 @@ public class UserPlacesPostEntity {
 	
 	@Column(name = "postsubjectname")
 	private String postsubjectname;
+	
+	@Column(name = "upvotes")
+	private int upvotes;
+	
+	@Column(name = "downvotes")
+	private int downvotes;
+	
+	public int getUpvotes() {
+		return upvotes;
+	}
+
+	public void setUpvotes(int upvotes) {
+		this.upvotes = upvotes;
+	}
+
+	public int getDownvotes() {
+		return downvotes;
+	}
+
+	public void setDownvotes(int downvotes) {
+		this.downvotes = downvotes;
+	}
 	
 	public String getPostsubjectname() {
 		return postsubjectname;
