@@ -16,6 +16,7 @@ import Housing from "./Housing";
 import Events from "./Events";
 import Details_housing from "./Details_housing";
 import EventDetails from "./EventDetails";
+import Details_restaurant from "./Details_restaurant"
 
 class App extends Component {
   render() {
@@ -35,6 +36,7 @@ class App extends Component {
           <Route exact path="/Flip" component={Flip} />
           <Route exact path="/Housing" component={Housing} />
           <Route exact path="/HousingDetails" component={Details_housing} />
+          <Route exact path="/RestaurantDetails" component={Details_restaurant} />
           <Route exact path="/Events" component={Events} />
           <Route exact path="/EventDetails" component={EventDetails} />
 

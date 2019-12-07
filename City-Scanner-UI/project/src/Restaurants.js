@@ -21,6 +21,12 @@ class Restaurants extends Component {
     };
   }
 
+  handleClick(index) {
+    this.setState({ index });
+    ls.set("selectedIndex", index);
+          window.location.href="/RestaurantDetails"
+  }
+
   componentWillMount() {
     ls.set("page", "restaurants");
   }
@@ -78,9 +84,50 @@ class Restaurants extends Component {
                     fontColor: "black"
                   }}
                 >
-                  <Card className="cardsize">
+                  <Card onClick={this.handleClick.bind(this, el)}>
                     <CardActionArea>
-                      <CardMedia
+                    <div>
+                        <div
+                          className="card float-right"
+                          style={{ width: 600 }}
+                        >
+                          <div className="row">
+                            <div className="col-sm-5">
+                              <img
+                                className="d-block w-100"
+                                src="https://picsum.photos/150?image=641"
+                                alt=""
+                              />
+                            </div>
+                            <div className="col-sm-7" style={{ marginTop: 10 }}>
+                              <div className="card-block">
+                                <Typography
+                                  gutterBottom
+                                  variant="h5"
+                                  component="h3"
+                                >
+                                  {el.name}
+                                </Typography>
+                                <Typography
+                                  gutterBottom
+                                  variant="h5"
+                                  component="h1"
+                                >
+                                  <Rater total={5} rating={el.rating} />
+                                </Typography>
+                                <Typography
+                                  variant="body2"
+                                  color="textSecondary"
+                                  component="p"
+                                >
+                                  {el.vicinity}
+                                </Typography>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>         
+                      {/* <CardMedia
                         component="img"
                         alt="Contemplative Reptile"
                         height="140"
@@ -115,7 +162,7 @@ class Restaurants extends Component {
                           &nbsp;
                           {el.types[3]}
                         </Typography>
-                      </CardContent>
+                      </CardContent> */}
                     </CardActionArea>
                   </Card>
                 </div>
