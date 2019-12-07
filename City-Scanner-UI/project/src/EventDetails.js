@@ -101,7 +101,7 @@ console.log("writing a post"+JSON.stringify(postData))
 
       this.refs.comment.value="";
       this.fetchComments();
-      this.sendNotifications();
+     // this.sendNotifications();
       ToastsStore.success("New Post Added");
 
     })
