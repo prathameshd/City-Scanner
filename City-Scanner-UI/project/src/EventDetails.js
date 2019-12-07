@@ -20,11 +20,13 @@ class EventDetails extends Component{
     super (props);
     this.state={
             allComments:[],
+            upvotes:0,
+            downvotes:0
 
     };
     this.fetchComments = this.fetchComments.bind(this);
     this.addComment = this.addComment.bind(this);
-    this.sendNotifications = this.sendNotifications.bind(this);
+   // this.sendNotifications = this.sendNotifications.bind(this);
 
 
   }
@@ -38,7 +40,12 @@ class EventDetails extends Component{
 //Method to get all comments for this event
   fetchComments() {
   var postData = {
-    "postsubjectname": ls.get("selectedIndex")["name"]
+    "postsubjectname": ls.get("selectedIndex")["eventTitle"]
+  }
+
+    if(postData["postsubjectname"]==null)
+  {
+   postData["postsubjectname"]=ls.get("selectedIndex")["name"] 
   }
 
   return axios({
@@ -69,13 +76,18 @@ addComment() {
     "title": "",
     "ratings": 0,
     "datetime": "",
-    "category": "Housing",
-    "postsubjectname": ls.get("selectedIndex")["name"],
-    "postContent": data,
+    "category": "Events",
+    "postsubjectname": ls.get("selectedIndex")["eventTitle"],
+    "postcontent": data,
     "upvotes":0,
     "downvotes":0
   }
+  if(postData["postsubjectname"]==null)
+  {
+   postData["postsubjectname"]=ls.get("selectedIndex")["name"] 
+  }
 
+console.log("writing a post"+JSON.stringify(postData))
   return axios({
       method: "post",
       url: "http://localhost:8080/saveEventPost",
@@ -89,7 +101,7 @@ addComment() {
 
       this.refs.comment.value="";
       this.fetchComments();
-      this.sendNotifications();
+     // this.sendNotifications();
       ToastsStore.success("New Post Added");
 
     })
@@ -100,7 +112,7 @@ addComment() {
 }
 
 //Method to send notifications when a new post is added
-sendNotifications()
+/*sendNotifications()
 {
   var postData = {
     "email": '',
@@ -122,7 +134,88 @@ sendNotifications()
     .catch(err => {
       console.log("error while sending Notifications" + err);
     });
+}*/
+
+
+upvote(index) {
+  var count = index['upvotes'] + 1;
+  var postData = {
+    "username": ls.get("currentUser"),
+    "title": "",
+    "ratings": 0,
+    "datetime": "",
+    "category": "Housing",
+    "postsubjectname": index["postsubjectname"],
+    "postContent": index['postContent'],
+    "postId": index['postId'],
+    "upvotes":count,
+    "downvotes":index['downvotes']
+  }
+  return axios({
+      method: "post",
+      url: "http://localhost:8080/updateHousePost",
+      headers: {
+        "Access-Control-Allow-Origin": "*"
+      },
+      data: postData
+    })
+    .then(response => {
+      console.log("update success" + response.data);
+      this.fetchComments();
+    })
+    .catch(err => {
+      console.log("error while updating" + err);
+    });
 }
+
+downvote(index) {
+
+  var count = index['downvotes'] + 1;
+
+  this.setState({
+    updatedPostId: index["postId"]
+  })
+
+  var postData = {
+    "username": ls.get("currentUser"),
+    "title": "",
+    "ratings": 0,
+    "datetime": "",
+    "category": "Housing",
+    "postsubjectname": index["postsubjectname"],
+    "postContent":  index['postContent'],
+    "postId":  index['postId'],
+    "downvotes":count,
+    "upvotes":index['upvotes']
+  }
+  return axios({
+      method: "post",
+      url: "http://localhost:8080/updateHousePost",
+      headers: {
+        "Access-Control-Allow-Origin": "*"
+      },
+      data: postData
+    })
+    .then(response => {
+      console.log("update success" + response.data);
+      this.fetchComments();
+    })
+    .catch(err => {
+      console.log("error while updating" + err);
+    });
+}
+
+handleClick(index) {
+  console.log(index)
+  if (ls.get("currentUser") == index["username"])
+    this.setState({
+      showModal1: true,
+      updatedComment: index["postContent"],
+      updatedPostId: index["postId"],
+      upvotes:index["upvotes"],
+      downvotes:index["downvotes"]
+    })
+  }
 
   render()
   {
@@ -180,7 +273,7 @@ sendNotifications()
                             <span className="float-right"><i className="text-warning fa fa-star" /></span>
                             </p>
                             <div className="clearfix" />
-                            <p>{el.postContent}</p>
+                            <p>{el.postcontent}</p>
                               <div className="like grow" style={{float:'left', bottom:'0px'}}>
                                 <i className="fa fa-thumbs-up fa-2x like" aria-hidden="true" onClick={this.upvote.bind(this, el)}/>
                               {el.upvotes}
