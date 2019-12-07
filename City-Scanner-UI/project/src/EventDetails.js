@@ -112,7 +112,7 @@ console.log("writing a post"+JSON.stringify(postData))
 }
 
 //Method to send notifications when a new post is added
-sendNotifications()
+/*sendNotifications()
 {
   var postData = {
     "email": '',
@@ -134,7 +134,7 @@ sendNotifications()
     .catch(err => {
       console.log("error while sending Notifications" + err);
     });
-}
+}*/
 
 
 upvote(index) {
