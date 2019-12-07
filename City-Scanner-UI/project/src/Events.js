@@ -291,7 +291,7 @@ class Events extends Component {
                   fontColor: "black"
                 }}
               >
-                <Card>
+                                <Card onClick={this.handleClick.bind(this, el)}>
                   <CardActionArea>
                     <div>
                       <div className="card float-right" style={{ width: 400 }}>

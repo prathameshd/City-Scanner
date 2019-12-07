@@ -126,14 +126,15 @@ sendNotifications()
 
   render()
   {
+    let imagePath="./EventImages/"+ls.get("selectedIndex")["eventImage"]
     return(
         <>
             <div style={{ background: "gray url(https://subtlepatterns.com/patterns/geometry2.png)"}}>
             <div className="container-fluid" style={{width:'90%'}}>
-            <h1 className="my-4">{ls.get("selectedIndex")["name"]} </h1>
+            <h1 className="my-4">{ls.get("selectedIndex")["name"]} {ls.get("selectedIndex")["eventTitle"]}</h1>
             <div className="row">
                 <div className="col-md-8" style={{paddingRight:'50px'}}>
-                <img className="img-fluid" src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/142996/moscow.jpg" alt="" />
+                <img className="img-fluid" src={imagePath} alt="" />
                 </div>
                 <div className="col-md-4">
                     <div>
@@ -141,8 +142,8 @@ sendNotifications()
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae. Sed dui lorem, adipiscing in adipiscing et, interdum nec metus. Mauris ultricies, justo eu convallis placerat, felis enim.</p>
                     <h3 className="my-3" style={{'font-family': 'cursive'}}>Details</h3>
                     <ul>
-                        <li>Address:</li>
-                        <li>Average Rating:</li>
+                        <li>Address:{ls.get("selectedIndex")["eventAddress"]}</li>
+                        <li>Date:{ls.get("selectedIndex")["eventDate"]}</li>
                     </ul>
                   </div>
 
