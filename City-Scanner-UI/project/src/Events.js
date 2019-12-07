@@ -167,13 +167,17 @@ class Events extends Component {
 //Method to get all user created events for city
     getUserEvents()
     {
+      var postData = {
+        "eventCity": ls.get('city'),
+    }
+      console.log(ls.get('city'))
     	    	      return axios({
           method: 'post',
           url: 'http://localhost:8080/getEventsForCity',
           headers: {
             'Access-Control-Allow-Origin': '*'
           },
-          data: ls.get('city')
+          data: postData
         })
         .then((response) => {
         	console.log("user events"+JSON.stringify(response))
@@ -287,7 +291,7 @@ class Events extends Component {
                   fontColor: "black"
                 }}
               >
-                <Card>
+                                <Card onClick={this.handleClick.bind(this, el)}>
                   <CardActionArea>
                     <div>
                       <div className="card float-right" style={{ width: 400 }}>

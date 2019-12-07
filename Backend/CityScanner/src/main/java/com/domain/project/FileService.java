@@ -15,7 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 @Service
 public class FileService {
 
-	@Value("C:\\Users\\Hp\\Desktop\\OOSD")
+	@Value("C:\\Users\\Hp\\Desktop\\OOSD\\project\\City-Source\\City-Scanner-UI\\project\\public\\EventImages")
 	public String uploadDir;
 
 	public void uploadFile(MultipartFile file) {
