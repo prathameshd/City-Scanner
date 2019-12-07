@@ -26,7 +26,7 @@ class EventDetails extends Component{
     };
     this.fetchComments = this.fetchComments.bind(this);
     this.addComment = this.addComment.bind(this);
-    this.sendNotifications = this.sendNotifications.bind(this);
+   // this.sendNotifications = this.sendNotifications.bind(this);
 
 
   }
