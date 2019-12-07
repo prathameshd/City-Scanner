@@ -44,4 +44,12 @@ public class UserEventPostController {
 		post.get().setDownvotes(userPost.getDownvotes());
 		userEventPostRepository.save(post.get());
 	}
+	
+	// Method to delete a post
+	@CrossOrigin
+	@PostMapping("/deleteEventPost")
+	public void deleteEventPost(@RequestBody UserEventPostEntity userPost) {
+		userEventPostRepository.delete(userPost);
+		System.out.println("delete successful");
+	}
 }

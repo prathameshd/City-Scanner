@@ -286,7 +286,7 @@ deleteComment(index) {
   }
   return axios({
       method: "post",
-      url: "http://localhost:8080/deleteRestaurantPost",
+      url: "http://localhost:8080/deleteEventPost",
       headers: {
         "Access-Control-Allow-Origin": "*"
       },
