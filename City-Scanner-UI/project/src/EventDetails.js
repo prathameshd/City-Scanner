@@ -48,11 +48,13 @@ onChange(e) {
   });
 }
 
+componentWillMount()
+{
+        this.getCoordinates()
+}
   componentDidMount()
   {
-    console.log(JSON.stringify(ls))
     this.fetchComments()
-    this.getCoordinates()
   }
 
 //Method to get all comments for this event
@@ -105,7 +107,6 @@ addComment() {
    postData["postsubjectname"]=ls.get("selectedIndex")["name"] 
   }
 
-console.log("writing a post"+JSON.stringify(postData))
   return axios({
       method: "post",
       url: "http://localhost:8080/saveEventPost",
@@ -224,7 +225,6 @@ downvote(index) {
 }
 
 handleClick(index) {
-  console.log(index)
   if (ls.get("currentUser") == index["username"])
     this.setState({
       showModal1: true,
@@ -255,7 +255,7 @@ updateComment(index) {
     "upvotes":this.state.upvotes,
     "downvotes":this.state.downvotes,
   }
-  console.log("fffffffffffff"+JSON.stringify(postData))
+
   return axios({
       method: "post",
       url: "http://localhost:8080/updateEventPost",
@@ -368,7 +368,7 @@ getCoordinates() {
                     <>
                     <li>Address:{ls.get("selectedIndex")["_embedded"]["venues"][0]["address"]["line1"]+","+ls.get("selectedIndex")["_embedded"]["venues"][0]["city"]["name"]} </li>
                                         <li>Date:{ls.get("selectedIndex")["dates"]["start"]["localDate"]} </li>
-                                        <li>Tickets: {ls.get("selectedIndex")["url"]}</li>
+                                        <li>Tickets: Purchase tickets <a href={ls.get("selectedIndex")["url"]}>here</a></li>
 </>
                     :
                     <>

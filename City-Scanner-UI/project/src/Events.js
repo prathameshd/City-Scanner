@@ -158,6 +158,9 @@ class Events extends Component {
           data: postData
         })
         .then((response) => {
+        	this.displayModalBox();
+        	    this.getUserEvents();
+
 
         }).catch(err => {
 
