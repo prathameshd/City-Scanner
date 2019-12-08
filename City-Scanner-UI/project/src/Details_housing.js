@@ -9,7 +9,7 @@ import Rater from "react-rater";
 import "react-rater/lib/react-rater.css";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import { Fade } from "react-slideshow-image";
-import Map from "./Map";
+import Map2 from "./Map2";
 import ls from "local-storage";
 import { Form } from 'react-bootstrap';
 import Modal from 'react-bootstrap/Modal';
@@ -553,14 +553,14 @@ sendNotifications()
 
 
                       <div className="row" style={{paddingTop:'4%'}}>
-                                <Map
+                                <Map2
                                   lat={ls.get("selectedIndex")["geometry"]["location"]["lat"]}
                                   long={ls.get("selectedIndex")["geometry"]["location"]["lng"]}
                                   locations={this.state.locations}
                                   shopLoc={this.state.shopLoc}
                                   busStopLoc={this.state.busStopLoc}
                                   atmLoc={this.state.atmLoc}
-                                  style={{height:'80% !important'}}
+                                  style={{height:'40% !important'}}
                                 />
                       </div>
                 </div>

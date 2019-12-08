@@ -9,7 +9,7 @@ import Rater from "react-rater";
 import "react-rater/lib/react-rater.css";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import { Fade } from "react-slideshow-image";
-import Map from "./Map";
+import Map2 from "./Map2";
 import ls from "local-storage";
 import { Form } from 'react-bootstrap';
 import Modal from 'react-bootstrap/Modal';
@@ -17,10 +17,10 @@ import {ToastsContainer, ToastsStore} from 'react-toasts';
 
 
 const fadeProperties = {
-    duration: 5000,
+    duration: 2000,
     transitionDuration: 500,
     infinite: true,
-    indicators: true,
+    indicators: false,
     onChange: (oldIndex, newIndex) => {
       console.log(`fade transition from ${oldIndex} to ${newIndex}`);
     }
@@ -397,9 +397,10 @@ downvote(index) {
 
             <div style={{ background: "gray url(https://subtlepatterns.com/patterns/geometry2.png)"}}>
             <div className="container-fluid" style={{width:'90%'}}>
-            <h1 className="my-4">{ls.get("selectedIndex")["name"]} </h1>
             <div className="row">
                 <div className="col-md-7" style={{paddingRight:'50px'}}>
+                            <h1 className="my-4">{ls.get("selectedIndex")["name"]} </h1>
+
                 <Fade {...fadeProperties}>     
           <div >
             <div className="image-container">
@@ -451,33 +452,33 @@ downvote(index) {
         </Fade>
                 </div>
                 <div className="col-md-5">
-                <div style={{'font-family': 'verdana'}}>
-                      <h5 className="my-3" >Details</h5>
-                     <font size="4" color="#229dc1">Address:</font> {this.state.place_details.formatted_address}
-                      <br/><font size="4" color="#229dc1">Contact:</font>  {this.state.place_details.formatted_phone_number}
-                      <br/><font size="4" color="#229dc1">Website:</font><a href='/'> {this.state.place_details.website}</a><br/>
-                      <br/><font size="4" color="#229dc1">Rating:</font> {this.state.place_details.rating} / 5 
-                      
-                      <br/><br/><font size="4" color="#229dc1">Opening Hours:</font><br/>
-                      {this.state.timing1}<br/>
-                      {this.state.timing2}<br/> 
-                      {this.state.timing3}<br/>
-                      {this.state.timing4}<br/>
-                      {this.state.timing5}<br/>
-                      {this.state.timing6}<br/>
-                      {this.state.timing7}<br/>              
+                <div className="container" style={{'font-family': 'verdana',paddingTop:'15%'}}>
+                                     <div className="row col-sm-12"><h5>Details</h5></div>
+                     <div className="row col-sm-12"><font size="3" color="">Address:</font> {this.state.place_details.formatted_address}</div>
+                     <div className="row col-sm-12"> <br/><font size="3" color="">Contact:</font>  {this.state.place_details.formatted_phone_number}</div>
+                            <div className="row col-sm-12"><br/><font size="3" color="">Website:</font><a href={this.state.place_details.website}> {this.state.place_details.website}</a></div>
+                       <div className="row col-sm-12">     <br/><font size="3" color="">Rating:</font> {this.state.place_details.rating} / 5 </div>
+                      <br/>
+                     <div className="row col-sm-12"> <br/><font size="3" color="">Opening Hours:</font><br/></div>
+                      <div className="row col-sm-12"><font size="2.8" >{this.state.timing1}</font><br/></div>
+                    <div className="row col-sm-12">  <font size="2.5" >{this.state.timing2}</font><br/> </div>
+                    <div className="row col-sm-12">  <font size="2.5" >{this.state.timing3}</font><br/></div>
+                    <div className="row col-sm-12">  <font size="2.5" >{this.state.timing4}</font><br/></div>
+                    <div className="row col-sm-12">  <font size="2.5" >{this.state.timing5}</font><br/></div>
+                    <div className="row col-sm-12">  <font size="2.5" >{this.state.timing6}</font><br/></div>
+                    <div className="row col-sm-12">  <font size="2.5" >{this.state.timing7}</font><br/>      </div>        
                       
                     </div>
 
                   <div className="container" style={{paddingTop:'4%'}}>
-                            <Map
+                            <Map2
                               lat={ls.get("selectedIndex")["geometry"]["location"]["lat"]}
                               long={ls.get("selectedIndex")["geometry"]["location"]["lng"]}
                               locations={this.state.locations}
                               shopLoc={[]}
                               busStopLoc={[]}
                               atmLoc={[]}
-                              style={{height:'80% !important'}}
+                              style={{height:'50% !important'}}
                             />
                   </div>
                 </div>

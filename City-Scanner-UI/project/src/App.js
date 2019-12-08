@@ -18,6 +18,7 @@ import Details_housing from "./Details_housing";
 import EventDetails from "./EventDetails";
 import Details_restaurant from "./Details_restaurant"
 import Details_places from "./Details_places"
+import Map2 from "./Map2";
 
 class App extends Component {
   render() {
@@ -27,7 +28,7 @@ class App extends Component {
           <Header />
           <Route exact path="/" component={Home} />
           <Route exact path="/Map" component={Map} />
-
+          <Route exact path="/Map2" component={Map2} />
           <Route exact path="/temp" component={temp} />
           <Route exact path="/Restaurants" component={Restaurants} />
           <Route exact path="/Places" component={Places} />
