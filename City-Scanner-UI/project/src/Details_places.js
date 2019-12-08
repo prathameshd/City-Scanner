@@ -456,7 +456,7 @@ downvote(index) {
                                      <div className="row col-sm-12"><h5>Details</h5></div>
                      <div className="row col-sm-12"><font size="3" color="">Address:</font> {this.state.place_details.formatted_address}</div>
                      <div className="row col-sm-12"> <br/><font size="3" color="">Contact:</font>  {this.state.place_details.formatted_phone_number}</div>
-                            <div className="row col-sm-12"><br/><font size="3" color="">Website:</font><a href={this.state.place_details.website}> {this.state.place_details.website}</a></div>
+                            <div className="row col-sm-12"><br/><font size="3" color="">Website: Visit their</font><a href={this.state.place_details.website}>&nbsp; website</a></div>
                        <div className="row col-sm-12">     <br/><font size="3" color="">Rating:</font> {this.state.place_details.rating} / 5 </div>
                       <br/>
                      <div className="row col-sm-12"> <br/><font size="3" color="">Opening Hours:</font><br/></div>
