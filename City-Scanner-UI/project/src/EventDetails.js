@@ -25,6 +25,8 @@ class EventDetails extends Component{
         showModal1: false,
         updatedComment:"",
         updatedPostId:"",
+        lat:'',
+        long:''
 
     };
     this.fetchComments = this.fetchComments.bind(this);
@@ -33,6 +35,7 @@ class EventDetails extends Component{
     this.updateComment = this.updateComment.bind(this);
     this.deleteComment = this.deleteComment.bind(this);
         this.onChange = this.onChange.bind(this);
+        this.getCoordinates = this.getCoordinates.bind(this);
 
    // this.sendNotifications = this.sendNotifications.bind(this);
 
@@ -49,6 +52,7 @@ onChange(e) {
   {
     console.log(JSON.stringify(ls))
     this.fetchComments()
+    this.getCoordinates()
   }
 
 //Method to get all comments for this event
@@ -304,6 +308,27 @@ deleteComment(index) {
     });
 }
 
+getCoordinates() {
+  return axios({
+      method: "post",
+      url: "http://localhost:8080/getPosition",
+      headers: {
+        "Access-Control-Allow-Origin": "*"
+      },
+      data: ls.get("selectedIndex")["eventAddress"]
+    })
+    .then(response => {
+      this.setState({
+        lat: response.data.lat
+      });
+      this.setState({
+        long: response.data.long
+      });
+    })
+    .catch(err => {
+      console.log(err);
+    });
+}
 
   render()
   {
@@ -331,9 +356,9 @@ deleteComment(index) {
             <div style={{ background: "gray url(https://subtlepatterns.com/patterns/geometry2.png)"}}>
             <div className="container-fluid" style={{width:'90%'}}>
             <h1 className="my-4">{ls.get("selectedIndex")["name"]} {ls.get("selectedIndex")["eventTitle"]}</h1>
-            <div className="row">
+            <div className="row" style={{height:'450px'}}>
                 <div className="col-md-8" style={{paddingRight:'50px'}}>
-                <img className="img-fluid" src={imagePath} alt="" />
+                <img style={{height:"400px",width:'600px'}} className="img-fluid" src={imagePath} alt="" />
                 </div>
                 <div className="col-md-4">
                     <div>
@@ -367,7 +392,16 @@ deleteComment(index) {
                               atmLoc={[]}
                               style={{height:'80% !important'}}
                             />   
-                  </div>:null
+                  </div>:
+                                                                       <Map
+                              lat={this.state.lat}
+                              long={this.state.long}
+                              locations={[]}
+                              shopLoc={[]}
+                              busStopLoc={[]}
+                              atmLoc={[]}
+                              style={{height:'80% !important'}}
+                            />   
                     }
                 </div>
 
