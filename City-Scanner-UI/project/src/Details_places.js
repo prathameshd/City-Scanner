@@ -171,7 +171,7 @@ addComment() {
       })
       this.refs.comment.value="";
       this.fetchComments();
-      //this.sendNotifications();
+      this.sendNotifications();
       ToastsStore.success("New Post Added");
 
     })
@@ -334,29 +334,29 @@ downvote(index) {
     });
 }
 
-// sendNotifications()
-// {
-//   var postData = {
-//     "email": '',
-//     "cityName": localStorage.getItem("city"),
-//     "notificationType":"Reastaurant",
-//   }
+sendNotifications()
+{
+  var postData = {
+    "email": '',
+    "cityName": localStorage.getItem("city"),
+    "notificationType":"Places",
+  }
 
-//   return axios({
-//       method: "post",
-//       url: "http://localhost:8080/sendRestaurantNotifications",
-//       headers: {
-//         "Access-Control-Allow-Origin": "*"
-//       },
-//       data: postData
-//     })
-//     .then(response => {
+  return axios({
+      method: "post",
+      url: "http://localhost:8080/getSubscribedUsers",
+      headers: {
+        "Access-Control-Allow-Origin": "*"
+      },
+      data: postData
+    })
+    .then(response => {
 
-//     })
-//     .catch(err => {
-//       console.log("error while sending Notifications" + err);
-//     });
-// }
+    })
+    .catch(err => {
+      console.log("error while sending Notifications" + err);
+    });
+}
     render(){
        let Comment=this.state.Comment
         return (

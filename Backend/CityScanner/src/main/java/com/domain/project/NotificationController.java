@@ -60,26 +60,26 @@ public class NotificationController {
 		return result;
 	}
 
-	// Method to get all users for current city and notification type
+	// Method to get all users for current city and housing notifications
 	@CrossOrigin
-	@PostMapping("/sendHousingNotifications")
-	public List<NotificationEntity> sendHousingNotifications(@RequestBody NotificationEntity object) {
+	@PostMapping("/getSubscribedUsers")
+	public List<NotificationEntity> getSubscribedUsers(@RequestBody NotificationEntity object) {
 		// get list of all users that satisfy given city and type
 		List<NotificationEntity> usersList = notificationRepository.findUsers(object.getNotificationType(),
 				object.getCityName());
-		sendHousingNotificationEmails(usersList);
+		
+		sendNotificationEmails(usersList,object.getNotificationType());	
 		return usersList;
 	}
-
+	
 	// Method to send Email notifications for housing
-	public void sendHousingNotificationEmails(List<NotificationEntity> usersList) {
+	public void sendNotificationEmails(List<NotificationEntity> usersList,String type) {
 		for (NotificationEntity user : usersList) {
 			SimpleMailMessage msg = new SimpleMailMessage();
 			msg.setTo(user.getEmail());
 			msg.setSubject("New Post!");
-			msg.setText("There's a new post on CityScanner. Check it out!");
+			msg.setText("There's a new post in the "+type+" section. Check it out!");
 			javaMailSender.send(msg);
 		}
 	}
-
 }

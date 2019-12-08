@@ -384,7 +384,6 @@ for(let i = 0; i < response.data.length; i++){
       })
    }
 
-  //console.log(JSON.stringify(response.data[i].notificationType));
 }
         })
         .catch(err => {
