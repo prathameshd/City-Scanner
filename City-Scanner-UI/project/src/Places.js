@@ -21,6 +21,12 @@ class Places extends Component {
     };
   }
 
+  handleClick(index) {
+    this.setState({ index });
+    ls.set("selectedIndex", index);
+          window.location.href="/PlacesDetails"
+  }
+
   componentWillMount() {
     ls.set("page", "places");
   }
@@ -70,12 +76,16 @@ class Places extends Component {
         <div className="containter-fluid">
           <h1>Places in {ls.get("city")}</h1>
           <div className="row">
-            <div className="col-sm-6  ">
+            <div className="col-sm-6  "
+            style={{
+              overflowY: "scroll",
+              overflowX: "hidden",
+              height: "1200px"
+            }}>
               {this.state.places.map((el, i) => (
                 <div
                   style={{
                     display: "inline-block",
-                    width: 350,
                     marginBottom: 18,
                     marginRight: 18,
                     marginLeft: 100,
@@ -83,7 +93,53 @@ class Places extends Component {
                     fontColor: "black"
                   }}
                 >
-                  <Card className="cardsize">
+                  <Card onClick={this.handleClick.bind(this, el)}>
+                    <CardActionArea>
+                    <div>
+                        <div
+                          className="card float-right"
+                          style={{ width: 600 }}
+                        >
+                          <div className="row">
+                            <div className="col-sm-5">
+                              <img
+                                className="d-block w-100"
+                                src="https://picsum.photos/150?image=641"
+                                alt=""
+                              />
+                            </div>
+                            <div className="col-sm-7" style={{ marginTop: 10 }}>
+                              <div className="card-block">
+                                <Typography
+                                  gutterBottom
+                                  variant="h5"
+                                  component="h3"
+                                >
+                                  {el.name}
+                                </Typography>
+                                <Typography
+                                  gutterBottom
+                                  variant="h5"
+                                  component="h1"
+                                >
+                                  <Rater total={5} rating={el.rating} />
+                                </Typography>
+                                <Typography
+                                  variant="body2"
+                                  color="textSecondary"
+                                  component="p"
+                                >
+                                  {el.vicinity}
+                                </Typography>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>         
+                    </CardActionArea>
+                  </Card>
+
+                  {/* <Card className="cardsize">
                     <CardActionArea>
                       <CardContent style={{ display: "inline-block" }}>
                         <Typography gutterBottom variant="h5" component="h3">
@@ -114,7 +170,7 @@ class Places extends Component {
                         </Typography>
                       </CardContent>
                     </CardActionArea>
-                  </Card>
+                  </Card> */}
                 </div>
               ))}
             </div>
