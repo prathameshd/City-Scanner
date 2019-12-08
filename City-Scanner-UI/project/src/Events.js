@@ -194,6 +194,15 @@ class Events extends Component {
       handleClick(index) {
    
     ls.set("selectedIndex", index);
+    ls.set("userCreatedEvent",false);
+          window.location.href="/EventDetails"
+  }
+
+  //Method to redirect to Event Details page
+      handleClickForUserEvents(index) {
+   
+    ls.set("selectedIndex", index);
+    ls.set("userCreatedEvent",true);
           window.location.href="/EventDetails"
   }
 
@@ -291,7 +300,7 @@ class Events extends Component {
                   fontColor: "black"
                 }}
               >
-                                <Card onClick={this.handleClick.bind(this, el)}>
+                                <Card onClick={this.handleClickForUserEvents.bind(this, el)}>
                   <CardActionArea>
                     <div>
                       <div className="card float-right" style={{ width: 400 }}>

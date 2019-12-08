@@ -197,8 +197,8 @@ downvote(index) {
     "datetime": "",
     "category": "Events",
     "postsubjectname": index["postsubjectname"],
-    "postContent":  index['postcontent'],
-    "postId":  index['postId'],
+    "postcontent":  index['postcontent'],
+    "postid":  index['postid'],
     "downvotes":count,
     "upvotes":index['upvotes']
   }
@@ -307,7 +307,11 @@ deleteComment(index) {
 
   render()
   {
-    let imagePath="./EventImages/"+ls.get("selectedIndex")["eventImage"]
+    let imagePath=""
+    ls.get("userCreatedEvent")==false?
+    imagePath=ls.get("selectedIndex")["images"][0]["url"]:
+    imagePath="./EventImages/"+ls.get("selectedIndex")["eventImage"]
+   
     return(
         <>
 
@@ -333,18 +337,38 @@ deleteComment(index) {
                 </div>
                 <div className="col-md-4">
                     <div>
-                    <h3 className="my-3" style={{'font-family': 'cursive'}}>About</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae. Sed dui lorem, adipiscing in adipiscing et, interdum nec metus. Mauris ultricies, justo eu convallis placerat, felis enim.</p>
                     <h3 className="my-3" style={{'font-family': 'cursive'}}>Details</h3>
                     <ul>
-                        <li>Address:{ls.get("selectedIndex")["eventAddress"]}</li>
-                        <li>Date:{ls.get("selectedIndex")["eventDate"]}</li>
+                    { ls.get("userCreatedEvent")==false?
+                    <>
+                    <li>Address:{ls.get("selectedIndex")["_embedded"]["venues"][0]["address"]["line1"]+","+ls.get("selectedIndex")["_embedded"]["venues"][0]["city"]["name"]} </li>
+                                        <li>Date:{ls.get("selectedIndex")["dates"]["start"]["localDate"]} </li>
+                                        <li>Tickets: {ls.get("selectedIndex")["url"]}</li>
+</>
+                    :
+                    <>
+                    <li>About: {ls.get("selectedIndex")["eventDescription"]}</li>
+                                        <li>Contact Info: {ls.get("selectedIndex")["eventContact"]}</li>
+                    <li>Address:{ls.get("selectedIndex")["eventAddress"]}</li>
+                                        <li>Date:{ls.get("selectedIndex")["eventDate"]}</li>
+</>
+                }
+
                     </ul>
                   </div>
-
+                  {  ls.get("userCreatedEvent")==false?
                   <div className="container" style={{paddingTop:'4%'}}>
-                            
-                  </div>
+                                                     <Map
+                              lat={ls.get("selectedIndex")["_embedded"]["venues"][0]["location"]["latitude"]}
+                              long={ls.get("selectedIndex")["_embedded"]["venues"][0]["location"]["longitude"]}
+                              locations={[]}
+                              shopLoc={[]}
+                              busStopLoc={[]}
+                              atmLoc={[]}
+                              style={{height:'80% !important'}}
+                            />   
+                  </div>:null
+                    }
                 </div>
 
             </div>
