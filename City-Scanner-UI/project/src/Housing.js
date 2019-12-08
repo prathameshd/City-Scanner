@@ -27,7 +27,8 @@ class Housing extends Component {
       atm: [],
       atmLoc: [],
       lat: " ",
-      long: " "
+      long: " ",
+      mapname: ""
     };
     this.getCoordinates = this.getCoordinates.bind(this);
     this.getHousing = this.getHousing.bind(this);
@@ -82,9 +83,10 @@ class Housing extends Component {
       data: ls.get("city")
     })
       .then(response => {
-        console.log(response.data);
+        console.log("estttttttttttt"+JSON.stringify(response.data.results[0]));
         this.setState({ establishments: response.data.results });
         this.setState({ locations: response.data.results });
+        this.setState({pic_ref:response.data.results.photos[0]["photo_reference"]})
       })
       .catch(err => {
         console.log(err);
@@ -162,7 +164,10 @@ class Housing extends Component {
           <div className="row">
             <div className="col-sm-6" style={{overflowY: 'scroll', height:'1200px',}}>
               {this.state.establishments.map((el, i) => (
-                
+              //  {t=1}
+                                                //  {{let temp="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1000&photoreference="+el.name+"&key=AIzaSyAJA71Rtblkd6TpFQvsgsnCbOVUqDCf-nc"}}
+                                               // {{const temp=`https://maps.googleapis.com/maps/api/place/photo?maxwidth=1000&photoreference=&key=AIzaSyAJA71Rtblkd6TpFQvsgsnCbOVUqDCf-nc`}}
+
                 <div
                   style={{
                     display: "inline-block",
@@ -181,7 +186,7 @@ class Housing extends Component {
                                   <div className="card float-right" style={{width:600}}>
                                     <div className="row">
                                       <div className="col-sm-5">
-                                        <img className="d-block w-100" src="https://959online.com/wp-content/uploads/2019/11/iStock_110819_LeBronHomes.jpg" alt="" />
+                                        <img className="d-block w-100" src={"https://maps.googleapis.com/maps/api/place/photo?maxwidth=1000&photoreference="+ls.get(el)["photos"][0]["photo_reference"]+"&key=AIzaSyAJA71Rtblkd6TpFQvsgsnCbOVUqDCf-nc"} alt="" />
                                       </div>
                                       <div className="col-sm-7" style={{marginTop:10}}>
                                         <div className="card-block">
@@ -196,6 +201,7 @@ class Housing extends Component {
                                             color="textSecondary"
                                             component="p"
                                           >
+                                            
                                             {el.vicinity}
                                           </Typography>
                                         </div>
@@ -255,6 +261,7 @@ class Housing extends Component {
                 busStopLoc={this.state.busStopLoc}
                 atmLoc={this.state.atmLoc}
               />
+              
             </div>
           </div>
         </div>

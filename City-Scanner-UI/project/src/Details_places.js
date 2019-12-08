@@ -35,7 +35,14 @@ class Details_Place extends PureComponent{
           long: " ",
           showModal1: false,
           updatedComment:"",
-          updatedPostId:""
+          updatedPostId:"",
+          timing1: "",
+          timing2:"",
+          timing3:"",
+          timing4:"",
+          timing5:"",
+          timing6:"",
+          timing7:""
       };
   
       this.getCoordinates = this.getCoordinates.bind(this);
@@ -123,6 +130,13 @@ class Details_Place extends PureComponent{
               image3:response.data.result.photos[2]["photo_reference"],
               image4:response.data.result.photos[3]["photo_reference"],
               image5:response.data.result.photos[4]["photo_reference"],
+              timing1:response.data.result.opening_hours.weekday_text[0],
+              timing2:response.data.result.opening_hours.weekday_text[1],
+              timing3:response.data.result.opening_hours.weekday_text[2],
+              timing4:response.data.result.opening_hours.weekday_text[3],
+              timing5:response.data.result.opening_hours.weekday_text[4],
+              timing6:response.data.result.opening_hours.weekday_text[5],
+              timing7:response.data.result.opening_hours.weekday_text[6]
             });
             //this.setState({ locations: response.data.results });
           })
@@ -353,12 +367,18 @@ class Details_Place extends PureComponent{
                  <div className="col-md-5">
                        <div>
                        <h5 className="my-3" style={{'font-family': 'cursive'}}>Details</h5>
-                       <img style={{height:'7%', width:'7%'}} src="https://www.freeiconspng.com/uploads/orange-localization-icon-11.png"/>  {this.state.place_details.formatted_address}<br/>
-                       <br/><img style={{height:'7%', width:'7%'}} src="https://iconsplace.com/wp-content/uploads/_icons/ffa500/256/png/phone-icon-11-256.png"/>  {this.state.place_details.formatted_phone_number}<br/>
-                       <br/><img style={{height:'7%', width:'7%'}} src="https://www.flaticon.es/premium-icon/icons/svg/1178/1178509.svg"/>  {this.state.place_details.rating} / 5 <br/>
-                       <br/><img style={{height:'7%', width:'7%'}} src="https://www.pngtube.com/myfile/detail/176-1761461_website-vector-icon-png-png-download-worldwide-shipping.png"/>  {this.state.place_details.website}<br/>
-                       <br/><img style={{height:'7%', width:'7%'}} src="https://resources.iacademy.com/49/1110/4440/1464979022/Icon_HoursOfOperationSign-01.png"/>  Not available<br/>
-                       
+                       <img style={{height:'7%', width:'7%'}} src="https://www.freeiconspng.com/uploads/orange-localization-icon-11.png"/>  {this.state.place_details.formatted_address}
+                       <br/><img style={{height:'7%', width:'7%'}} src="https://iconsplace.com/wp-content/uploads/_icons/ffa500/256/png/phone-icon-11-256.png"/>  {this.state.place_details.formatted_phone_number}
+                       <br/><img style={{height:'7%', width:'7%'}} src="https://www.flaticon.es/premium-icon/icons/svg/1178/1178509.svg"/>  {this.state.place_details.rating} / 5 
+                       <br/><img style={{height:'7%', width:'7%'}} src="https://www.pngtube.com/myfile/detail/176-1761461_website-vector-icon-png-png-download-worldwide-shipping.png"/>  {this.state.place_details.website}
+                       <br/><img style={{height:'7%', width:'7%'}} src="https://resources.iacademy.com/49/1110/4440/1464979022/Icon_HoursOfOperationSign-01.png"/><u>Opening Hours:</u> <br/>
+                       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{this.state.timing1}<br/>
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{this.state.timing2}<br/> 
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{this.state.timing3}<br/>
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{this.state.timing4}<br/>
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{this.state.timing5}<br/>
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{this.state.timing6}<br/>
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{this.state.timing7}<br/> 
                      </div>
  
                        <div className="row" style={{paddingTop:'4%'}}>
@@ -437,7 +457,7 @@ class Details_Place extends PureComponent{
          </div>:
          <div className="row">
          <font face="Cursive" color="skyblue">    
-         <h4> The residents of {ls.get("city")} will help you. Find their reviews about '{this.state.place_details.name}'.</h4>
+         <h4> The residents of {ls.get("city")} will help you.<br/> Find their reviews about '{this.state.place_details.name}'.</h4>
          <h3>LOGIN TO SEE POSTS </h3>
          </font>
          </div>

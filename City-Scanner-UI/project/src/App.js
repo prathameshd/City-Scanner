@@ -17,6 +17,8 @@ import Events from "./Events";
 import Details_Housing from "./Details_housing";
 import Details_Restaurant from "./Details_restaurants";
 import Details_Place from "./Details_places";
+import ShareForm from "./Share";
+import NameForm from "./Share_Resources"
 class App extends Component {
   render() {
     return (
@@ -42,6 +44,7 @@ class App extends Component {
 
           {/*<Footer />*/}
         </Router>
+        {/*<NameForm/>*/}
       </>
     );
   }

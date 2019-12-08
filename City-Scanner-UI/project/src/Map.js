@@ -40,6 +40,7 @@ class MapContainer extends Component {
               lat: store.geometry.location.lat,
               lng: store.geometry.location.lng
             }}
+            
             onClick={() => console.log("You clicked me!")}
           />
         );
@@ -129,6 +130,7 @@ class MapContainer extends Component {
 
     return (
       <Map
+        
         google={this.props.google}
         zoom={13}
         style={mapStyles}

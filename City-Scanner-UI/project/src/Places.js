@@ -94,7 +94,7 @@ class Places extends Component {
                                   <div className="card float-right" style={{width:600}}>
                                     <div className="row">
                                       <div className="col-sm-5">
-                                        <img className="d-block w-100" src="https://s27363.pcdn.co/wp-content/uploads/2017/02/Tigers-Nest-Bhutan.jpg.optimal.jpg" alt="" />
+                                        <img className="d-block w-100" src={"https://maps.googleapis.com/maps/api/place/photo?maxwidth=1000&photoreference="+ls.get("selectedIndex")["photos"][0]["photo_reference"]+"&key=AIzaSyAJA71Rtblkd6TpFQvsgsnCbOVUqDCf-nc"} alt="" />
                                       </div>
                                       <div className="col-sm-7" style={{marginTop:10}}>
                                         <div className="card-block">
