@@ -9,7 +9,7 @@ import Rater from "react-rater";
 import "react-rater/lib/react-rater.css";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import { Fade } from "react-slideshow-image";
-import Map from "./Map";
+import Map2 from "./Map2";
 import ls from "local-storage";
 import { Form } from 'react-bootstrap';
 import Modal from 'react-bootstrap/Modal';
@@ -17,10 +17,10 @@ import {ToastsContainer, ToastsStore} from 'react-toasts';
 
 
 const fadeProperties = {
-    duration: 5000,
+    duration: 2000,
     transitionDuration: 500,
     infinite: true,
-    indicators: true,
+    indicators: false,
     onChange: (oldIndex, newIndex) => {
       console.log(`fade transition from ${oldIndex} to ${newIndex}`);
     }
@@ -120,6 +120,7 @@ getCoordinates() {
 
 componentDidMount() {
   this.getCoordinates();
+  this.getPlaceDetails();
 }
 
 getPlaceDetails() {
@@ -132,8 +133,22 @@ getPlaceDetails() {
       data: ls.get("selectedIndex")["place_id"]
     })
     .then(response => {
+      //console.log("Place det",response.data.result.photos[0]["photo_reference"])
+      console.log("Place det",response.data.result.opening_hours.weekday_text)
       this.setState({
-        place_details: response.data.results
+        place_details: response.data.result,
+        image1:response.data.result.photos[0]["photo_reference"],
+        image2:response.data.result.photos[1]["photo_reference"],
+        image3:response.data.result.photos[2]["photo_reference"],
+        image4:response.data.result.photos[3]["photo_reference"],
+        image5:response.data.result.photos[4]["photo_reference"],
+        timing1:response.data.result.opening_hours.weekday_text[0],
+        timing2:response.data.result.opening_hours.weekday_text[1],
+        timing3:response.data.result.opening_hours.weekday_text[2],
+        timing4:response.data.result.opening_hours.weekday_text[3],
+        timing5:response.data.result.opening_hours.weekday_text[4],
+        timing6:response.data.result.opening_hours.weekday_text[5],
+        timing7:response.data.result.opening_hours.weekday_text[6]
       });
       //this.setState({ locations: response.data.results });
     })
@@ -141,6 +156,7 @@ getPlaceDetails() {
       console.log(err);
     });
 }
+
 
 addComment() {
   var data=this.refs.comment.value;
@@ -359,6 +375,11 @@ sendNotifications()
 }
     render(){
        let Comment=this.state.Comment
+       let imageurl1="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1000&photoreference="+this.state.image1+"&key=AIzaSyAJA71Rtblkd6TpFQvsgsnCbOVUqDCf-nc"
+       let imageurl2="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1000&photoreference="+this.state.image2+"&key=AIzaSyAJA71Rtblkd6TpFQvsgsnCbOVUqDCf-nc"
+       let imageurl3="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1000&photoreference="+this.state.image3+"&key=AIzaSyAJA71Rtblkd6TpFQvsgsnCbOVUqDCf-nc"
+       let imageurl4="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1000&photoreference="+this.state.image4+"&key=AIzaSyAJA71Rtblkd6TpFQvsgsnCbOVUqDCf-nc"
+       let imageurl5="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1000&photoreference="+this.state.image5+"&key=AIzaSyAJA71Rtblkd6TpFQvsgsnCbOVUqDCf-nc"
         return (
             <>
             <Modal style={{zIndex:50000,top:'40%'}} show={this.state.showModal1} onHide={this.changeState}>
@@ -376,31 +397,88 @@ sendNotifications()
 
             <div style={{ background: "gray url(https://subtlepatterns.com/patterns/geometry2.png)"}}>
             <div className="container-fluid" style={{width:'90%'}}>
-            <h1 className="my-4">{ls.get("selectedIndex")["name"]} </h1>
             <div className="row">
-                <div className="col-md-8" style={{paddingRight:'50px'}}>
-                <img className="img-fluid" src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/142996/moscow.jpg" alt="" />
+                <div className="col-md-7" style={{paddingRight:'50px'}}>
+                            <h1 className="my-4">{ls.get("selectedIndex")["name"]} </h1>
+
+                <Fade {...fadeProperties}>     
+          <div >
+            <div className="image-container">
+            
+              <img
+                src={imageurl1}
+                height="555"
+                width="1550"
+              />
+            </div>
+          </div>
+          <div >
+            <div className="image-container">
+                        
+              <img
+                src={imageurl2}
+                height="555"
+                width="1550"
+              />
+            </div>
+          </div>
+          <div >
+            <div className="image-container">
+               <img
+                src={imageurl3}
+                height="555"
+                width="1550"
+              />
+            </div>
+          </div>
+          <div >
+            <div className="image-container">
+              <img
+                src={imageurl4}
+                height="555"
+                width="1550"
+              />
+            </div>
+          </div>
+          <div >
+            <div className="image-container">
+              <img
+                src={imageurl5}
+                height="555"
+                width="1550"
+              />
+            </div>
+          </div>
+        </Fade>
                 </div>
-                <div className="col-md-4">
-                    <div>
-                    <h3 className="my-3" style={{'font-family': 'cursive'}}>About</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae. Sed dui lorem, adipiscing in adipiscing et, interdum nec metus. Mauris ultricies, justo eu convallis placerat, felis enim.</p>
-                    <h3 className="my-3" style={{'font-family': 'cursive'}}>Details</h3>
-                    <ul>
-                        <li>Address: {ls.get("selectedIndex")["vicinity"]}</li>
-                        <li>Average Rating:{ls.get("selectedIndex")["rating"]}</li>
-                    </ul>
-                  </div>
+                <div className="col-md-5">
+                <div className="container" style={{'font-family': 'verdana',paddingTop:'15%'}}>
+                                     <div className="row col-sm-12"><h5>Details</h5></div>
+                     <div className="row col-sm-12"><font size="3" color="">Address:</font> {this.state.place_details.formatted_address}</div>
+                     <div className="row col-sm-12"> <br/><font size="3" color="">Contact:</font>  {this.state.place_details.formatted_phone_number}</div>
+                            <div className="row col-sm-12"><br/><font size="3" color="">Website: Visit their</font><a href={this.state.place_details.website}>&nbsp; website</a></div>
+                       <div className="row col-sm-12">     <br/><font size="3" color="">Rating:</font> {this.state.place_details.rating} / 5 </div>
+                      <br/>
+                     <div className="row col-sm-12"> <br/><font size="3" color="">Opening Hours:</font><br/></div>
+                      <div className="row col-sm-12"><font size="2.8" >{this.state.timing1}</font><br/></div>
+                    <div className="row col-sm-12">  <font size="2.5" >{this.state.timing2}</font><br/> </div>
+                    <div className="row col-sm-12">  <font size="2.5" >{this.state.timing3}</font><br/></div>
+                    <div className="row col-sm-12">  <font size="2.5" >{this.state.timing4}</font><br/></div>
+                    <div className="row col-sm-12">  <font size="2.5" >{this.state.timing5}</font><br/></div>
+                    <div className="row col-sm-12">  <font size="2.5" >{this.state.timing6}</font><br/></div>
+                    <div className="row col-sm-12">  <font size="2.5" >{this.state.timing7}</font><br/>      </div>        
+                      
+                    </div>
 
                   <div className="container" style={{paddingTop:'4%'}}>
-                            <Map
+                            <Map2
                               lat={ls.get("selectedIndex")["geometry"]["location"]["lat"]}
                               long={ls.get("selectedIndex")["geometry"]["location"]["lng"]}
                               locations={this.state.locations}
                               shopLoc={[]}
                               busStopLoc={[]}
                               atmLoc={[]}
-                              style={{height:'80% !important'}}
+                              style={{height:'50% !important'}}
                             />
                   </div>
                 </div>
@@ -471,7 +549,11 @@ sendNotifications()
 
         </div>:
         <div className="row">
-        <h3>Login to see all posts</h3>
+        <font face="verdana" color="skyblue">
+         <h4> The residents of {ls.get("city")} will help you. <br/>Find their reviews about '{this.state.place_details.name}'.</h4>
+         <h3>LOGIN TO SEE POSTS</h3>
+         </font>
+
         </div>
       }
         </div>
