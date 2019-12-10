@@ -422,7 +422,7 @@ sendNotifications()
 
   return axios({
       method: "post",
-      url: "http://localhost:8080/sendHousingNotifications",
+      url: "http://localhost:8080/getSubscribedUsers",
       headers: {
         "Access-Control-Allow-Origin": "*"
       },

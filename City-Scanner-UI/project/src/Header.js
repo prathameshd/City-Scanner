@@ -26,7 +26,9 @@ class Header extends Component {
         newLastName: "",
         newContact: "",
         HousingBoxChecked:false,
-        EventsBoxChecked:false
+        EventsBoxChecked:false,
+        RestaurantsBoxChecked:false,
+        PlacesBoxChecked:false
       };
       this.changeState = this.changeState.bind(this);
       this.changeState2 = this.changeState2.bind(this);
@@ -43,6 +45,8 @@ class Header extends Component {
             this.getUserNotificationStatus= this.getUserNotificationStatus.bind(this);
             this.changeCheckbox1= this.changeCheckbox1.bind(this);
             this.changeCheckbox2= this.changeCheckbox2.bind(this);
+            this.changeCheckbox3= this.changeCheckbox3.bind(this);
+            this.changeCheckbox4= this.changeCheckbox4.bind(this);
 
 
     }
@@ -208,6 +212,19 @@ class Header extends Component {
       this.addSubscription(tempType);
     }
 
+
+    if(this.refs.Restaurantsbox.checked==true)
+    {
+      var tempType="Restaurants";
+      this.addSubscription(tempType);
+    }
+
+        if(this.refs.Placesbox.checked==true)
+    {
+      var tempType="Places";
+      this.addSubscription(tempType);
+    }
+
     if(this.refs.Housingbox.checked==false)
     {
       var tempType="Housing";
@@ -217,6 +234,18 @@ class Header extends Component {
     if(this.refs.Eventsbox.checked==false)
     {
       var tempType="Events";
+      this.removeSubscription(tempType);
+    }
+
+        if(this.refs.Restaurantsbox.checked==false)
+    {
+      var tempType="Restaurants";
+      this.removeSubscription(tempType);
+    }
+
+            if(this.refs.Placesbox.checked==false)
+    {
+      var tempType="Places";
       this.removeSubscription(tempType);
     }
 
@@ -320,7 +349,9 @@ getUserNotificationStatus()
           console.log("user notificaiotn status"+JSON.stringify(response.data))
         this.setState({
         HousingBoxChecked: false,
-        EventsBoxChecked:false
+        EventsBoxChecked:false,
+        RestaurantsBoxChecked:false,
+        PlacesBoxChecked:false
       })
 
 for(let i = 0; i < response.data.length; i++){
@@ -339,7 +370,20 @@ for(let i = 0; i < response.data.length; i++){
       })
    }
 
-  //console.log(JSON.stringify(response.data[i].notificationType));
+     if(response.data[i].notificationType=='Restaurants')
+  {
+      this.setState({
+        RestaurantsBoxChecked: true
+      })
+   }
+
+        if(response.data[i].notificationType=='Places')
+  {
+      this.setState({
+        PlacesBoxChecked: true
+      })
+   }
+
 }
         })
         .catch(err => {
@@ -356,6 +400,18 @@ for(let i = 0; i < response.data.length; i++){
       changeCheckbox2() {
       this.setState({
         EventsBoxChecked: !this.state.EventsBoxChecked
+      });
+    }
+
+          changeCheckbox3() {
+      this.setState({
+        RestaurantsBoxChecked: !this.state.RestaurantsBoxChecked
+      });
+    }
+
+              changeCheckbox4() {
+      this.setState({
+        PlacesBoxChecked: !this.state.PlacesBoxChecked
       });
     }
 
@@ -390,8 +446,10 @@ for(let i = 0; i < response.data.length; i++){
                         {localStorage.getItem("city")?
                         <>
                       <Form>
-                      <input type="checkbox" ref="Housingbox" checked={this.state.HousingBoxChecked} name="HousingBoxChecked" onChange={this.changeCheckbox1}/>Housing Posts <br/>
+                      <input type="checkbox" ref="Housingbox" checked={this.state.HousingBoxChecked} name="HousingBoxChecked" onChange={this.changeCheckbox1}/>Housing <br/>
                       <input type="checkbox" ref="Eventsbox" checked={this.state.EventsBoxChecked}  name="EventsBoxChecked" onChange={this.changeCheckbox2}/> Events<br/>
+                      <input type="checkbox" ref="Restaurantsbox" checked={this.state.RestaurantsBoxChecked}  name="RestaurantsBoxChecked" onChange={this.changeCheckbox3}/> Restaurants<br/>
+                      <input type="checkbox" ref="Placesbox" checked={this.state.PlacesBoxChecked}  name="PlacesBoxChecked" onChange={this.changeCheckbox4}/> Places<br/>
 
                       </Form>
                     <button style={{float:"right"}} className="btn btn-primary" onClick={this.subscribeUser}>Update</button> </> :

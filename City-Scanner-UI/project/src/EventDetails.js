@@ -120,7 +120,7 @@ addComment() {
 
       this.refs.comment.value="";
       this.fetchComments();
-     // this.sendNotifications();
+     this.sendNotifications();
       ToastsStore.success("New Post Added");
 
     })
@@ -131,7 +131,7 @@ addComment() {
 }
 
 //Method to send notifications when a new post is added
-/*sendNotifications()
+sendNotifications()
 {
   var postData = {
     "email": '',
@@ -141,7 +141,7 @@ addComment() {
 
   return axios({
       method: "post",
-      url: "http://localhost:8080/sendEventNotifications",
+      url: "http://localhost:8080/getSubscribedUsers",
       headers: {
         "Access-Control-Allow-Origin": "*"
       },
@@ -153,7 +153,7 @@ addComment() {
     .catch(err => {
       console.log("error while sending Notifications" + err);
     });
-}*/
+}
 
 
 upvote(index) {
