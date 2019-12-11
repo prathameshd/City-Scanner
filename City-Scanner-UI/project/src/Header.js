@@ -145,8 +145,11 @@ openModal() {
       data: postData
     })
       .then(response => {
-        console.log(response.data);
-        this.setState({ user: response.data });
+        this.setState({ user: response.data,
+          updatedFirstName:response.data.firstName,
+          updatedLastName:response.data.lastName,
+          updatedContactNumber:response.data.contactNumber
+         });
       })
       .catch(err => {
         console.log(err);
@@ -387,7 +390,6 @@ openModal() {
       data: postData
     })
       .then(response => {
-        console.log("user notificaiotn status" + JSON.stringify(response.data));
         this.setState({
         HousingBoxChecked: false,
         EventsBoxChecked:false,
@@ -519,7 +521,6 @@ openModal() {
                         id="updatedFirstName"
                         name="updatedFirstName"
                         value={this.state.updatedFirstName}
-                        placeholder={this.state.user.firstName}
                         onChange={this.onChange1}
                       />
                       <br></br>
@@ -531,7 +532,6 @@ openModal() {
                         name="updatedLastName"
                         value={this.state.updatedLastName}
                         onChange={this.onChange1}
-                        placeholder={this.state.user.lastName}
                       />
                       <br></br>
                       Password:
@@ -553,7 +553,6 @@ openModal() {
                         name="updatedContactNumber"
                         value={this.state.updatedContactNumber}
                         onChange={this.onChange1}
-                        placeholder={this.state.user.contactNumber}
                       />
                     </fieldset>
                     <button
