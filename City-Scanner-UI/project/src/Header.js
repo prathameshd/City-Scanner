@@ -322,6 +322,7 @@ openModal() {
       var tempType="Places";
       this.removeSubscription(tempType);
     }
+            ToastsStore.success("Notifications Successfully Updated");
   }
 
   addSubscription(tempType) {
@@ -343,7 +344,6 @@ openModal() {
         this.setState({
           showModal3: false
         });
-        ToastsStore.success("Notifications Successfully Updated");
       })
       .catch(err => {
         console.log("error " + err);
@@ -368,7 +368,6 @@ openModal() {
         this.setState({
           showModal3: false
         });
-        ToastsStore.success("Notifications Successfully Updated");
       })
       .catch(err => {
         console.log("error " + err);

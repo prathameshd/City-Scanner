@@ -82,6 +82,7 @@ componentWillMount()
       this.setState({
         allComments: response.data
       });
+      console.log("all the commeentssss"+JSON.stringify(response.data))
     })
     .catch(err => {
       console.log(err);
@@ -91,11 +92,18 @@ componentWillMount()
 //Method to add new Comment under current event
 addComment() {
   var data=this.refs.comment.value;
+
+var today = new Date();
+var dd = String(today.getDate()).padStart(2, '0');
+var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+var yyyy = today.getFullYear();
+today = mm + '/' + dd + '/' + yyyy;
+
   var postData = {
     "username": ls.get('currentUser'),
     "title": "",
     "ratings": 0,
-    "datetime": "",
+    "datetime": today,
     "category": "Events",
     "postsubjectname": ls.get("selectedIndex")["eventTitle"],
     "postcontent": data,
@@ -422,7 +430,7 @@ getCoordinates() {
                         <div className="row">
                         <div className="col-md-2">
                             <img src="https://image.ibb.co/jw55Ex/def_face.jpg" className="img img-rounded img-fluid" />
-                            <p className="text-secondary text-center">15 Minutes Ago</p>
+                            <p className="text-secondary text-center">{el.datetime}</p>
                         </div>
                         <div className="col-md-10">
                             <p>
