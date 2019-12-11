@@ -20,13 +20,13 @@ const fadeProperties = {
     duration: 5000,
     transitionDuration: 500,
     infinite: true,
-    indicators: false ,
+    indicators: false,
     onChange: (oldIndex, newIndex) => {
       console.log(`fade transition from ${oldIndex} to ${newIndex}`);
     }
   };
 
-class Details_Housing extends PureComponent{
+class Details_Restaurant extends PureComponent{
   constructor (props){
     super (props);
     this.state={
@@ -35,13 +35,7 @@ class Details_Housing extends PureComponent{
       comment:"",
       newPostAdded:false,
       establishments: [],
-        shops: [],
         locations: [],
-        shopLoc: [],
-        busStop: [],
-        busStopLoc: [],
-        atm: [],
-        atmLoc: [],
         lat: " ",
         long: " ",
         showModal1: false,
@@ -50,15 +44,9 @@ class Details_Housing extends PureComponent{
         isliked:false,
         upvotes:0,
         downvotes:0,
-
     };
 
     this.getCoordinates = this.getCoordinates.bind(this);
-    this.getHousing = "";
-    this.getShops = this.getShops.bind(this);
-    this.getBusStops = this.getBusStops.bind(this);
-    this.getAtms = this.getAtms.bind(this);
-
     this.getPlaceDetails = this.getPlaceDetails.bind(this);
     this.addComment = this.addComment.bind(this);
     this.onChange = this.onChange.bind(this);
@@ -82,7 +70,7 @@ fetchComments() {
 
   return axios({
       method: "post",
-      url: "http://localhost:8080/gethouseposts",
+      url: "http://localhost:8080/getrestaurantposts",
       headers: {
         "Access-Control-Allow-Origin": "*"
       },
@@ -128,77 +116,10 @@ getCoordinates() {
     });
 }
 
-getShops() {
-  return axios({
-      method: "post",
-      url: "http://localhost:8080/getShopping",
-      headers: {
-        "Access-Control-Allow-Origin": "*"
-      },
-      data: ls.get("city")
-    })
-    .then(response => {
-      this.setState({
-        shops: response.data.results
-      });
-      this.setState({
-        shopLoc: response.data.results
-      });
-    })
-    .catch(err => {
-      console.log(err);
-    });
-}
 
-getBusStops() {
-  return axios({
-      method: "post",
-      url: "http://localhost:8080/getBusStop",
-      headers: {
-        "Access-Control-Allow-Origin": "*"
-      },
-      data: ls.get("city")
-    })
-    .then(response => {
-      this.setState({
-        busStop: response.data.results
-      });
-      this.setState({
-        busStopLoc: response.data.results
-      });
-    })
-    .catch(err => {
-      console.log(err);
-    });
-}
-
-getAtms() {
-  return axios({
-      method: "post",
-      url: "http://localhost:8080/getAtm",
-      headers: {
-        "Access-Control-Allow-Origin": "*"
-      },
-      data: ls.get("city")
-    })
-    .then(response => {
-      this.setState({
-        atm: response.data.results
-      });
-      this.setState({
-        atmLoc: response.data.results
-      });
-    })
-    .catch(err => {
-      console.log(err);
-    });
-}
 
 componentDidMount() {
   this.getCoordinates();
-  this.getShops();
-  this.getBusStops();
-  this.getAtms();
   this.getPlaceDetails();
 }
 
@@ -244,7 +165,7 @@ addComment() {
     "title": "",
     "ratings": 0,
     "datetime": "",
-    "category": "Housing",
+    "category": "Restaurant",
     "postsubjectname": ls.get("selectedIndex")["name"],
     "postContent": data,
     "upvotes":0,
@@ -253,7 +174,7 @@ addComment() {
 
   return axios({
       method: "post",
-      url: "http://localhost:8080/savehousepost",
+      url: "http://localhost:8080/saverestaurantpost",
       headers: {
         "Access-Control-Allow-Origin": "*"
       },
@@ -301,7 +222,7 @@ updateComment(index) {
     "title": "",
     "ratings": 0,
     "datetime": "",
-    "category": "Housing",
+    "category": "Restaurant",
     "postsubjectname": index["postsubjectname"],
     "postContent": this.state.updatedComment,
     "postId": this.state.updatedPostId,
@@ -310,7 +231,7 @@ updateComment(index) {
   }
   return axios({
       method: "post",
-      url: "http://localhost:8080/updateHousePost",
+      url: "http://localhost:8080/updateRestaurantPost",
       headers: {
         "Access-Control-Allow-Origin": "*"
       },
@@ -333,7 +254,7 @@ deleteComment(index) {
     "title": "",
     "ratings": 0,
     "datetime": "",
-    "category": "Housing",
+    "category": "Restaurant",
     "postsubjectname": index["postsubjectname"],
     "postContent": this.state.updatedComment,
     "postId": this.state.updatedPostId,
@@ -342,7 +263,7 @@ deleteComment(index) {
   }
   return axios({
       method: "post",
-      url: "http://localhost:8080/deleteHousePost",
+      url: "http://localhost:8080/deleteRestaurantPost",
       headers: {
         "Access-Control-Allow-Origin": "*"
       },
@@ -368,7 +289,7 @@ upvote(index) {
     "title": "",
     "ratings": 0,
     "datetime": "",
-    "category": "Housing",
+    "category": "Restaurant",
     "postsubjectname": index["postsubjectname"],
     "postContent": index['postContent'],
     "postId": index['postId'],
@@ -377,7 +298,7 @@ upvote(index) {
   }
   return axios({
       method: "post",
-      url: "http://localhost:8080/updateHousePost",
+      url: "http://localhost:8080/updateRestaurantPost",
       headers: {
         "Access-Control-Allow-Origin": "*"
       },
@@ -405,7 +326,7 @@ downvote(index) {
     "title": "",
     "ratings": 0,
     "datetime": "",
-    "category": "Housing",
+    "category": "Restaurant",
     "postsubjectname": index["postsubjectname"],
     "postContent":  index['postContent'],
     "postId":  index['postId'],
@@ -414,7 +335,7 @@ downvote(index) {
   }
   return axios({
       method: "post",
-      url: "http://localhost:8080/updateHousePost",
+      url: "http://localhost:8080/updateRestaurantPost",
       headers: {
         "Access-Control-Allow-Origin": "*"
       },
@@ -434,7 +355,7 @@ sendNotifications()
   var postData = {
     "email": '',
     "cityName": localStorage.getItem("city"),
-    "notificationType":"Housing",
+    "notificationType":"Restaurants",
   }
 
   return axios({
@@ -459,8 +380,6 @@ sendNotifications()
        let imageurl3="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1000&photoreference="+this.state.image3+"&key=AIzaSyAJA71Rtblkd6TpFQvsgsnCbOVUqDCf-nc"
        let imageurl4="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1000&photoreference="+this.state.image4+"&key=AIzaSyAJA71Rtblkd6TpFQvsgsnCbOVUqDCf-nc"
        let imageurl5="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1000&photoreference="+this.state.image5+"&key=AIzaSyAJA71Rtblkd6TpFQvsgsnCbOVUqDCf-nc"
-
-
         return (
             <>
             <Modal style={{zIndex:50000,top:'40%'}} show={this.state.showModal1} onHide={this.changeState}>
@@ -481,7 +400,6 @@ sendNotifications()
             <div className="row">
                 <div className="col-md-7" style={{paddingRight:'50px'}}>
                             <h1 className="my-4">{ls.get("selectedIndex")["name"]} </h1>
-
                 <Fade {...fadeProperties}>     
           <div >
             <div className="image-container">
@@ -531,14 +449,13 @@ sendNotifications()
             </div>
           </div>
         </Fade>
-
                 </div>
                 <div className="col-md-5">
-                 <div className="container" style={{'font-family': 'verdana',paddingTop:'15%'}}>
+         <div className="container" style={{'font-family': 'verdana',paddingTop:'15%'}}>
                                      <div className="row col-sm-12"><h5>Details</h5></div>
                      <div className="row col-sm-12"><font size="3" color="">Address:</font> {this.state.place_details.formatted_address}</div>
                      <div className="row col-sm-12"> <br/><font size="3" color="">Contact:</font>  {this.state.place_details.formatted_phone_number}</div>
-                            <div className="row col-sm-12"><br/><font size="3" color="">Website: Visit their  </font><a href={this.state.place_details.website}> &nbsp;website</a></div>
+                            <div className="row col-sm-12"><br/><font size="3" color="">Website: Visit their</font><a href={this.state.place_details.website}> &nbsp;website</a></div>
                        <div className="row col-sm-12">     <br/><font size="3" color="">Rating:</font> {this.state.place_details.rating} / 5 </div>
                       <br/>
                      <div className="row col-sm-12"> <br/><font size="3" color="">Opening Hours:</font><br/></div>
@@ -553,17 +470,17 @@ sendNotifications()
                     </div>
 
 
-                      <div className="container" style={{paddingTop:'4%'}}>
-                                <Map2
-                                  lat={ls.get("selectedIndex")["geometry"]["location"]["lat"]}
-                                  long={ls.get("selectedIndex")["geometry"]["location"]["lng"]}
-                                  locations={this.state.locations}
-                                  shopLoc={this.state.shopLoc}
-                                  busStopLoc={this.state.busStopLoc}
-                                  atmLoc={this.state.atmLoc}
-                                  style={{height:'40% !important'}}
-                                />
-                      </div>
+                  <div className="container" style={{paddingTop:'4%'}}>
+                            <Map2
+                              lat={ls.get("selectedIndex")["geometry"]["location"]["lat"]}
+                              long={ls.get("selectedIndex")["geometry"]["location"]["lng"]}
+                              locations={this.state.locations}
+                              shopLoc={[]}
+                              busStopLoc={[]}
+                              atmLoc={[]}
+                              style={{height:'80% !important'}}
+                            />
+                  </div>
                 </div>
 
             </div>
@@ -646,4 +563,4 @@ sendNotifications()
         );
     }
 }
-export default Details_Housing;
+export default Details_Restaurant;

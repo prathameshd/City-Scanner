@@ -7,7 +7,6 @@ import axios from "axios";
 import localStorage from "localStorage";
 import { ToastsContainer, ToastsStore } from "react-toasts";
 import { MDBCol, MDBBtn } from "mdbreact";
-import "react-tabs/style/react-tabs.css";
 import { Tab, Tabs } from "react-bootstrap";
 import Typography from "@material-ui/core/Typography";
 
@@ -16,52 +15,55 @@ const Bounce = styled.div`
 `;
 
 class Header extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isLogin: false,
-      showModal1: false,
-      showModal2: false,
-      showModal3: false,
-      email: "",
-      password: "",
-      newEmail: "",
-      newPassword: "",
-      newFirstName: "",
-      newLastName: "",
-      newContact: "",
-      HousingBoxChecked: false,
-      EventsBoxChecked: false,
-      modalIsOpen: false,
-      user: []
-    };
-    this.changeState1 = this.changeState1.bind(this);
-    this.changeState2 = this.changeState2.bind(this);
-    this.changeState3 = this.changeState3.bind(this);
 
-    this.sendLoginData = this.sendLoginData.bind(this);
-    this.logout = this.logout.bind(this);
-    this.sendEmail = this.sendEmail.bind(this);
-    this.createNewUser = this.createNewUser.bind(this);
-    this.onChange = this.onChange.bind(this);
-    this.subscribeUser = this.subscribeUser.bind(this);
-    this.addSubscription = this.addSubscription.bind(this);
-    this.removeSubscription = this.removeSubscription.bind(this);
-    this.getUserNotificationStatus = this.getUserNotificationStatus.bind(this);
-    this.changeCheckbox1 = this.changeCheckbox1.bind(this);
-    this.changeCheckbox2 = this.changeCheckbox2.bind(this);
-    this.openModal = this.openModal.bind(this);
-    this.closeModal = this.closeModal.bind(this);
-    this.getUser = this.getUser.bind(this);
-    this.updateDetails = this.updateDetails.bind(this);
-    this.onChange1 = this.onChange1.bind(this);
-    this.changeState = this.changeState.bind(this);
-  }
+    constructor(props) {
+      super(props);
+      this.state = {
+        isLogin: false,
+        showModal1: false,
+        showModal2: false,
+        showModal3: false,
+        email: "",
+        password: "",
+        newEmail: "",
+        newPassword: "",
+        newFirstName: "",
+        newLastName: "",
+        newContact: "",
+        HousingBoxChecked:false,
+        EventsBoxChecked:false,
+        RestaurantsBoxChecked:false,
+        PlacesBoxChecked:false,
+        modalIsOpen: false,
+        user: []
+      };
+      this.changeState1 = this.changeState1.bind(this);
+      this.changeState2 = this.changeState2.bind(this);
+      this.changeState3 = this.changeState3.bind(this);
 
-  openModal() {
-    this.setState({ modalIsOpen: true });
-  }
-
+      this.sendLoginData = this.sendLoginData.bind(this);
+      this.logout = this.logout.bind(this);
+      this.sendEmail = this.sendEmail.bind(this);
+      this.createNewUser = this.createNewUser.bind(this);
+      this.onChange = this.onChange.bind(this);
+      this.subscribeUser= this.subscribeUser.bind(this);
+            this.addSubscription= this.addSubscription.bind(this);
+            this.removeSubscription= this.removeSubscription.bind(this);
+            this.getUserNotificationStatus= this.getUserNotificationStatus.bind(this);
+            this.changeCheckbox1= this.changeCheckbox1.bind(this);
+            this.changeCheckbox2= this.changeCheckbox2.bind(this);
+            this.changeCheckbox3= this.changeCheckbox3.bind(this);
+            this.changeCheckbox4= this.changeCheckbox4.bind(this);
+            this.openModal = this.openModal.bind(this);
+            this.closeModal = this.closeModal.bind(this);
+            this.getUser = this.getUser.bind(this);
+            this.updateDetails = this.updateDetails.bind(this);
+            this.onChange1 = this.onChange1.bind(this);
+            this.changeState = this.changeState.bind(this);
+}
+openModal() {
+  this.setState({ modalIsOpen: true });
+}
   closeModal() {
     this.setState({ modalIsOpen: false });
   }
@@ -220,7 +222,7 @@ class Header extends Component {
         }
       })
       .catch(err => {
-        alert(err);
+        //alert(err);
         console.log(err);
       });
   }
@@ -283,13 +285,38 @@ class Header extends Component {
       this.addSubscription(tempType);
     }
 
-    if (this.refs.Housingbox.checked == false) {
-      var tempType = "Housing";
+
+    if(this.refs.Restaurantsbox.checked==true)
+    {
+      var tempType="Restaurants";
+      this.addSubscription(tempType);
+    }
+
+        if(this.refs.Placesbox.checked==true)
+    {
+      var tempType="Places";
+      this.addSubscription(tempType);
+    }
+
+    if(this.refs.Housingbox.checked==false)
+    {
+      var tempType="Housing";
       this.removeSubscription(tempType);
     }
 
     if (this.refs.Eventsbox.checked == false) {
       var tempType = "Events";
+      this.removeSubscription(tempType);
+    }
+        if(this.refs.Restaurantsbox.checked==false)
+    {
+      var tempType="Restaurants";
+      this.removeSubscription(tempType);
+    }
+
+            if(this.refs.Placesbox.checked==false)
+    {
+      var tempType="Places";
       this.removeSubscription(tempType);
     }
   }
@@ -362,9 +389,11 @@ class Header extends Component {
       .then(response => {
         console.log("user notificaiotn status" + JSON.stringify(response.data));
         this.setState({
-          HousingBoxChecked: false,
-          EventsBoxChecked: false
-        });
+        HousingBoxChecked: false,
+        EventsBoxChecked:false,
+        RestaurantsBoxChecked:false,
+        PlacesBoxChecked:false
+      })
 
         for (let i = 0; i < response.data.length; i++) {
           //alert(response.data[i].notificationType);
@@ -379,6 +408,19 @@ class Header extends Component {
               EventsBoxChecked: true
             });
           }
+          if(response.data[i].notificationType=='Restaurants')
+       {
+           this.setState({
+             RestaurantsBoxChecked: true
+           })
+        }
+
+             if(response.data[i].notificationType=='Places')
+       {
+           this.setState({
+             PlacesBoxChecked: true
+           })
+        }
         }
       })
       .catch(err => {
@@ -398,9 +440,22 @@ class Header extends Component {
     });
   }
 
-  render() {
-    if (localStorage.getItem("isLogin") == "true") {
-      return (
+          changeCheckbox3() {
+      this.setState({
+        RestaurantsBoxChecked: !this.state.RestaurantsBoxChecked
+      });
+    }
+
+              changeCheckbox4() {
+      this.setState({
+        PlacesBoxChecked: !this.state.PlacesBoxChecked
+      });
+    }
+
+    render() {
+      if(localStorage.getItem("isLogin")=="true")
+      {
+        return(
         <div>
           <Modal
             show={this.state.modalIsOpen}
@@ -515,6 +570,7 @@ class Header extends Component {
               </Tab>
             </Tabs>
           </Modal>
+
           <meta charSet="utf-8" />
           <meta
             name="viewport"
@@ -570,40 +626,20 @@ class Header extends Component {
                       <h3>Manage Notifications</h3>
                       <br />
                       <h6>Get Email Notifications</h6>
-                      {localStorage.getItem("city") ? (
+                      {localStorage.getItem("city") ?
                         <>
-                          <Form>
-                            <input
-                              type="checkbox"
-                              ref="Housingbox"
-                              checked={this.state.HousingBoxChecked}
-                              name="HousingBoxChecked"
-                              onChange={this.changeCheckbox1}
-                            />
-                            Housing Posts <br />
-                            <input
-                              type="checkbox"
-                              ref="Eventsbox"
-                              checked={this.state.EventsBoxChecked}
-                              name="EventsBoxChecked"
-                              onChange={this.changeCheckbox2}
-                            />{" "}
-                            Events
-                            <br />
-                          </Form>
-                          <button
-                            style={{ float: "right" }}
-                            className="btn btn-primary"
-                            onClick={this.subscribeUser}
-                          >
-                            Update
-                          </button>{" "}
-                        </>
-                      ) : (
-                        <p>Start exploring a place to enable notifications</p>
-                      )}
-                    </div>
-                  </Modal>
+                      <Form>
+                      <input type="checkbox" ref="Housingbox" checked={this.state.HousingBoxChecked} name="HousingBoxChecked" onChange={this.changeCheckbox1}/>Housing <br/>
+                      <input type="checkbox" ref="Eventsbox" checked={this.state.EventsBoxChecked}  name="EventsBoxChecked" onChange={this.changeCheckbox2}/> Events<br/>
+                      <input type="checkbox" ref="Restaurantsbox" checked={this.state.RestaurantsBoxChecked}  name="RestaurantsBoxChecked" onChange={this.changeCheckbox3}/> Restaurants<br/>
+                      <input type="checkbox" ref="Placesbox" checked={this.state.PlacesBoxChecked}  name="PlacesBoxChecked" onChange={this.changeCheckbox4}/> Places<br/>
+
+                      </Form>
+                    <button style={{float:"right"}} className="btn btn-primary" onClick={this.subscribeUser}>Update</button> </> :
+                      <p>Start exploring a place to enable notifications</p>
+                    }
+                        </div>
+                     </Modal>
                   <li class="list-inline-item">
                     <MDBBtn
                       id="LogoutButton"

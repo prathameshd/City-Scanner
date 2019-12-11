@@ -52,92 +52,93 @@ public class PlacesController {
 	}
 
 	// Get housing locations for a city
-		@CrossOrigin
-		@PostMapping(value = "/getHousing")
-		public String getHousing(@RequestBody String cityName) {
-			JsonObject coords = new JsonParser().parse(getPosition(cityName)).getAsJsonObject();
-			String lat = coords.get("lat").getAsString();
-			String lng = coords.get("long").getAsString();
-			String APIKEY = "AIzaSyAJA71Rtblkd6TpFQvsgsnCbOVUqDCf-nc";
+	@CrossOrigin
+	@PostMapping(value = "/getHousing")
+	public String getHousing(@RequestBody String cityName) {
+		JsonObject coords = new JsonParser().parse(getPosition(cityName)).getAsJsonObject();
+		String lat = coords.get("lat").getAsString();
+		String lng = coords.get("long").getAsString();
+		String APIKEY = "AIzaSyAJA71Rtblkd6TpFQvsgsnCbOVUqDCf-nc";
 
-			final String placesAPI = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" + lat + ","
-					+ lng + "&radius=15000&type=establishment&keyword=apartment|housing|society&key=" + APIKEY;
-			System.out.println(placesAPI);
-			RestTemplate getPlaces = new RestTemplate();
-			String placesResult = getPlaces.getForObject(placesAPI, String.class);
+		final String placesAPI = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" + lat + ","
+				+ lng + "&radius=15000&type=establishment&keyword=apartment|housing|society&key=" + APIKEY;
+		System.out.println(placesAPI);
+		RestTemplate getPlaces = new RestTemplate();
+		String placesResult = getPlaces.getForObject(placesAPI, String.class);
 
-			return placesResult;
-		}
+		return placesResult;
+	}
 
 	// Get groceries or shopping centers for a city
-		@CrossOrigin
-		@PostMapping(value = "/getShopping")
-		public String getShopping(@RequestBody String shop) {
-			JsonObject coords = new JsonParser().parse(getPosition(shop)).getAsJsonObject();
-			String lat = coords.get("lat").getAsString();
-			String lng = coords.get("long").getAsString();
-			String APIKEY = "AIzaSyAJA71Rtblkd6TpFQvsgsnCbOVUqDCf-nc";
+	@CrossOrigin
+	@PostMapping(value = "/getShopping")
+	public String getShopping(@RequestBody String shop) {
+		JsonObject coords = new JsonParser().parse(getPosition(shop)).getAsJsonObject();
+		String lat = coords.get("lat").getAsString();
+		String lng = coords.get("long").getAsString();
+		String APIKEY = "AIzaSyAJA71Rtblkd6TpFQvsgsnCbOVUqDCf-nc";
 
-			final String placesAPI = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" + lat + ","
-					+ lng + "&radius=15000&type=shopping_mall|grocery_or_supermarket|home_goods_store&key=" + APIKEY;
-			System.out.println(placesAPI);
-			RestTemplate getPlaces = new RestTemplate();
-			String placesResult = getPlaces.getForObject(placesAPI, String.class);
+		final String placesAPI = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" + lat + ","
+				+ lng + "&radius=15000&type=shopping_mall|grocery_or_supermarket|home_goods_store&key=" + APIKEY;
+		System.out.println(placesAPI);
+		RestTemplate getPlaces = new RestTemplate();
+		String placesResult = getPlaces.getForObject(placesAPI, String.class);
 
-			return placesResult;
-		}
-		
+		return placesResult;
+	}
+
 	// Get bus stops for a city
-		@CrossOrigin
-		@PostMapping(value = "/getBusStop")
-		public String getBusStop(@RequestBody String busStop) {
-			JsonObject coords = new JsonParser().parse(getPosition(busStop)).getAsJsonObject();
-			String lat = coords.get("lat").getAsString();
-			String lng = coords.get("long").getAsString();
-			String APIKEY = "AIzaSyAJA71Rtblkd6TpFQvsgsnCbOVUqDCf-nc";
+	@CrossOrigin
+	@PostMapping(value = "/getBusStop")
+	public String getBusStop(@RequestBody String busStop) {
+		JsonObject coords = new JsonParser().parse(getPosition(busStop)).getAsJsonObject();
+		String lat = coords.get("lat").getAsString();
+		String lng = coords.get("long").getAsString();
+		String APIKEY = "AIzaSyAJA71Rtblkd6TpFQvsgsnCbOVUqDCf-nc";
 
-			final String placesAPI = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" + lat + ","
-					+ lng + "&radius=15000&type=bus_station&key=" + APIKEY;
-			System.out.println(placesAPI);
-			RestTemplate getPlaces = new RestTemplate();
-			String placesResult = getPlaces.getForObject(placesAPI, String.class);
+		final String placesAPI = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" + lat + ","
+				+ lng + "&radius=15000&type=bus_station&key=" + APIKEY;
+		System.out.println(placesAPI);
+		RestTemplate getPlaces = new RestTemplate();
+		String placesResult = getPlaces.getForObject(placesAPI, String.class);
 
-			return placesResult;
-		}
-		
+		return placesResult;
+	}
+
 	// Get atms, banks for a city
-		@CrossOrigin
-		@PostMapping(value = "/getAtm")
-		public String getAtm(@RequestBody String atm) {
-			JsonObject coords = new JsonParser().parse(getPosition(atm)).getAsJsonObject();
-			String lat = coords.get("lat").getAsString();
-			String lng = coords.get("long").getAsString();
-			String APIKEY = "AIzaSyAJA71Rtblkd6TpFQvsgsnCbOVUqDCf-nc";
+	@CrossOrigin
+	@PostMapping(value = "/getAtm")
+	public String getAtm(@RequestBody String atm) {
+		JsonObject coords = new JsonParser().parse(getPosition(atm)).getAsJsonObject();
+		String lat = coords.get("lat").getAsString();
+		String lng = coords.get("long").getAsString();
+		String APIKEY = "AIzaSyAJA71Rtblkd6TpFQvsgsnCbOVUqDCf-nc";
 
-			final String placesAPI = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" + lat + ","
-					+ lng + "&radius=15000&type=atm|bank&key=" + APIKEY;
-			System.out.println(placesAPI);
-			RestTemplate getPlaces = new RestTemplate();
-			String placesResult = getPlaces.getForObject(placesAPI, String.class);
+		final String placesAPI = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" + lat + ","
+				+ lng + "&radius=15000&type=atm|bank&key=" + APIKEY;
+		System.out.println(placesAPI);
+		RestTemplate getPlaces = new RestTemplate();
+		String placesResult = getPlaces.getForObject(placesAPI, String.class);
 
-			return placesResult;
-		}
-		
+		return placesResult;
+	}
+
 	// Get events for a city
-		@CrossOrigin
-		@PostMapping(value = "/getEvent")
-		public String getEvent(@RequestBody String event) {
-			JsonObject coords = new JsonParser().parse(getPosition(event)).getAsJsonObject();
-			String lat = coords.get("lat").getAsString();
-			String lng = coords.get("long").getAsString();
-			String APIKEY = "GLxqEVHtALzHBKjax1d9knHafTr5wtmd";
-			final String placesAPI = "https://app.ticketmaster.com/discovery/v2/events?apikey=" + APIKEY +"&latlong=" + lat + "," + lng + "&radius=15000";
-			System.out.println(placesAPI);
-		    RestTemplate getPlaces = new RestTemplate(); String placesResult =
-		    getPlaces.getForObject(placesAPI, String.class);
-		 
-		    return placesResult;
-		}
+	@CrossOrigin
+	@PostMapping(value = "/getEvent")
+	public String getEvent(@RequestBody String event) {
+		JsonObject coords = new JsonParser().parse(getPosition(event)).getAsJsonObject();
+		String lat = coords.get("lat").getAsString();
+		String lng = coords.get("long").getAsString();
+		String APIKEY = "GLxqEVHtALzHBKjax1d9knHafTr5wtmd";
+		final String placesAPI = "https://app.ticketmaster.com/discovery/v2/events?apikey=" + APIKEY + "&latlong=" + lat
+				+ "," + lng + "&radius=15000";
+		System.out.println(placesAPI);
+		RestTemplate getPlaces = new RestTemplate();
+		String placesResult = getPlaces.getForObject(placesAPI, String.class);
+
+		return placesResult;
+	}
 
 	// Get coordinates for a city
 	@JsonIgnore
@@ -162,6 +163,19 @@ public class PlacesController {
 		coords.addProperty("long", lng);
 
 		return coords.toString();
+	}
+
+	@CrossOrigin
+	@JsonIgnore
+	@PostMapping(value = "/getPlaceDetails")
+	public String getPlacesDetails(@RequestBody String placeID) {
+		String plcID = placeID.substring(0, 27);
+		String APIKEY = "AIzaSyAJA71Rtblkd6TpFQvsgsnCbOVUqDCf-nc";
+		final String placeDetailsAPI = "https://maps.googleapis.com/maps/api/place/details/json?place_id=" + plcID
+				+ "&key=" + APIKEY;
+		RestTemplate getPlaces = new RestTemplate();
+		String placesResult = getPlaces.getForObject(placeDetailsAPI, String.class);
+		return placesResult;
 	}
 
 }
