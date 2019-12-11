@@ -19,8 +19,10 @@ class Events extends Component {
       long: " ",
 			selectedFile: '',
 			imageName:'',
-			showModal:false,
-			eventTitle:'',
+      showModal:false,
+      showModal1:false,
+      eventTitle:'',
+      eventId:"",
 			eventDescription:'',
 			eventContact:'',
 			eventAddress:'',
@@ -35,9 +37,12 @@ class Events extends Component {
     this.getEvents = this.getEvents.bind(this);
 		this.onFileChangeHandler= this.onFileChangeHandler.bind(this);
 		this.uploadImage=this.uploadImage.bind(this);
-		this.displayModalBox=this.displayModalBox.bind(this);
+    this.displayModalBox=this.displayModalBox.bind(this);
+    this.displayUpdateModalBox=this.displayUpdateModalBox.bind(this);
 		this.onChange=this.onChange.bind(this);
-		this.createEvent=this.createEvent.bind(this);
+    this.createEvent=this.createEvent.bind(this);
+    this.updateEvent=this.updateEvent.bind(this);
+    this.deleteEvent=this.deleteEvent.bind(this);
 				this.getUserEvents=this.getUserEvents.bind(this);
   }
 
@@ -70,6 +75,7 @@ class Events extends Component {
       data: ls.get("city")
     })
       .then(response => {
+        console.log(response.data._embedded.events);
         this.setState({ events: response.data._embedded.events });
         this.setState({ locations: response.data.results });
       })
@@ -130,6 +136,12 @@ class Events extends Component {
       })
     }
 
+    displayUpdateModalBox() {
+      this.setState({
+        showModal1: !this.state.showModal1
+      })
+    }
+
 //Method to create new event by user
     createEvent()
     {
@@ -147,8 +159,6 @@ class Events extends Component {
     		    		"eventImage":this.state.imageName,
 
     	}
-
-
     	      return axios({
           method: 'post',
           url: 'http://localhost:8080/addEvent',
@@ -165,6 +175,70 @@ class Events extends Component {
         }).catch(err => {
 
         })
+    }
+
+
+    //Method to update event by user
+    updateEvent()
+    {
+      console.log(this.state.eventId)
+    	var postData={
+        "eventId":this.state.eventId,
+    		"eventTitle":this.state.eventTitle,
+    		"eventDescription":this.state.eventDescription,
+    		"eventDate":this.state.eventDate,
+    		"eventAddress":this.state.eventAddress,
+    		"eventCity":ls.get("city"),
+    		"eventContact":this.state.eventContact,
+    		"eventStartTime":this.state.eventStartTime,
+    		"eventEndTime":this.state.eventEndTime,
+    	}
+    	      return axios({
+          method: 'post',
+          url: 'http://localhost:8080/updateEvent',
+          headers: {
+            'Access-Control-Allow-Origin': '*'
+          },
+          data: postData
+        })
+        .then((response) => {
+        	this.displayUpdateModalBox();
+        	this.getUserEvents();
+        }).catch(err => {
+
+        })
+    }
+
+
+    //Method to delete event by user
+    deleteEvent()
+    {
+      var postData={
+        "eventId":this.state.eventId,
+    		"eventTitle":this.state.eventTitle,
+    		"eventDescription":this.state.eventDescription,
+    		"eventDate":this.state.eventDate,
+    		"eventAddress":this.state.eventAddress,
+    		"eventCity":ls.get("city"),
+    		"eventContact":this.state.eventContact,
+    		"eventStartTime":this.state.eventStartTime,
+    		"eventEndTime":this.state.eventEndTime,
+    	}
+    	      return axios({
+          method: 'post',
+          url: 'http://localhost:8080/deleteEvent',
+          headers: {
+            'Access-Control-Allow-Origin': '*'
+          },
+          data: postData
+        })
+        .then((response) => {
+        	this.displayUpdateModalBox();
+        	this.getUserEvents();
+        }).catch(err => {
+
+        })
+     
     }
 
 //Method to get all user created events for city
@@ -193,9 +267,29 @@ class Events extends Component {
         })
     }
 
+    handleChildClick(e, index) {
+      e.stopPropagation();
+      console.log('child');
+      console.log(index['eventId']);
+      
+      this.displayUpdateModalBox();
+
+      this.setState({
+      eventId:index['eventId'],
+      eventTitle:index['eventTitle'],
+			eventDescription:index['eventDescription'],
+			eventContact:index['eventContact'],
+			eventAddress:index['eventAddress'],
+			eventDate:index['eventDate'],
+			eventStartTime:index['eventStartTime'],
+			eventEndTime:index['eventEndTime'],
+		  })
+    }
+    
+
 //Method to redirect to Event Details page
+
       handleClick(index) {
-   
     ls.set("selectedIndex", index);
     ls.set("userCreatedEvent",false);
           window.location.href="/EventDetails"
@@ -239,7 +333,7 @@ class Events extends Component {
                   fontColor: "black"
                 }}
               >
-                                <Card onClick={this.handleClick.bind(this, el)}>
+                <Card onClick={this.handleClick.bind(this, el)}>
                   <CardActionArea>
                     <div>
                       <div className="card float-right" style={{ width: 400 }}>
@@ -337,6 +431,12 @@ class Events extends Component {
                                 component="p"
                               >
                               </Typography>
+                              <div>
+                                {ls.get("currentUser")==el.userEmail
+                                  ? <button className="float-right btn btn-error" onClick={(e) => {this.handleChildClick(e, el)}} >Edit</button>
+                                  : null
+                                }
+                            </div>
                             </div>
                           </div>
                         </div>
@@ -356,6 +456,78 @@ class Events extends Component {
 		  </Tab>
 			</Tabs>
         </div>
+        <div className="row">
+		
+
+				<Modal style={{zIndex:50000,top:'5%'}} show={this.state.showModal1} onHide={this.displayUpdateModalBox}>
+				<div className="container" style={{padding:'5%'}}>
+				<Form style = {{padding:'20px'}}>
+				<Form.Group controlId="Header">
+						<h1 style={{textAlign:"center"}}>Update Event</h1>
+				</Form.Group>
+				<Form.Row>
+
+
+				<Form.Group as={Col} controlId="formGridPassword">
+					<Form.Label style={{fontSize:18}}>Title</Form.Label>
+					<Form.Control placeholder="" value={this.state.eventTitle} name="eventTitle"  onChange={this.onChange} />
+				</Form.Group>
+				</Form.Row>
+
+				<Form.Group controlId="formGridFirstName">
+				<Form.Label style={{fontSize:18}}>Description</Form.Label>
+				<Form.Control placeholder="" value={this.state.eventDescription} name="eventDescription" onChange={this.onChange} />
+				</Form.Group>
+
+															<Form.Group controlId="formGridFirstName">
+				<Form.Label style={{fontSize:18}}>Address</Form.Label>
+				<Form.Control placeholder="" value={this.state.eventAddress} name="eventAddress" onChange={this.onChange} />
+				</Form.Group>
+
+															<Form.Group controlId="formGridFirstName">
+				<Form.Label style={{fontSize:18}}>Contact</Form.Label>
+				<Form.Control placeholder="" value={this.state.eventContact} name="eventContact" onChange={this.onChange} />
+				</Form.Group>
+
+																											<Form.Group controlId="formGridFirstName">
+				<Form.Label style={{fontSize:18}}>Date</Form.Label>
+				<Form.Control type="date" placeholder="" value={this.state.eventDate} name="eventDate" onChange={this.onChange} />
+				</Form.Group>
+
+
+																											<Form.Group controlId="formGridFirstName">
+				<Form.Label style={{fontSize:18}}>Start Time</Form.Label>
+				<Form.Control type="time" placeholder="" value={this.state.eventStartTime} name="eventStartTime" onChange={this.onChange} />
+				</Form.Group>
+
+																																							<Form.Group controlId="formGridFirstName">
+				<Form.Label style={{fontSize:18}}>End Time</Form.Label>
+				<Form.Control type="time" placeholder="" value={this.state.eventEndTime} name="eventEndTime" onChange={this.onChange} />
+				</Form.Group>
+
+															<Form.Group controlId="formGridFirstName">
+
+				<input type="file" name="file" onChange={this.onFileChangeHandler}/>
+				<button type="button" onClick={this.uploadImage} >Submit</button>
+				</Form.Group>
+
+				
+        <Button style = {{float:'right'}} variant="danger" type="Button" onClick={this.deleteEvent}>
+				Delete
+				</Button>
+        
+        &nbsp; &nbsp; &nbsp;
+        &nbsp; &nbsp; &nbsp;
+
+        <Button style = {{float:'right'}} variant="primary" type="Button" onClick={this.updateEvent}>
+				Update
+				</Button>
+        
+        </Form>
+				</div>
+				</Modal>
+					</div>
+
 					<div className="row">
 		
 
@@ -418,8 +590,7 @@ class Events extends Component {
 				</div>
 				</Modal>
 					</div>
-
-          
+     
         </div>
       );
     } else {
