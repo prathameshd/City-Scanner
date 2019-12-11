@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.domain.project.entities.UserEntity;
+import com.domain.project.entities.UserHousingPostEntity;
 import com.domain.project.repositories.UserRepository;
 
 @RestController
@@ -84,6 +85,28 @@ public class UserController {
 	public List<UserEntity> getUsers() {
 		return userRepository.findAll();
 	}
+	
+	// extract user profile info
+	@CrossOrigin
+	@PostMapping("/getUser")
+	public Object userDetails(@RequestBody UserEntity user) {
+		String userEmail = user.getEmail();
+		return userRepository.findById(userEmail);
+	}
+	
+	// Method to update user info
+	@CrossOrigin
+	@PostMapping("/updateUserProfile")
+	public void updateDetails(@RequestBody UserEntity user) {
+		String userEmail = user.getEmail();
+		PasswordEncoderConfig passwordEncoderConfig = new PasswordEncoderConfig();
+		Optional<UserEntity> userUpdateObject = userRepository.findById(userEmail);
+		userUpdateObject.get().setPassword(passwordEncoderConfig.passwordEncoder().encode(user.getPassword()));
+		userUpdateObject.get().setFirstName(user.getFirstName());
+		userUpdateObject.get().setLastName(user.getLastName());
+		userUpdateObject.get().setContactNumber(user.getContactNumber());
+		userRepository.save(userUpdateObject.get());
+	}
 
 	// send welcome email to new user
 	@CrossOrigin
@@ -98,4 +121,5 @@ public class UserController {
 		javaMailSender.send(msg);
 		return "Email sent successfully";
 	}
+	
 }
