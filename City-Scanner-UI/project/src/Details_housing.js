@@ -594,10 +594,6 @@ sendNotifications()
                         <div className="col-md-10">
                             <p>
         <a className="float-left" href="https://maniruzzaman-akash.blogspot.com/p/contact.html"><strong>{el.username}</strong></a>
-                            <span className="float-right"><i className="text-warning fa fa-star" /></span>
-                            <span className="float-right"><i className="text-warning fa fa-star" /></span>
-                            <span className="float-right"><i className="text-warning fa fa-star" /></span>
-                            <span className="float-right"><i className="text-warning fa fa-star" /></span>
                             </p>
                             <div className="clearfix" />
                             <p>{el.postContent}</p>
