@@ -596,25 +596,16 @@ openModal() {
             type="text/css"
           />
           <link href="./css/landing-page.min.css" rel="stylesheet" />
-          <nav className="navbar navbar-light bg-light static-top">
-            <div className="container-fluid">
-              <a className="navbar-brand" href="/home">
-                City Scanner
+          <nav className="navbar navbar-light bg-light static-top" style={{padding:'0%'}}>
+            <div className="container-fluid" style={{backgroundColor:'#0277bd',color:'white'}}>
+              <a className="navbar-brand" style={{'fontSize':'30px','fontFamily':'Acme',color:'white'}} href="/home">
+                CityScanner
               </a>
 
               <Form>
-                <ul class="list-inline">
-                  <li class="list-inline-item">
-                    <MDBBtn
-                      id="NotificationButton"
-                      onClick={this.changeState3}
-                      rounded
-                      size="md"
-                      color="transparent"
-                    >
-                      Notifications
+                    <MDBBtn>
+                      <a style={{color:'white'}} onClick={this.changeState3}>Notifications</a>
                     </MDBBtn>
-                  </li>
                   <Modal
                     style={{ zIndex: 50000, top: "40%" }}
                     show={this.state.showModal3}
@@ -638,29 +629,13 @@ openModal() {
                     }
                         </div>
                      </Modal>
-                  <li class="list-inline-item">
-                    <MDBBtn
-                      id="LogoutButton"
-                      onClick={this.logout}
-                      rounded
-                      size="md"
-                      color="transparent"
-                    >
-                      Logout
+                    <MDBBtn>
+                      <a style={{color:'white'}} onClick={this.logout}>Logout</a>
                     </MDBBtn>
-                  </li>
-                  <li class="list-inline-item">
-                    <MDBBtn
-                      id="userProfileButton"
-                      onClick={this.openModal}
-                      rounded
-                      size="md"
-                      color="transparent"
+                    <MDBBtn 
                     >
-                      <i className="fas fa-user-circle fa-2x"></i>
+                      <i className="fas fa-user-circle fa-2x" onClick={this.openModal}></i>
                     </MDBBtn>
-                  </li>
-                </ul>
               </Form>
             </div>
           </nav>
@@ -697,19 +672,21 @@ openModal() {
             type="text/css"
           />
           <link href="./css/landing-page.min.css" rel="stylesheet" />
-          <nav className="navbar navbar-light bg-light static-top">
-            <div className="container-fluid">
-              <a className="navbar-brand" href="/home">
-                City Scanner
+                 <nav className="navbar navbar-light bg-light static-top" style={{padding:'0%'}}>
+            <div className="container-fluid" style={{backgroundColor:'#0277bd',color:'white'}}>
+              <a className="navbar-brand" style={{'fontSize':'30px','fontFamily':'Acme',color:'white'}} href="/home">
+                CityScanner
               </a>
               <Form>
+               <MDBBtn>
                 <a
-                  className="btn btn-error"
                   onClick={this.changeState1}
                   show={this.state.isLogin}
+                  style={{color:'white'}}
                 >
                   Login
                 </a>
+                </MDBBtn>
                 <Modal
                   style={{ zIndex: 50000 }}
                   show={this.state.showModal1}
@@ -751,13 +728,17 @@ openModal() {
                   </Form>
                 </Modal>
                 &nbsp;&nbsp;&nbsp;
+                               <MDBBtn>
+
                 <a
-                  className="btn btn-error"
                   onClick={this.changeState2}
                   show={this.state.isLogin}
+                  style={{color:'white'}}
                 >
                   Sign Up
                 </a>
+                               </MDBBtn>
+
                 <Modal
                   style={{ zIndex: 50000 }}
                   show={this.state.showModal2}
