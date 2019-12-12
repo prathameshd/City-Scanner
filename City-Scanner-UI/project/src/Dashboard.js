@@ -40,7 +40,7 @@ export default class Dashboard extends Component {
   render() {
     return (
       <div style={{ width: "100%", overflow: "hidden" }}>
-        <AppBar position="relative">
+        <AppBar position="relative" color="">
           <div
             className="Toolbar"
             style={{

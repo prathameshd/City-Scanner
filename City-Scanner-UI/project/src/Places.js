@@ -73,14 +73,24 @@ class Places extends Component {
       window.location.href = "/home";
     } else if (this.state.lat != " " && this.state.long != " ") {
       return (
-        <div className="containter-fluid">
-          <h1>Places in {ls.get("city")}</h1>
+        <div className="my-4" style={{paddingTop: "0px", overflowY: "hidden" }}>
+        <center><font size="6">Explore {ls.get("city")}!</font></center><br/>
+        <div style={{backgroundColor: "#eceff1", paddingTop: "1%"}}>
+        <div className="containter-fluid"
+        style={{
+          overflowX: "hidden",
+          overflowY: "hidden",
+          width: "90%",
+          marginLeft: "5%",
+          //backgroundColor: "#eceff1"
+        }}>
+          
           <div className="row">
-            <div className="col-sm-6  "
+            <div className="col-sm-6" id="style-1"
             style={{
               overflowY: "scroll",
               overflowX: "hidden",
-              height: "1200px"
+              height: "600px"
             }}>
               {this.state.places.map((el, i) => (
                 <div
@@ -88,8 +98,8 @@ class Places extends Component {
                     display: "inline-block",
                     marginBottom: 18,
                     marginRight: 18,
-                    marginLeft: 100,
-                    paddingTop: "10px",
+                    marginLeft: 38,
+                    paddingTop: "0px",
                     fontColor: "black"
                   }}
                 >
@@ -98,17 +108,18 @@ class Places extends Component {
                     <div>
                         <div
                           className="card float-right"
-                          style={{ width: 600 }}
+                          style={{ width: 600, height:170 }}
                         >
                           <div className="row">
-                            <div className="col-sm-5">
+                            <div className="col-sm-4">
                               <img
                                 className="d-block w-100"
-                                src="https://picsum.photos/150?image=641"
+                                src="http://www.pngall.com/wp-content/uploads/2/Travel-PNG-Free-Image.png"
+                                
                                 alt=""
                               />
                             </div>
-                            <div className="col-sm-7" style={{ marginTop: 10 }}>
+                            <div className="col-sm-8" style={{ marginTop: 10 }}>
                               <div className="card-block">
                                 <Typography
                                   gutterBottom
@@ -174,7 +185,8 @@ class Places extends Component {
                 </div>
               ))}
             </div>
-            <div className="col-sm-6">
+            <div className="col-sm-6"               style={{ height: 1325, overflowX: "hidden", overflowY: "hidden",paddingLeft:'4%'}}>
+
               <Map
                 lat={this.state.lat}
                 long={this.state.long}
@@ -185,6 +197,8 @@ class Places extends Component {
               />
             </div>
           </div>
+        </div>
+        </div>
         </div>
       );
     } else {
