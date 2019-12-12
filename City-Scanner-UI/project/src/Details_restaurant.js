@@ -401,12 +401,12 @@ sendNotifications()
             </Form>
             </div>
          </Modal>
-
-            <div style={{ background: "gray url(https://subtlepatterns.com/patterns/geometry2.png)"}}>
-            <div className="container-fluid" style={{width:'90%'}}>
+         <div className="my-4">
+         <center><font size="6">{ls.get("selectedIndex")["name"]}</font> </center></div>
+            <div style={{ background: "gray url(https://subtlepatterns.com/patterns/geometry2.png)",paddingBottom:'2%',paddingTop:'2%'}}>
+            <div className="container" style={{width:'90%'}}>
             <div className="row">
                 <div className="col-md-7" style={{paddingRight:'50px'}}>
-                            <h1 className="my-4">{ls.get("selectedIndex")["name"]} </h1>
                 <Fade {...fadeProperties}>     
           <div >
             <div className="image-container">
@@ -458,21 +458,21 @@ sendNotifications()
         </Fade>
                 </div>
                 <div className="col-md-5">
-         <div className="container" style={{'font-family': 'verdana',paddingTop:'15%'}}>
+         <div className="container" style={{paddingTop:'2%'}}>
                                      <div className="row col-sm-12"><h5>Details</h5></div>
-                     <div className="row col-sm-12"><font size="3" color="">Address:</font> {this.state.place_details.formatted_address}</div>
-                     <div className="row col-sm-12"> <br/><font size="3" color="">Contact:</font>  {this.state.place_details.formatted_phone_number}</div>
-                            <div className="row col-sm-12"><br/><font size="3" color="">Website: Visit their</font><a href={this.state.place_details.website}> &nbsp;website</a></div>
-                       <div className="row col-sm-12">     <br/><font size="3" color="">Rating:</font> {this.state.place_details.rating} / 5 </div>
+                     <div className="row col-sm-12"><font size="3" color="">Address:</font> &nbsp;{this.state.place_details.formatted_address}</div>
+                     <div className="row col-sm-12"> <br/><font size="3" color="">Contact:</font> &nbsp;{this.state.place_details.formatted_phone_number}</div>
+                            <div className="row col-sm-12"><br/><font size="3" color="">Website:&nbsp; Visit their</font>&nbsp; &nbsp; <a href={this.state.place_details.website}> &nbsp;website</a></div>
+                       <div className="row col-sm-12">     <br/><font size="3" color="">Rating:</font> &nbsp; &nbsp;<Rater total={5} rating={this.state.place_details.rating} /> </div>
                       <br/>
-                     <div className="row col-sm-12"> <br/><font size="3" color="">Opening Hours:</font><br/></div>
-                      <div className="row col-sm-12"><font size="2.8" >{this.state.timing1}</font><br/></div>
-                    <div className="row col-sm-12">  <font size="2.5" >{this.state.timing2}</font><br/> </div>
-                    <div className="row col-sm-12">  <font size="2.5" >{this.state.timing3}</font><br/></div>
-                    <div className="row col-sm-12">  <font size="2.5" >{this.state.timing4}</font><br/></div>
-                    <div className="row col-sm-12">  <font size="2.5" >{this.state.timing5}</font><br/></div>
-                    <div className="row col-sm-12">  <font size="2.5" >{this.state.timing6}</font><br/></div>
-                    <div className="row col-sm-12">  <font size="2.5" >{this.state.timing7}</font><br/>      </div>        
+                     <div className="row col-sm-12"> <br/><h5>Opening Hours:</h5><br/></div>
+                      <div className="row col-sm-12"><font size="3" >{this.state.timing1}</font><br/></div>
+                    <div className="row col-sm-12">  <font size="3" >{this.state.timing2}</font><br/> </div>
+                    <div className="row col-sm-12">  <font size="3" >{this.state.timing3}</font><br/></div>
+                    <div className="row col-sm-12">  <font size="3" >{this.state.timing4}</font><br/></div>
+                    <div className="row col-sm-12">  <font size="3" >{this.state.timing5}</font><br/></div>
+                    <div className="row col-sm-12">  <font size="3" >{this.state.timing6}</font><br/></div>
+                    <div className="row col-sm-12">  <font size="3" >{this.state.timing7}</font><br/>      </div>        
                       
                     </div>
 
@@ -495,7 +495,7 @@ sendNotifications()
         </div>
 
 
-        <div className="container-fluid" style={{width:'90%',marginTop:'4%'}}>
+        <div className="container" style={{width:'90%',marginTop:'4%'}}>
         {ls.get("currentUser") !=""?
 
         <div className="row">
@@ -535,21 +535,15 @@ sendNotifications()
                     </div>
                 </div>
           ))}
-        </div>
-
-
-
-        <div className="col-md-4">
-        <Form>
-        <fieldset className="form-group">
-            <h3>Write a Post:</h3>
-            <input className="form-control" type="text" ref="comment" id="comment" name="comment"/>
-        </fieldset>
-
-        <button className="btn btn-success" type="button" onClick={this.addComment}>Post</button>
+          <div className="my-2"></div>
+          <Form>
+            <fieldset className="form-group">
+                <h3>Write a Post:</h3>
+                <textarea className="form-control" type="text" ref="comment" id="comment" name="comment" placeholder="write a comment..." rows="5"></textarea>
+            </fieldset>
+        <button className="btn btn-success pull-right" type="button" onClick={this.addComment}>Post</button>
         </Form>
-              </div>
-
+        </div>
         </div>:
         <div className="row">
         <font face="verdana" color="skyblue">

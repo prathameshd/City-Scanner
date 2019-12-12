@@ -360,12 +360,12 @@ getCoordinates() {
             </Form>
             </div>
          </Modal>
-
-            <div style={{ background: "gray url(https://subtlepatterns.com/patterns/geometry2.png)"}}>
-            <div className="container-fluid" style={{width:'90%'}}>
-            <h1 className="my-4">{ls.get("selectedIndex")["name"]} {ls.get("selectedIndex")["eventTitle"]}</h1>
+         <div className="my-4">
+         <center><font size="6">{ls.get("selectedIndex")["name"]} {ls.get("selectedIndex")["eventTitle"]}</font> </center></div>
+            <div style={{ background: "gray url(https://subtlepatterns.com/patterns/geometry2.png)",paddingBottom:'2%',paddingTop:'2%'}}>
+            <div className="container" style={{width:'90%'}}>
             <div className="row" style={{height:'450px'}}>
-                <div className="col-md-8" style={{paddingRight:'50px'}}>
+                <div className="col-md-8" style={{paddingRight:'50px', paddingTop:'2%'}}>
                 <img style={{height:"400px",width:'600px'}} className="img-fluid" src={imagePath} alt="" />
                 </div>
                 <div className="col-md-4">
@@ -390,8 +390,8 @@ getCoordinates() {
                     </ul>
                   </div>
                   {  ls.get("userCreatedEvent")==false?
-                  <div className="container" style={{paddingTop:'4%'}}>
-                                                     <Map
+                  <div style={{paddingTop:'2%'}}>
+                          <Map
                               lat={ls.get("selectedIndex")["_embedded"]["venues"][0]["location"]["latitude"]}
                               long={ls.get("selectedIndex")["_embedded"]["venues"][0]["location"]["longitude"]}
                               locations={[]}
@@ -401,7 +401,7 @@ getCoordinates() {
                               style={{height:'80% !important'}}
                             />   
                   </div>:
-                                                                       <Map
+                          <Map
                               lat={this.state.lat}
                               long={this.state.long}
                               locations={[]}
@@ -418,7 +418,7 @@ getCoordinates() {
             </div>
 
 
- <div className="container-fluid" style={{width:'90%',marginTop:'4%'}}>
+ <div className="container" style={{width:'95%',marginTop:'2%'}}>
         {ls.get("currentUser") !=""?
 
         <div className="row">
@@ -458,21 +458,15 @@ getCoordinates() {
                     </div>
                 </div>
           ))}
-        </div>
-
-
-
-        <div className="col-md-4">
-        <Form>
-        <fieldset className="form-group">
-            <h3>Write a Post:</h3>
-            <input className="form-control" type="text" ref="comment" id="comment" name="comment"/>
-        </fieldset>
-
-        <button className="btn btn-success" type="button" onClick={this.addComment}>Post</button>
+          <div className="my-2"></div>
+          <Form>
+            <fieldset className="form-group">
+                <h3>Write a Post:</h3>
+                <textarea className="form-control" type="text" ref="comment" id="comment" name="comment" placeholder="write a comment..." rows="5"></textarea>
+            </fieldset>
+        <button className="btn btn-success pull-right" type="button" onClick={this.addComment}>Post</button>
         </Form>
-              </div>
-
+        </div>
         </div>:
         <div className="row">
         <h3>Login to see all posts</h3>
