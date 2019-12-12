@@ -38,7 +38,6 @@ export default class LandingPage extends Component {
             <div className="container">
               <div className="row">
                 <div className="col-xl-9 mx-auto">
-                  <h1 className="mb-5">Explore The Unknown!</h1>
                 </div>
                 <div className="col-md-10 col-lg-8 col-xl-7 mx-auto">
                   <form>
@@ -48,21 +47,22 @@ export default class LandingPage extends Component {
                           <input
                             type="text"
                             className="form-control form-control-lg"
-                            placeholder="Enter University Name..."
+                            placeholder="Search City"
                             name="location"
                             value={this.state.location}
                             onChange={this.handleChange}
+                            style={{borderRadius:'9px'}}
                           />
                         </div>
-                        <div className="input-group-prepend">
+                        <div className="input-group-prepend" style={{backgroundColor:'#0277bd',borderRadius:"7px"}}>
                           <Link to={{ pathname: "/Dashboard" }}>
                             <div className="col-12 col-md-15">
                               <button
                                 type="submit"
-                                className="btn btn-block btn-lg btn-primary"
-                                onChange={{}}
+                                className="btn btn-lg"
+
                               >
-                                Search
+                                <a style={{color:'white'}}>Search</a>
                               </button>
                             </div>
                           </Link>
