@@ -185,7 +185,8 @@ class Places extends Component {
                 </div>
               ))}
             </div>
-            <div className="col-sm-6" style={{ height: 1205, overflowX: "hidden" }}>
+            <div className="col-sm-6"               style={{ height: 1325, overflowX: "hidden", overflowY: "hidden",paddingLeft:'4%'}}>
+
               <Map
                 lat={this.state.lat}
                 long={this.state.long}
