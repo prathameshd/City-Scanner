@@ -308,13 +308,13 @@ class Events extends Component {
       window.location.href = "/home";
     } else if (this.state.lat != " " && this.state.long != " ") {
       return (
-        <div className="containter-fluid">
+        <div className="containter-fluid" style={{width:'90%',marginLeft:'5%'}}>
         <div className="row">
                   <div className="col-sm-9"><h3>Events around {ls.get("city")}</h3>
                   </div>
                   <div className="col-sm-3">
         			{ls.get("currentUser")!=""?
-					<Button style={{float:"right"}} className="btn btn-primary" onClick={this.displayModalBox}>Create Your Event</Button>:null}
+					<Button style={{float:"right"}} className="btn btn-primary" onClick={this.displayModalBox}>Create Your Event</Button>:<Button disabled style={{float:"right"}} className="btn btn-primary" onClick={this.displayModalBox}>Login to Create Event</Button>}
 					</div>
         </div>
 
@@ -336,12 +336,12 @@ class Events extends Component {
                 <Card onClick={this.handleClick.bind(this, el)}>
                   <CardActionArea>
                     <div>
-                      <div className="card float-right" style={{ width: 400 }}>
+                      <div className="card float-right" style={{ width: 350,height:150 }}>
                         <div className="row">
                           <div className="col-sm-5">
                             <img
                               className="d-block w-100"
-                              src="https://picsum.photos/150?image=641"
+                              src=""
                               alt=""
                             />
                           </div>
@@ -352,14 +352,13 @@ class Events extends Component {
                                 variant="h5"
                                 component="h3"
                               >
-                                {el.name}
+                                {el.name.substring(0, 35)}
                               </Typography>
                               <Typography
                                 gutterBottom
                                 variant="h5"
                                 component="h1"
                               >
-                                <Rater total={5} rating={el.rating} />
                               </Typography>
                               <Typography
                                 variant="body2"
@@ -400,12 +399,12 @@ class Events extends Component {
                                 <Card onClick={this.handleClickForUserEvents.bind(this, el)}>
                   <CardActionArea>
                     <div>
-                      <div className="card float-right" style={{ width: 400 }}>
+                      <div className="card float-right" style={{ width: 350,height:150 }}>
                         <div className="row">
                           <div className="col-sm-5">
                             <img
                               className="d-block w-100"
-                              src="https://picsum.photos/150?image=641"
+                              src=""
                               alt=""
                             />
                           </div>
@@ -423,7 +422,6 @@ class Events extends Component {
                                 variant="h5"
                                 component="h1"
                               >
-                                <Rater total={5} rating={el.rating} />
                               </Typography>
                               <Typography
                                 variant="body2"
@@ -431,7 +429,7 @@ class Events extends Component {
                                 component="p"
                               >
                               </Typography>
-                              <div>
+                              <div style={{paddingTop:'30%'}}>
                                 {ls.get("currentUser")==el.userEmail
                                   ? <button className="float-right btn btn-error" onClick={(e) => {this.handleChildClick(e, el)}} >Edit</button>
                                   : null
