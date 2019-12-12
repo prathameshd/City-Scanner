@@ -73,9 +73,9 @@ class Places extends Component {
       window.location.href = "/home";
     } else if (this.state.lat != " " && this.state.long != " ") {
       return (
-        <div className="my-4" style={{paddingTop: "16px", overflowY: "hidden" }}>
-        <center><font size="6">Spots to visit near {ls.get("city")}</font></center><br/>
-        <div style={{backgroundColor: "#eceff1"}}>
+        <div className="my-4" style={{paddingTop: "0px", overflowY: "hidden" }}>
+        <center><font size="6">Explore {ls.get("city")}!</font></center><br/>
+        <div style={{backgroundColor: "#eceff1", paddingTop: "1%"}}>
         <div className="containter-fluid"
         style={{
           overflowX: "hidden",
@@ -99,7 +99,7 @@ class Places extends Component {
                     marginBottom: 18,
                     marginRight: 18,
                     marginLeft: 38,
-                    paddingTop: "10px",
+                    paddingTop: "0px",
                     fontColor: "black"
                   }}
                 >

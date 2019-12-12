@@ -310,7 +310,7 @@ class Events extends Component {
       return (
         <div className="containter-fluid" style={{width:'90%',marginLeft:'5%'}}>
         <div className="row">
-                  <div className="col-sm-9"><h3>Events around {ls.get("city")}</h3>
+                  <div className="col-sm-9"><h3>Events happening around {ls.get("city")}</h3>
                   </div>
                   <div className="col-sm-3">
         			{ls.get("currentUser")!=""?

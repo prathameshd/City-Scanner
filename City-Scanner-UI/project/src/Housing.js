@@ -155,9 +155,9 @@ class Housing extends Component {
       window.location.href = "/home";
     } else if (this.state.lat != " " && this.state.long != " ") {
       return (
-        <div className="my-4" style={{paddingTop: "16px", overflowY: "hidden"}}>
-        <center><font size="6">Establishments in {ls.get("city")}</font></center><br/>
-        <div style={{backgroundColor: "#eceff1", }}>
+        <div className="my-4" style={{paddingTop: "0px", overflowY: "hidden"}}>
+        <center><font size="6">Explore housing options near {ls.get("city")}</font></center><br/>
+        <div style={{backgroundColor: "#eceff1",paddingTop:'1%' }}>
         <div
           className="containter-fluid"
           style={{
@@ -203,7 +203,7 @@ class Housing extends Component {
                     marginBottom: 18,
                     marginRight: 18,
                     marginLeft: 38,
-                    paddingTop: "10px",
+                    paddingTop: "0px",
                     fontColor: "black"
                   }}
                 >
@@ -298,7 +298,7 @@ class Housing extends Component {
             </div>
             <div
               className="col-sm-6"
-              style={{ height: 1205, overflowX: "hidden", overflowY: "hidden", paddingTop: "10px"}}
+              style={{ height: 1205, overflowX: "hidden", overflowY: "hidden"}}
             >
               <Map
                 lat={this.state.lat}
