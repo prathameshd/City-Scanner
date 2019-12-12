@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { MDBCol, MDBBtn } from "mdbreact";
 import Header from "./Header";
 import ls from "local-storage";
+import ReactTypingEffect from 'react-typing-effect';
 
 export default class LandingPage extends Component {
   constructor(props) {
@@ -35,11 +36,22 @@ export default class LandingPage extends Component {
         <div>
           <header className="masthead text-white text-center">
             <div className="overlay" />
-            <div className="container">
-              <div className="row">
-                <div className="col-xl-9 mx-auto">
-                  <h1 className="mb-5">Explore The Unknown!</h1>
+            <div className="container-fluid">
+            <div className="row">
+                           <div className="col-xl-9 mx-auto">
+        <h1><ReactTypingEffect
+                      text={[
+                        "Finalized a university?",
+                        "Moving to a new city?",
+                        "You are at the Right Place!  "
+                      ]}
+                      speed="55"
+                      eraseDelay="1500"
+                    /></h1>
                 </div>
+                </div>
+              <div className="row">
+ 
                 <div className="col-md-10 col-lg-8 col-xl-7 mx-auto">
                   <form>
                     <div className="form-row">
@@ -48,21 +60,22 @@ export default class LandingPage extends Component {
                           <input
                             type="text"
                             className="form-control form-control-lg"
-                            placeholder="Enter University Name..."
+                            placeholder="Search City"
                             name="location"
                             value={this.state.location}
                             onChange={this.handleChange}
+                            style={{borderRadius:'9px'}}
                           />
                         </div>
-                        <div className="input-group-prepend">
+                        <div className="input-group-prepend" style={{backgroundColor:'#0277bd',borderRadius:"7px"}}>
                           <Link to={{ pathname: "/Dashboard" }}>
                             <div className="col-12 col-md-15">
                               <button
                                 type="submit"
-                                className="btn btn-block btn-lg btn-primary"
-                                onChange={{}}
+                                className="btn btn-lg"
+
                               >
-                                Search
+                                <a style={{color:'white'}}>Search</a>
                               </button>
                             </div>
                           </Link>

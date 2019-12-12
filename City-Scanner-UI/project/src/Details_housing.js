@@ -239,11 +239,17 @@ getPlaceDetails() {
 
 addComment() {
   var data=this.refs.comment.value;
+  var today = new Date();
+var dd = String(today.getDate()).padStart(2, '0');
+var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+var yyyy = today.getFullYear();
+today = mm + '/' + dd + '/' + yyyy;
+
   var postData = {
     "username": ls.get('currentUser'),
     "title": "",
     "ratings": 0,
-    "datetime": "",
+    "datetime": today,
     "category": "Housing",
     "postsubjectname": ls.get("selectedIndex")["name"],
     "postContent": data,
@@ -475,17 +481,17 @@ sendNotifications()
             </Form>
             </div>
          </Modal>
-
-            <div style={{ background: "gray url(https://subtlepatterns.com/patterns/geometry2.png)"}}>
-            <div className="container-fluid" style={{width:'90%'}}>
+         <div className="my-4">
+         <center><font size="6">{ls.get("selectedIndex")["name"]}</font> </center></div>
+            <div style={{ background: "gray url(https://subtlepatterns.com/patterns/geometry2.png)",paddingBottom:'2%',paddingTop:'2%'}}>
+            <div className="container" style={{width:'90%'}}>
             <div className="row">
                 <div className="col-md-7" style={{paddingRight:'50px'}}>
-                            <h1 className="my-4">{ls.get("selectedIndex")["name"]} </h1>
-
-                <Fade {...fadeProperties}>     
+                <div className="my-3"></div>
+                <Fade {...fadeProperties}>
           <div >
             <div className="image-container">
-            
+
               <img
                 src={imageurl1}
                 height="555"
@@ -495,7 +501,7 @@ sendNotifications()
           </div>
           <div >
             <div className="image-container">
-                        
+
               <img
                 src={imageurl2}
                 height="555"
@@ -534,22 +540,22 @@ sendNotifications()
 
                 </div>
                 <div className="col-md-5">
-                 <div className="container" style={{'font-family': 'verdana',paddingTop:'15%'}}>
+                 <div className="container" style={{paddingTop:'2%'}}>
                                      <div className="row col-sm-12"><h5>Details</h5></div>
-                     <div className="row col-sm-12"><font size="3" color="">Address:</font> {this.state.place_details.formatted_address}</div>
-                     <div className="row col-sm-12"> <br/><font size="3" color="">Contact:</font>  {this.state.place_details.formatted_phone_number}</div>
-                            <div className="row col-sm-12"><br/><font size="3" color="">Website: Visit their  </font><a href={this.state.place_details.website}> &nbsp;website</a></div>
-                       <div className="row col-sm-12">     <br/><font size="3" color="">Rating:</font> {this.state.place_details.rating} / 5 </div>
+                     <div className="row col-sm-12"><font size="3" color="">Address:</font> &nbsp; &nbsp; {this.state.place_details.formatted_address}</div>
+                     <div className="row col-sm-12"> <br/><font size="3" color="">Contact:</font> &nbsp; &nbsp; {this.state.place_details.formatted_phone_number}</div>
+                            <div className="row col-sm-12"><br/><font size="3" color="">Website: &nbsp; Visit their  </font>&nbsp; &nbsp; <a href={this.state.place_details.website}> &nbsp;website</a></div>
+                       <div className="row col-sm-12">     <br/><font size="3" color="">Rating:</font> &nbsp; &nbsp; &nbsp; &nbsp;<Rater total={5} rating={this.state.place_details.rating} /></div>
                       <br/>
-                     <div className="row col-sm-12"> <br/><font size="3" color="">Opening Hours:</font><br/></div>
-                      <div className="row col-sm-12"><font size="2.8" >{this.state.timing1}</font><br/></div>
-                    <div className="row col-sm-12">  <font size="2.5" >{this.state.timing2}</font><br/> </div>
-                    <div className="row col-sm-12">  <font size="2.5" >{this.state.timing3}</font><br/></div>
-                    <div className="row col-sm-12">  <font size="2.5" >{this.state.timing4}</font><br/></div>
-                    <div className="row col-sm-12">  <font size="2.5" >{this.state.timing5}</font><br/></div>
-                    <div className="row col-sm-12">  <font size="2.5" >{this.state.timing6}</font><br/></div>
-                    <div className="row col-sm-12">  <font size="2.5" >{this.state.timing7}</font><br/>      </div>        
-                      
+                     <div className="row col-sm-12"> <br/><h5>Opening Hours:</h5><br/></div>
+                      <div className="row col-sm-12"><font size="3" >{this.state.timing1}</font><br/></div>
+                    <div className="row col-sm-12">  <font size="3" >{this.state.timing2}</font><br/> </div>
+                    <div className="row col-sm-12">  <font size="3" >{this.state.timing3}</font><br/></div>
+                    <div className="row col-sm-12">  <font size="3" >{this.state.timing4}</font><br/></div>
+                    <div className="row col-sm-12">  <font size="3" >{this.state.timing5}</font><br/></div>
+                    <div className="row col-sm-12">  <font size="3" >{this.state.timing6}</font><br/></div>
+                    <div className="row col-sm-12">  <font size="3" >{this.state.timing7}</font><br/>      </div>
+
                     </div>
 
 
@@ -571,7 +577,7 @@ sendNotifications()
         </div>
 
 
-        <div className="container-fluid" style={{width:'90%',marginTop:'4%'}}>
+        <div className="container" style={{width:'90%',marginTop:'4%'}}>
         {ls.get("currentUser") !=""?
 
         <div className="row">
@@ -583,15 +589,11 @@ sendNotifications()
                         <div className="row">
                         <div className="col-md-2">
                             <img src="https://image.ibb.co/jw55Ex/def_face.jpg" className="img img-rounded img-fluid" />
-                            <p className="text-secondary text-center">15 Minutes Ago</p>
+                            <p className="text-secondary text-center">{el.datetime}</p>
                         </div>
                         <div className="col-md-10">
                             <p>
         <a className="float-left" href="https://maniruzzaman-akash.blogspot.com/p/contact.html"><strong>{el.username}</strong></a>
-                            <span className="float-right"><i className="text-warning fa fa-star" /></span>
-                            <span className="float-right"><i className="text-warning fa fa-star" /></span>
-                            <span className="float-right"><i className="text-warning fa fa-star" /></span>
-                            <span className="float-right"><i className="text-warning fa fa-star" /></span>
                             </p>
                             <div className="clearfix" />
                             <p>{el.postContent}</p>
@@ -615,21 +617,16 @@ sendNotifications()
                     </div>
                 </div>
           ))}
-        </div>
-
-
-
-        <div className="col-md-4">
-        <Form>
-        <fieldset className="form-group">
-            <h3>Write a Post:</h3>
-            <input className="form-control" type="text" ref="comment" id="comment" name="comment"/>
-        </fieldset>
-
-        <button className="btn btn-success" type="button" onClick={this.addComment}>Post</button>
+          <div className="my-2"></div>
+          <Form>
+            <fieldset className="form-group">
+                <h3>Write a Post:</h3>
+                <textarea className="form-control" type="text" ref="comment" id="comment" name="comment" placeholder="write a comment..." rows="5"></textarea>
+            </fieldset>
+        <button className="btn btn-success pull-right" type="button" onClick={this.addComment}>Post</button>
         </Form>
-              </div>
 
+        </div>
         </div>:
         <div className="row">
         <font face="verdana" color="skyblue">
