@@ -403,8 +403,8 @@ sendNotifications()
          </Modal>
          <div className="my-4">
          <center><font size="6">{ls.get("selectedIndex")["name"]}</font> </center></div>
-            <div style={{ background: "gray url(https://subtlepatterns.com/patterns/geometry2.png)"}}>
-            <div className="container-fluid" style={{width:'90%'}}>
+            <div style={{ background: "gray url(https://subtlepatterns.com/patterns/geometry2.png)",paddingBottom:'2%',paddingTop:'2%'}}>
+            <div className="container" style={{width:'90%'}}>
             <div className="row">
                 <div className="col-md-7" style={{paddingRight:'50px'}}>
                 <Fade {...fadeProperties}>     
@@ -495,7 +495,7 @@ sendNotifications()
         </div>
 
 
-        <div className="container-fluid" style={{width:'90%',marginTop:'4%'}}>
+        <div className="container" style={{width:'90%',marginTop:'4%'}}>
         {ls.get("currentUser") !=""?
 
         <div className="row">

@@ -362,8 +362,8 @@ getCoordinates() {
          </Modal>
          <div className="my-4">
          <center><font size="6">{ls.get("selectedIndex")["name"]} {ls.get("selectedIndex")["eventTitle"]}</font> </center></div>
-            <div style={{ background: "gray url(https://subtlepatterns.com/patterns/geometry2.png)"}}>
-            <div className="container-fluid" style={{width:'90%'}}>
+            <div style={{ background: "gray url(https://subtlepatterns.com/patterns/geometry2.png)",paddingBottom:'2%',paddingTop:'2%'}}>
+            <div className="container" style={{width:'90%'}}>
             <div className="row" style={{height:'450px'}}>
                 <div className="col-md-8" style={{paddingRight:'50px', paddingTop:'2%'}}>
                 <img style={{height:"400px",width:'600px'}} className="img-fluid" src={imagePath} alt="" />
@@ -418,7 +418,7 @@ getCoordinates() {
             </div>
 
 
- <div className="container-fluid" style={{width:'95%',marginTop:'2%'}}>
+ <div className="container" style={{width:'95%',marginTop:'2%'}}>
         {ls.get("currentUser") !=""?
 
         <div className="row">
