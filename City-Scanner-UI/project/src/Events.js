@@ -8,6 +8,8 @@ import "react-rater/lib/react-rater.css";
 import ls from "local-storage";
 import { Form, Button, Col, Nav, Navbar, useState,Tab,Tabs} from "react-bootstrap";
 import Modal from 'react-bootstrap/Modal';
+import { MDBCol, MDBBtn } from "mdbreact";
+
 
 class Events extends Component {
   constructor(props) {
@@ -75,7 +77,7 @@ class Events extends Component {
       data: ls.get("city")
     })
       .then(response => {
-        console.log(response.data._embedded.events);
+        console.log("ggggggggggggggggggggg"+JSON.stringify(response.data._embedded.events));
         this.setState({ events: response.data._embedded.events });
         this.setState({ locations: response.data.results });
       })
@@ -310,15 +312,14 @@ class Events extends Component {
       return (
         <div className="containter-fluid" style={{width:'90%',marginLeft:'5%'}}>
         <div className="row">
-                  <div className="col-sm-9"><h3>Events happening around {ls.get("city")}</h3>
+
+                  <div className="col-sm-12" style={{textAlign:'center',paddingTop:'2%',paddingBottom:'2%'}}><font size="6">Events happening around {ls.get("city")}</font>
                   </div>
-                  <div className="col-sm-3">
-        			{ls.get("currentUser")!=""?
-					<Button style={{float:"right"}} className="btn btn-primary" onClick={this.displayModalBox}>Create Your Event</Button>:<Button disabled style={{float:"right"}} className="btn btn-primary" onClick={this.displayModalBox}>Login to Create Event</Button>}
-					</div>
+       
         </div>
 
         <div className="row">
+					<div className="col-sm-10">
         <Tabs defaultActiveKey="home" id="uncontrolled-tab-example">
 		  <Tab eventKey="home" title="Explore">
 <div className="row">
@@ -336,7 +337,7 @@ class Events extends Component {
                 <Card onClick={this.handleClick.bind(this, el)}>
                   <CardActionArea>
                     <div>
-                      <div className="card float-right" style={{ width: 350,height:150 }}>
+                      <div className="card float-right" style={{ width: 470,height:150 }}>
                         <div className="row">
                           <div className="col-sm-5">
                             <img
@@ -365,7 +366,6 @@ class Events extends Component {
                                 color="textSecondary"
                                 component="p"
                               >
-                                {el.vicinity}
                               </Typography>
                             </div>
                           </div>
@@ -399,7 +399,7 @@ class Events extends Component {
                                 <Card onClick={this.handleClickForUserEvents.bind(this, el)}>
                   <CardActionArea>
                     <div>
-                      <div className="card float-right" style={{ width: 350,height:150 }}>
+                      <div className="card float-right" style={{ width: 470,height:150 }}>
                         <div className="row">
                           <div className="col-sm-5">
                             <img
@@ -453,6 +453,11 @@ class Events extends Component {
 
 		  </Tab>
 			</Tabs>
+			</div>
+			         <div className="col-sm-2">
+        			{ls.get("currentUser")!=""?
+					                    <MDBBtn><a style={{float:"right"}} className="btn btn-error" onClick={this.displayModalBox}>Create Your Event</a></MDBBtn>:<p>Login to create events</p>}
+					</div>
         </div>
         <div className="row">
 		
