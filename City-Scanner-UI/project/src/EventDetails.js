@@ -458,7 +458,7 @@ getCoordinates() {
                     </div>
                 </div>
           ))}
-          <hr/>
+          <div className="my-2"></div>
           <Form>
             <fieldset className="form-group">
                 <h3>Write a Post:</h3>

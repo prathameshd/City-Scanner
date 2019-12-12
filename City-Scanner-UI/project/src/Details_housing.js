@@ -547,14 +547,14 @@ sendNotifications()
                             <div className="row col-sm-12"><br/><font size="3" color="">Website: &nbsp; Visit their  </font>&nbsp; &nbsp; <a href={this.state.place_details.website}> &nbsp;website</a></div>
                        <div className="row col-sm-12">     <br/><font size="3" color="">Rating:</font> &nbsp; &nbsp; &nbsp; &nbsp;<Rater total={5} rating={this.state.place_details.rating} /></div>
                       <br/>
-                     <div className="row col-sm-12"> <br/><font size="3" color="">Opening Hours:</font><br/></div>
-                      <div className="row col-sm-12"><font size="2.8" >{this.state.timing1}</font><br/></div>
-                    <div className="row col-sm-12">  <font size="2.5" >{this.state.timing2}</font><br/> </div>
-                    <div className="row col-sm-12">  <font size="2.5" >{this.state.timing3}</font><br/></div>
-                    <div className="row col-sm-12">  <font size="2.5" >{this.state.timing4}</font><br/></div>
-                    <div className="row col-sm-12">  <font size="2.5" >{this.state.timing5}</font><br/></div>
-                    <div className="row col-sm-12">  <font size="2.5" >{this.state.timing6}</font><br/></div>
-                    <div className="row col-sm-12">  <font size="2.5" >{this.state.timing7}</font><br/>      </div>
+                     <div className="row col-sm-12"> <br/><h5>Opening Hours:</h5><br/></div>
+                      <div className="row col-sm-12"><font size="3" >{this.state.timing1}</font><br/></div>
+                    <div className="row col-sm-12">  <font size="3" >{this.state.timing2}</font><br/> </div>
+                    <div className="row col-sm-12">  <font size="3" >{this.state.timing3}</font><br/></div>
+                    <div className="row col-sm-12">  <font size="3" >{this.state.timing4}</font><br/></div>
+                    <div className="row col-sm-12">  <font size="3" >{this.state.timing5}</font><br/></div>
+                    <div className="row col-sm-12">  <font size="3" >{this.state.timing6}</font><br/></div>
+                    <div className="row col-sm-12">  <font size="3" >{this.state.timing7}</font><br/>      </div>
 
                     </div>
 
@@ -617,7 +617,7 @@ sendNotifications()
                     </div>
                 </div>
           ))}
-          <hr/>
+          <div className="my-2"></div>
           <Form>
             <fieldset className="form-group">
                 <h3>Write a Post:</h3>
