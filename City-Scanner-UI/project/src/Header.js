@@ -459,10 +459,10 @@ class Header extends Component {
             <div
               style={{
                 // fontFamily: "Patua One",
-                color: "white",
+                color: "Black",
                 fontSize: "28px",
                 padding: "1%",
-                backgroundColor: "black"
+                textAlign:"center"
               }}
             >
               User Profile
