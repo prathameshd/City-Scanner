@@ -111,7 +111,7 @@ export default class LandingPage extends Component {
                     </div>
                     <h3>Connect</h3>
                     <p className="lead mb-0">
-                      Find the reviews from the local residents of the city.
+                      Find the reviews from the local residents and students of the city.
                     </p>
                   </div>
                 </div>
@@ -140,7 +140,7 @@ export default class LandingPage extends Component {
                   <h2>Housing</h2>
                   <p className="lead mb-0">
                     As soon as the university is finalized, the most important task is to find housing.
-                    We help you find perfect apartments based on distanace from campus and bus stops and other preferred amenities.
+                    We help you to find perfect apartments based on distanace from campus and bus stops and other preferred amenities.
                   </p>
                 </div>
               </div>
@@ -179,7 +179,7 @@ export default class LandingPage extends Component {
                 <div className="col-lg-6 my-auto showcase-text">
                   <h2>Events</h2>
                   <p className="lead mb-0">
-                    Don't miss a chance to socialize and do exciting activities. Discover what's happening around you
+                    Don't miss a chance to socialize and do exciting activities. Discover what's happening around you.
                     Find events near you or publicize an event that you want to host.
                   </p>
                 </div>
@@ -187,54 +187,6 @@ export default class LandingPage extends Component {
             </div>
           </section>
           <section>
-            {/*<div className="container">
-              <h2 className="mb-5">What people are saying...</h2>
-              <div className="row">
-                <div className="col-lg-4">
-                  <div className="testimonial-item mx-auto mb-5 mb-lg-0">
-                    <img
-                      className="img-fluid rounded-circle mb-3"
-                      src="img/testimonials-1.jpg"
-                      alt=""
-                    />
-                    <h5>Margaret E.</h5>
-                    <p className="font-weight-light mb-0">
-                      "This is fantastic! Thanks so much guys!"
-                    </p>
-                  </div>
-                </div>
-                <div className="col-lg-4">
-                  <div className="testimonial-item mx-auto mb-5 mb-lg-0">
-                    <img
-                      className="img-fluid rounded-circle mb-3"
-                      src="img/testimonials-2.jpg"
-                      alt=""
-                    />
-                    <h5>Fred S.</h5>
-                    <p className="font-weight-light mb-0">
-                      "Bootstrap is amazing. I've been using it to create lots
-                      of super nice landing pages."
-                    </p>
-                  </div>
-                </div>
-                <div className="col-lg-4">
-                  <div className="testimonial-item mx-auto mb-5 mb-lg-0">
-                    <img
-                      className="img-fluid rounded-circle mb-3"
-                      src="img/testimonials-3.jpg"
-                      alt=""
-                    />
-                    <h5>Sarah W.</h5>
-                    <p className="font-weight-light mb-0">
-                      "Thanks so much for making these free resources available
-                      to us!"
-                    </p>
-                  </div>
-                </div>
-              </div>
-                    </div>*/}
-                   
-
           <footer className="footer bg-light" style={{ position: "relative", paddingBottom:"50px" }}>
             <div className="container">
               <div className="row">
