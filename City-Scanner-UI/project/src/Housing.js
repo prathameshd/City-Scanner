@@ -12,6 +12,7 @@ import Map from "./Map";
 import ls from "local-storage";
 import localStorage from "localStorage";
 import { ToastsContainer, ToastsStore } from "react-toasts";
+import  "./App"
 
 class Housing extends Component {
   constructor(props) {
@@ -154,30 +155,55 @@ class Housing extends Component {
       window.location.href = "/home";
     } else if (this.state.lat != " " && this.state.long != " ") {
       return (
+        <div className="my-4" style={{paddingTop: "0px", overflowY: "hidden"}}>
+        <center><font size="6">Explore housing options near {ls.get("city")}</font></center><br/>
+        <div style={{backgroundColor: "#eceff1",paddingTop:'1%' }}>
         <div
           className="containter-fluid"
           style={{
-            overflowX: "hidden"
+            overflowX: "hidden",
+            overflowY: "hidden",
+            //background: "gray url(https://www.publicdomainpictures.net/pictures/230000/nahled/light-blue-background.jpg)"
+            //backgroundColor: "#eceff1",
+            width: "90%",
+            marginLeft: "5%"
           }}
         >
-          <h1>Establishments in {ls.get("city")}</h1>
+          
           <div className="row">
+         
             <div
-              className="col-sm-6"
-              style={{
-                overflowY: "scroll",
-                overflowX: "hidden",
-                height: "1200px"
+              className="col-sm-6" id="style-1"
+                style={{
+                 overflowY: "scroll",
+                 overflowX: "hidden",
+                 height: "600px",
+                 
+                 
+                 //backgroundColor: "#ede0dc"
+                //  '&::-webkit-scrollbar': {
+                //    width: '90px'
+                //   ;padding:5px;margin-top:5px;padding:5px;font: 24px/36px sans-serif;width:200px;height:150px;overflow:scroll;"
+                //  },
+                //  '&::-webkit-scrollbar-track': {
+                //    boxShadow: 'inset 0 0 6px rgba(0,0,0,0.3)',
+                //    webkitBoxShadow: 'inset 0 0 6px rgba(0,0,0,0.00)'
+                //  },
+                //  '&::-webkit-scrollbar-thumb': {
+                //    backgroundColor: 'rgba(0,0,0,.3)',
+                //    outline: '1px solid blue'
+                // }
               }}
             >
+              
               {this.state.establishments.map((el, i) => (
                 <div
                   style={{
                     display: "inline-block",
-                    marginBottom: 5,
-                    marginRight: 12,
-                    marginLeft: 100,
-                    paddingTop: "10px",
+                    marginBottom: 18,
+                    marginRight: 18,
+                    marginLeft: 38,
+                    paddingTop: "0px",
                     fontColor: "black"
                   }}
                 >
@@ -186,17 +212,17 @@ class Housing extends Component {
                       <div>
                         <div
                           className="card float-right"
-                          style={{ width: 600 }}
+                          style={{ width: 600, height: 170 }}
                         >
                           <div className="row">
-                            <div className="col-sm-5">
+                            <div className="col-sm-4">
                               <img
                                 className="d-block w-100"
-                                src="https://picsum.photos/150?image=641"
+                                src="http://www.clipartbest.com/cliparts/aTe/ony/aTeonyRyc.jpg"
                                 alt=""
                               />
                             </div>
-                            <div className="col-sm-7" style={{ marginTop: 10 }}>
+                            <div className="col-sm-8" style={{ marginTop: 10 }}>
                               <div className="card-block">
                                 <Typography
                                   gutterBottom
@@ -224,7 +250,9 @@ class Housing extends Component {
                           </div>
                         </div>
                       </div>
+                      
                     </CardActionArea>
+                    
                     {/* <CardActionArea>
                         <CardMedia
                           component="img"
@@ -265,12 +293,11 @@ class Housing extends Component {
                       </CardActionArea> */}
                   </Card>
                 </div>
+                
               ))}
             </div>
-            <div
-              className="col-sm-6"
-              style={{ height: 1205, overflowX: "hidden" }}
-            >
+            <div className="col-sm-6"               style={{ height: 1325, overflowX: "hidden", overflowY: "hidden",paddingLeft:'4%'}}>
+
               <Map
                 lat={this.state.lat}
                 long={this.state.long}
@@ -282,6 +309,8 @@ class Housing extends Component {
             </div>
           </div>
         </div>
+        </div>
+        </div>
       );
     } else {
       return <></>;
@@ -290,3 +319,4 @@ class Housing extends Component {
 }
 
 export default Housing;
+

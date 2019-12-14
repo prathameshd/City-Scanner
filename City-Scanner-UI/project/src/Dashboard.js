@@ -40,13 +40,14 @@ export default class Dashboard extends Component {
   render() {
     return (
       <div style={{ width: "100%", overflow: "hidden" }}>
-        <AppBar position="relative">
+        <AppBar position="relative" color="">
           <div
             className="Toolbar"
             style={{
               position: "relative",
               marginLeft: "25%",
-              marginBottom: "1%"
+              marginBottom: "1%",
+              marginTop: "1%"
             }}
           >
             <SearchBar />
@@ -153,7 +154,7 @@ export default class Dashboard extends Component {
                 color: "white"
               }}
             >
-              TOURIST SPOTS
+              PLACES TO VISIT
             </Typography>
           </div>
         </Link>
