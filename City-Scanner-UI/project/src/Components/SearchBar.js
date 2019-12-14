@@ -42,7 +42,7 @@ export default class SearchBar extends Component {
               <input
                 className="form-control my-0 py-1"
                 type="text"
-                placeholder="Enter a location"
+                placeholder="Enter destination"
                 aria-label="Search"
                 name="location"
                 value={this.state.location}
