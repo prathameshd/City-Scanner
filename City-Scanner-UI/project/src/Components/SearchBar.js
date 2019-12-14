@@ -36,7 +36,7 @@ export default class SearchBar extends Component {
   render() {
     return (
       <React.Fragment>
-        <div className="search-bar" style={{ paddingTop: 30 }}>
+        <div className="search-bar" >
           <MDBCol md="12">
             <div className="input-group md-form form-sm form-1 pl-0">
               <input

@@ -120,9 +120,9 @@ export default class LandingPage extends Component {
                     <div className="features-icons-icon d-flex">
                       <i className="icon-check m-auto text-primary" />
                     </div>
-                    <h3>Easy to Use</h3>
+                    <h3>Get notified</h3>
                     <p className="lead mb-0">
-                    Single platform to find information about Housing, Restaurants, Tourist Places and Events within the city.
+                    Sign up to get personalized notifications and never miss on any updates.
                     </p>
                   </div>
                 </div>
@@ -153,7 +153,7 @@ export default class LandingPage extends Component {
                   <h2>Restaurants</h2>
                   <p className="lead mb-0">
                     Love Mexican, Indian, Chineese or Italian food? 
-                    Get all food places within the city and enjoy eating your favorite cuisine.
+                    Get to know about all food places within the city and enjoy eating your favorite cuisine.
                   </p>
                 </div>
               </div>
@@ -165,7 +165,9 @@ export default class LandingPage extends Component {
                 <div className="col-lg-6 order-lg-1 my-auto showcase-text">
                   <h2>Places to Visit</h2>
                   <p className="lead mb-0">
-                    Take a break from your busy schedule and explore beautiful and adventurous destinations in and around the city with your friends.
+                    Having free time before the start of semester?
+                    Or tried of hectic student life, take a break from your busy schedule and chill along with your friends.
+                    Explore beautiful and adventurous destinations in and around the city.
                   </p>
                 </div>
               </div>
@@ -177,8 +179,8 @@ export default class LandingPage extends Component {
                 <div className="col-lg-6 my-auto showcase-text">
                   <h2>Events</h2>
                   <p className="lead mb-0">
-                    Discover what's happening around you. 
-                    Find events near you or create your own event that you want to host.
+                    Don't miss a chance to socialize and do exciting activities. Discover what's happening around you
+                    Find events near you or publicize an event that you want to host.
                   </p>
                 </div>
               </div>
