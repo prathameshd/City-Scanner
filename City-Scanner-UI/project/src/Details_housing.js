@@ -587,11 +587,11 @@ sendNotifications()
                     <div className="card">
                     <div className="card-body">
                         <div className="row">
-                        <div className="col-md-2">
+                        <div className="col-md-3">
                             <img src="https://image.ibb.co/jw55Ex/def_face.jpg" className="img img-rounded img-fluid" />
                             <p className="text-secondary text-center">{el.datetime}</p>
                         </div>
-                        <div className="col-md-10">
+                        <div className="col-md-9">
                             <p>
         <a className="float-left" href="https://maniruzzaman-akash.blogspot.com/p/contact.html"><strong>{el.username}</strong></a>
                             </p>

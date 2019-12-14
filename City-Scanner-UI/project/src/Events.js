@@ -10,7 +10,7 @@ import { Form, Button, Col, Nav, Navbar, useState,Tab,Tabs} from "react-bootstra
 import Modal from 'react-bootstrap/Modal';
 import { MDBCol, MDBBtn } from "mdbreact";
 import Events2 from "./event2.png"
-
+import  "./App"
 
 class Events extends Component {
   constructor(props) {
@@ -311,7 +311,8 @@ class Events extends Component {
       window.location.href = "/home";
     } else if (this.state.lat != " " && this.state.long != " ") {
       return (
-        <div className="containter-fluid" style={{width:'90%',marginLeft:'5%'}}>
+        <div id="style-1"  style={{ overflowY:'scroll'}}>
+        <div className="containter-fluid" style={{width:'90%',marginLeft:'5%'}} >
         <div className="row">
 
                   <div className="col-sm-12" style={{textAlign:'center',paddingTop:'2%',paddingBottom:'1%'}}><font size="6">Events happening around {ls.get("city")}</font>
@@ -449,7 +450,7 @@ class Events extends Component {
 			</div>
 			         <div className="col-sm-2">
         			{ls.get("currentUser")!=""?
-					                    <MDBBtn><a style={{float:"right"}} className="btn btn-error" onClick={this.displayModalBox}>Create Your Event</a></MDBBtn>:<p>Login to create events</p>}
+					                    <MDBBtn><a style={{float:"right"}} className="btn btn-error" onClick={this.displayModalBox}><font color="#2196f3" size="4.9"><b>Create Your Event</b></font></a></MDBBtn>:<p>Login to create events</p>}
 					</div>
         </div>
         <div className="row">
@@ -587,6 +588,7 @@ class Events extends Component {
 				</Modal>
 					</div>
      
+        </div>
         </div>
       );
     } else {
