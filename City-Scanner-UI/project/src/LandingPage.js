@@ -63,7 +63,7 @@ export default class LandingPage extends Component {
                           <input
                             type="text"
                             className="form-control form-control-lg"
-                            placeholder="Search City"
+                            placeholder="Enter destination"
                             name="location"
                             value={this.state.location}
                             onChange={this.handleChange}
