@@ -429,7 +429,7 @@ class Events extends Component {
                                 component="p"
                               >
                               </Typography>
-                              <div style={{paddingTop:'30%'}}>
+                              <div style={{paddingTop:'20%'}}>
                                 {ls.get("currentUser")==el.userEmail
                                   ? <button className="float-right btn btn-error" onClick={(e) => {this.handleChildClick(e, el)}} >Edit</button>
                                   : null
