@@ -4,6 +4,8 @@ import { MDBCol, MDBBtn } from "mdbreact";
 import Header from "./Header";
 import ls from "local-storage";
 import ReactTypingEffect from 'react-typing-effect';
+import  "./App"
+
 
 export default class LandingPage extends Component {
   constructor(props) {
@@ -33,12 +35,12 @@ export default class LandingPage extends Component {
   render() {
     return (
       <>
-        <div>
-          <header className="masthead text-white text-center">
+        <div id="style-1" style={{ overflowY:'scroll'}} >
+          <header className="masthead text-white text-center" >
             <div className="overlay" />
             <div className="container-fluid">
             <div className="row">
-                           <div className="col-xl-9 mx-auto">
+                           <div className="col-xl-8 mx-auto" style={{paddingRight:"180px"}}>
         <h1><ReactTypingEffect
                       text={[
                         "Finalized a university?",
@@ -47,6 +49,7 @@ export default class LandingPage extends Component {
                       ]}
                       speed="55"
                       eraseDelay="1500"
+                      
                     /></h1>
                 </div>
                 </div>
@@ -97,8 +100,7 @@ export default class LandingPage extends Component {
                     </div>
                     <h3>Explore</h3>
                     <p className="lead mb-0">
-                      This theme will look great on any device, no matter the
-                      size!
+                      Get to know about the city you are travelling to!
                     </p>
                   </div>
                 </div>
@@ -109,8 +111,7 @@ export default class LandingPage extends Component {
                     </div>
                     <h3>Connect</h3>
                     <p className="lead mb-0">
-                      Featuring the latest build of the new Bootstrap 4
-                      framework!
+                      Find the reviews from the local residents of the city.
                     </p>
                   </div>
                 </div>
@@ -121,8 +122,7 @@ export default class LandingPage extends Component {
                     </div>
                     <h3>Easy to Use</h3>
                     <p className="lead mb-0">
-                      Ready to use with your own content, or customize the
-                      source files!
+                    Single platform to find information about Housing, Restaurants, Tourist Places and Events within the city.
                     </p>
                   </div>
                 </div>
@@ -139,9 +139,8 @@ export default class LandingPage extends Component {
                 <div className="col-lg-6 order-lg-1 my-auto showcase-text">
                   <h2>Housing</h2>
                   <p className="lead mb-0">
-                    When you use a theme created by Start Bootstrap, you know
-                    that the theme will look great on any device, whether it's a
-                    phone, tablet, or desktop the page will behave responsively!
+                    As soon as the university is finalized, the most important task is to find housing.
+                    We help you find perfect apartments based on distanace from campus and bus stops and other preferred amenities.
                   </p>
                 </div>
               </div>
@@ -153,10 +152,8 @@ export default class LandingPage extends Component {
                 <div className="col-lg-6 my-auto showcase-text">
                   <h2>Restaurants</h2>
                   <p className="lead mb-0">
-                    Newly improved, and full of great utility classes, Bootstrap
-                    4 is leading the way in mobile responsive web development!
-                    All of the themes on Start Bootstrap are now using Bootstrap
-                    4!
+                    Love Mexican, Indian, Chineese or Italian food? 
+                    Get all food places within the city and enjoy eating your favorite cuisine.
                   </p>
                 </div>
               </div>
@@ -166,12 +163,9 @@ export default class LandingPage extends Component {
                   style={{ backgroundImage: 'url("img/bg-showcase-3.jpg")' }}
                 />
                 <div className="col-lg-6 order-lg-1 my-auto showcase-text">
-                  <h2>Tourist Places</h2>
+                  <h2>Places to Visit</h2>
                   <p className="lead mb-0">
-                    Landing Page is just HTML and CSS with a splash of SCSS for
-                    users who demand some deeper customization options. Out of
-                    the box, just add your content and images, and your new
-                    landing page will be ready to go!
+                    Take a break from your busy schedule and explore beautiful and adventurous destinations in and around the city with your friends.
                   </p>
                 </div>
               </div>
@@ -183,17 +177,15 @@ export default class LandingPage extends Component {
                 <div className="col-lg-6 my-auto showcase-text">
                   <h2>Events</h2>
                   <p className="lead mb-0">
-                    Newly improved, and full of great utility classes, Bootstrap
-                    4 is leading the way in mobile responsive web development!
-                    All of the themes on Start Bootstrap are now using Bootstrap
-                    4!
+                    Discover what's happening around you. 
+                    Find events near you or create your own event that you want to host.
                   </p>
                 </div>
               </div>
             </div>
           </section>
-          <section className="testimonials text-center bg-light">
-            <div className="container">
+          <section>
+            {/*<div className="container">
               <h2 className="mb-5">What people are saying...</h2>
               <div className="row">
                 <div className="col-lg-4">
@@ -238,10 +230,10 @@ export default class LandingPage extends Component {
                   </div>
                 </div>
               </div>
-            </div>
-          </section>
+                    </div>*/}
+                   
 
-          <footer className="footer bg-light" style={{ position: "relative" }}>
+          <footer className="footer bg-light" style={{ position: "relative", paddingBottom:"50px" }}>
             <div className="container">
               <div className="row">
                 <div className="col-lg-6 h-100 text-center text-lg-left my-auto">
@@ -288,7 +280,8 @@ export default class LandingPage extends Component {
               </div>
             </div>
           </footer>
-        </div>
+          </section>
+          </div>
       </>
     );
   }
