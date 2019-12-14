@@ -9,61 +9,61 @@ import { ToastsContainer, ToastsStore } from "react-toasts";
 import { MDBCol, MDBBtn } from "mdbreact";
 import { Tab, Tabs } from "react-bootstrap";
 import Typography from "@material-ui/core/Typography";
+import "./App.css";
 
 const Bounce = styled.div`
   animation: 3s ${keyframes`${bounce}`} infinite;
 `;
 
 class Header extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isLogin: false,
+      showModal1: false,
+      showModal2: false,
+      showModal3: false,
+      email: "",
+      password: "",
+      newEmail: "",
+      newPassword: "",
+      newFirstName: "",
+      newLastName: "",
+      newContact: "",
+      HousingBoxChecked: false,
+      EventsBoxChecked: false,
+      RestaurantsBoxChecked: false,
+      PlacesBoxChecked: false,
+      modalIsOpen: false,
+      user: []
+    };
+    this.changeState1 = this.changeState1.bind(this);
+    this.changeState2 = this.changeState2.bind(this);
+    this.changeState3 = this.changeState3.bind(this);
 
-    constructor(props) {
-      super(props);
-      this.state = {
-        isLogin: false,
-        showModal1: false,
-        showModal2: false,
-        showModal3: false,
-        email: "",
-        password: "",
-        newEmail: "",
-        newPassword: "",
-        newFirstName: "",
-        newLastName: "",
-        newContact: "",
-        HousingBoxChecked:false,
-        EventsBoxChecked:false,
-        RestaurantsBoxChecked:false,
-        PlacesBoxChecked:false,
-        modalIsOpen: false,
-        user: []
-      };
-      this.changeState1 = this.changeState1.bind(this);
-      this.changeState2 = this.changeState2.bind(this);
-      this.changeState3 = this.changeState3.bind(this);
-
-      this.sendLoginData = this.sendLoginData.bind(this);
-      this.logout = this.logout.bind(this);
-      this.sendEmail = this.sendEmail.bind(this);
-      this.createNewUser = this.createNewUser.bind(this);
-      this.onChange = this.onChange.bind(this);
-      this.subscribeUser= this.subscribeUser.bind(this);
-            this.addSubscription= this.addSubscription.bind(this);
-            this.removeSubscription= this.removeSubscription.bind(this);
-            this.getUserNotificationStatus= this.getUserNotificationStatus.bind(this);
-            this.changeCheckbox1= this.changeCheckbox1.bind(this);
-            this.changeCheckbox2= this.changeCheckbox2.bind(this);
-            this.changeCheckbox3= this.changeCheckbox3.bind(this);
-            this.changeCheckbox4= this.changeCheckbox4.bind(this);
-            this.openModal = this.openModal.bind(this);
-            this.closeModal = this.closeModal.bind(this);
-            this.getUser = this.getUser.bind(this);
-            this.updateDetails = this.updateDetails.bind(this);
-            this.onChange1 = this.onChange1.bind(this);
-            this.changeState = this.changeState.bind(this);
-}
-openModal() {
-  this.setState({ modalIsOpen: true });
-}
+    this.sendLoginData = this.sendLoginData.bind(this);
+    this.logout = this.logout.bind(this);
+    this.sendEmail = this.sendEmail.bind(this);
+    this.createNewUser = this.createNewUser.bind(this);
+    this.onChange = this.onChange.bind(this);
+    this.subscribeUser = this.subscribeUser.bind(this);
+    this.addSubscription = this.addSubscription.bind(this);
+    this.removeSubscription = this.removeSubscription.bind(this);
+    this.getUserNotificationStatus = this.getUserNotificationStatus.bind(this);
+    this.changeCheckbox1 = this.changeCheckbox1.bind(this);
+    this.changeCheckbox2 = this.changeCheckbox2.bind(this);
+    this.changeCheckbox3 = this.changeCheckbox3.bind(this);
+    this.changeCheckbox4 = this.changeCheckbox4.bind(this);
+    this.openModal = this.openModal.bind(this);
+    this.closeModal = this.closeModal.bind(this);
+    this.getUser = this.getUser.bind(this);
+    this.updateDetails = this.updateDetails.bind(this);
+    this.onChange1 = this.onChange1.bind(this);
+    this.changeState = this.changeState.bind(this);
+  }
+  openModal() {
+    this.setState({ modalIsOpen: true });
+  }
   closeModal() {
     this.setState({ modalIsOpen: false });
   }
@@ -145,11 +145,12 @@ openModal() {
       data: postData
     })
       .then(response => {
-        this.setState({ user: response.data,
-          updatedFirstName:response.data.firstName,
-          updatedLastName:response.data.lastName,
-          updatedContactNumber:response.data.contactNumber
-         });
+        this.setState({
+          user: response.data,
+          updatedFirstName: response.data.firstName,
+          updatedLastName: response.data.lastName,
+          updatedContactNumber: response.data.contactNumber
+        });
       })
       .catch(err => {
         console.log(err);
@@ -288,22 +289,18 @@ openModal() {
       this.addSubscription(tempType);
     }
 
-
-    if(this.refs.Restaurantsbox.checked==true)
-    {
-      var tempType="Restaurants";
+    if (this.refs.Restaurantsbox.checked == true) {
+      var tempType = "Restaurants";
       this.addSubscription(tempType);
     }
 
-        if(this.refs.Placesbox.checked==true)
-    {
-      var tempType="Places";
+    if (this.refs.Placesbox.checked == true) {
+      var tempType = "Places";
       this.addSubscription(tempType);
     }
 
-    if(this.refs.Housingbox.checked==false)
-    {
-      var tempType="Housing";
+    if (this.refs.Housingbox.checked == false) {
+      var tempType = "Housing";
       this.removeSubscription(tempType);
     }
 
@@ -311,18 +308,16 @@ openModal() {
       var tempType = "Events";
       this.removeSubscription(tempType);
     }
-        if(this.refs.Restaurantsbox.checked==false)
-    {
-      var tempType="Restaurants";
+    if (this.refs.Restaurantsbox.checked == false) {
+      var tempType = "Restaurants";
       this.removeSubscription(tempType);
     }
 
-            if(this.refs.Placesbox.checked==false)
-    {
-      var tempType="Places";
+    if (this.refs.Placesbox.checked == false) {
+      var tempType = "Places";
       this.removeSubscription(tempType);
     }
-            ToastsStore.success("Notifications Successfully Updated");
+    ToastsStore.success("Notifications Successfully Updated");
   }
 
   addSubscription(tempType) {
@@ -390,11 +385,11 @@ openModal() {
     })
       .then(response => {
         this.setState({
-        HousingBoxChecked: false,
-        EventsBoxChecked:false,
-        RestaurantsBoxChecked:false,
-        PlacesBoxChecked:false
-      })
+          HousingBoxChecked: false,
+          EventsBoxChecked: false,
+          RestaurantsBoxChecked: false,
+          PlacesBoxChecked: false
+        });
 
         for (let i = 0; i < response.data.length; i++) {
           //alert(response.data[i].notificationType);
@@ -409,19 +404,17 @@ openModal() {
               EventsBoxChecked: true
             });
           }
-          if(response.data[i].notificationType=='Restaurants')
-       {
-           this.setState({
-             RestaurantsBoxChecked: true
-           })
-        }
+          if (response.data[i].notificationType == "Restaurants") {
+            this.setState({
+              RestaurantsBoxChecked: true
+            });
+          }
 
-             if(response.data[i].notificationType=='Places')
-       {
-           this.setState({
-             PlacesBoxChecked: true
-           })
-        }
+          if (response.data[i].notificationType == "Places") {
+            this.setState({
+              PlacesBoxChecked: true
+            });
+          }
         }
       })
       .catch(err => {
@@ -441,22 +434,21 @@ openModal() {
     });
   }
 
-          changeCheckbox3() {
-      this.setState({
-        RestaurantsBoxChecked: !this.state.RestaurantsBoxChecked
-      });
-    }
+  changeCheckbox3() {
+    this.setState({
+      RestaurantsBoxChecked: !this.state.RestaurantsBoxChecked
+    });
+  }
 
-              changeCheckbox4() {
-      this.setState({
-        PlacesBoxChecked: !this.state.PlacesBoxChecked
-      });
-    }
+  changeCheckbox4() {
+    this.setState({
+      PlacesBoxChecked: !this.state.PlacesBoxChecked
+    });
+  }
 
-    render() {
-      if(localStorage.getItem("isLogin")=="true")
-      {
-        return(
+  render() {
+    if (localStorage.getItem("isLogin") == "true") {
+      return (
         <div>
           <Modal
             show={this.state.modalIsOpen}
@@ -464,46 +456,117 @@ openModal() {
             style={{ zIndex: 50000 }}
             contentLabel="Example Modal"
           >
-            <Typography
-              gutterBottom
-              variant="h3"
+            <div
               style={{
-                fontFamily: "Patua One",
-                color: "#2ebdd1"
+                // fontFamily: "Patua One",
+                color: "Black",
+                fontSize: "28px",
+                padding: "1%",
+                textAlign:"center"
               }}
             >
               User Profile
-            </Typography>
-
+            </div>
             <Tabs defaultActiveKey="home" id="uncontrolled-tab-example">
-              <Tab eventKey="home" title="Account details">
+              <Tab
+                className="myClass"
+                eventKey="home"
+                title="Account Details"
+                style={{ width: "700px" }}
+              >
                 <div style={{ padding: "3%" }}>
-                  <Typography
-                    gutterBottom
-                    variant="p"
+                  <p
                     style={{
-                      fontFamily: "Patua One",
-                      color: "black",
-                      fontSize: "17px"
+                      color: "#0277bd",
+                      marginBottom: "0px",
+                      fontSize: "14px"
                     }}
                   >
-                    Email: {this.state.user.email}
-                    <br></br>
-                    First Name: {this.state.user.firstName}
-                    <br></br>
-                    Last Name: {this.state.user.lastName}
-                    <br></br>
-                    Contact Number: {this.state.user.contactNumber}
-                    <br></br>
-                  </Typography>
+                    Email:
+                  </p>
+                  <p
+                    style={{
+                      color: "black",
+                      marginBottom: "10px",
+                      fontSize: "18px"
+                    }}
+                  >
+                    {this.state.user.email}
+                  </p>
+                  <br></br>
+                  <p
+                    style={{
+                      color: "#0277bd",
+                      marginBottom: "0px",
+                      fontSize: "14px"
+                    }}
+                  >
+                    First Name:
+                  </p>
+                  <p
+                    style={{
+                      color: "black",
+                      marginBottom: "10px",
+                      fontSize: "18px"
+                    }}
+                  >
+                    {this.state.user.firstName}
+                  </p>
+                  <br></br>
+                  <p
+                    style={{
+                      color: "#0277bd",
+                      marginBottom: "0px",
+                      fontSize: "14px"
+                    }}
+                  >
+                    Last Name:
+                  </p>
+                  <p
+                    style={{
+                      color: "black",
+                      marginBottom: "10px",
+                      fontSize: "18px"
+                    }}
+                  >
+                    {this.state.user.lastName}
+                  </p>
+                  <br></br>
+                  <p
+                    style={{
+                      color: "#0277bd",
+                      marginBottom: "0px",
+                      fontSize: "14px"
+                    }}
+                  >
+                    Contact Number:
+                  </p>
+                  <p
+                    style={{
+                      color: "black",
+                      marginBottom: "10px",
+                      fontSize: "18px"
+                    }}
+                  >
+                    {this.state.user.contactNumber}
+                  </p>
+                  <br></br>
                 </div>
               </Tab>
-              <Tab eventKey="profile" title="Edit">
+              <Tab eventKey="profile" title="Edit" className="myClass">
                 <Form>
-                  <div style={{ padding: "5%" }}>
+                  <div style={{ padding: "3%" }}>
                     <fieldset className="form-group">
                       <br></br>
-                      Email:
+                      <p
+                        style={{
+                          color: "#0277bd",
+                          marginBottom: "0px",
+                          fontSize: "14px"
+                        }}
+                      >
+                        Email:
+                      </p>
                       <input
                         className="form-control"
                         type="email"
@@ -513,7 +576,15 @@ openModal() {
                         value={this.state.user.email}
                       />
                       <br></br>
-                      First Name:
+                      <p
+                        style={{
+                          color: "#0277bd",
+                          marginBottom: "0px",
+                          fontSize: "14px"
+                        }}
+                      >
+                        First Name:
+                      </p>
                       <input
                         className="form-control"
                         type="text"
@@ -523,7 +594,15 @@ openModal() {
                         onChange={this.onChange1}
                       />
                       <br></br>
-                      Last Name:
+                      <p
+                        style={{
+                          color: "#0277bd",
+                          marginBottom: "0px",
+                          fontSize: "14px"
+                        }}
+                      >
+                        Last Name:
+                      </p>
                       <input
                         className="form-control"
                         type="text"
@@ -533,7 +612,15 @@ openModal() {
                         onChange={this.onChange1}
                       />
                       <br></br>
-                      Password:
+                      <p
+                        style={{
+                          color: "#0277bd",
+                          marginBottom: "0px",
+                          fontSize: "14px"
+                        }}
+                      >
+                        Password:
+                      </p>
                       <input
                         className="form-control"
                         type="password"
@@ -544,7 +631,15 @@ openModal() {
                         placeholder="Update Password..."
                       />
                       <br></br>
-                      Contact Number:
+                      <p
+                        style={{
+                          color: "#0277bd",
+                          marginBottom: "0px",
+                          fontSize: "14px"
+                        }}
+                      >
+                        Contact Number:
+                      </p>
                       <input
                         className="form-control"
                         type="text"
@@ -596,46 +691,100 @@ openModal() {
             type="text/css"
           />
           <link href="./css/landing-page.min.css" rel="stylesheet" />
-          <nav className="navbar navbar-light bg-light static-top" style={{padding:'0%'}}>
-            <div className="container-fluid" style={{backgroundColor:'#0277bd',color:'white'}}>
-              <a className="navbar-brand" style={{'fontSize':'30px','fontFamily':'Acme',color:'white'}} href="/home">
+          <nav
+            className="navbar navbar-light bg-light static-top"
+            style={{ padding: "0%" }}
+          >
+            <div
+              className="container-fluid"
+              style={{ backgroundColor: "#0277bd", color: "white" }}
+            >
+              <a
+                className="navbar-brand"
+                style={{ fontSize: "30px", fontFamily: "Acme", color: "white" }}
+                href="/home"
+              >
                 CityScanner
               </a>
 
               <Form>
-                    <MDBBtn>
-                      <a style={{color:'white'}} onClick={this.changeState3}>Notifications</a>
-                    </MDBBtn>
-                  <Modal
-                    style={{ zIndex: 50000, top: "40%" }}
-                    show={this.state.showModal3}
-                    onHide={this.changeState3}
-                  >
-                    <div className="container" style={{ padding: "5%" }}>
-                      <h3>Manage Notifications</h3>
-                      <br />
-                      <h6>Get Email Notifications</h6>
-                      {localStorage.getItem("city") ?
-                        <>
-                      <Form>
-                      <input type="checkbox" ref="Housingbox" checked={this.state.HousingBoxChecked} name="HousingBoxChecked" onChange={this.changeCheckbox1}/>Housing <br/>
-                      <input type="checkbox" ref="Eventsbox" checked={this.state.EventsBoxChecked}  name="EventsBoxChecked" onChange={this.changeCheckbox2}/> Events<br/>
-                      <input type="checkbox" ref="Restaurantsbox" checked={this.state.RestaurantsBoxChecked}  name="RestaurantsBoxChecked" onChange={this.changeCheckbox3}/> Restaurants<br/>
-                      <input type="checkbox" ref="Placesbox" checked={this.state.PlacesBoxChecked}  name="PlacesBoxChecked" onChange={this.changeCheckbox4}/> Places<br/>
-
-                      </Form>
-                    <button style={{float:"right"}} className="btn btn-primary" onClick={this.subscribeUser}>Update</button> </> :
+                <MDBBtn>
+                  <a style={{ color: "white" }} onClick={this.changeState3}>
+                    Notifications
+                  </a>
+                </MDBBtn>
+                <Modal
+                  style={{ zIndex: 50000, top: "40%" }}
+                  show={this.state.showModal3}
+                  onHide={this.changeState3}
+                >
+                  <div className="container" style={{ padding: "5%" }}>
+                    <h3>Manage Notifications</h3>
+                    <br />
+                    <h6>Get Email Notifications</h6>
+                    {localStorage.getItem("city") ? (
+                      <>
+                        <Form>
+                          <input
+                            type="checkbox"
+                            ref="Housingbox"
+                            checked={this.state.HousingBoxChecked}
+                            name="HousingBoxChecked"
+                            onChange={this.changeCheckbox1}
+                          />
+                          Housing <br />
+                          <input
+                            type="checkbox"
+                            ref="Eventsbox"
+                            checked={this.state.EventsBoxChecked}
+                            name="EventsBoxChecked"
+                            onChange={this.changeCheckbox2}
+                          />{" "}
+                          Events
+                          <br />
+                          <input
+                            type="checkbox"
+                            ref="Restaurantsbox"
+                            checked={this.state.RestaurantsBoxChecked}
+                            name="RestaurantsBoxChecked"
+                            onChange={this.changeCheckbox3}
+                          />{" "}
+                          Restaurants
+                          <br />
+                          <input
+                            type="checkbox"
+                            ref="Placesbox"
+                            checked={this.state.PlacesBoxChecked}
+                            name="PlacesBoxChecked"
+                            onChange={this.changeCheckbox4}
+                          />{" "}
+                          Places
+                          <br />
+                        </Form>
+                        <button
+                          style={{ float: "right" }}
+                          className="btn btn-primary"
+                          onClick={this.subscribeUser}
+                        >
+                          Update
+                        </button>{" "}
+                      </>
+                    ) : (
                       <p>Start exploring a place to enable notifications</p>
-                    }
-                        </div>
-                     </Modal>
-                    <MDBBtn>
-                      <a style={{color:'white'}} onClick={this.logout}>Logout</a>
-                    </MDBBtn>
-                    <MDBBtn 
-                    >
-                      <i className="fas fa-user-circle fa-2x" onClick={this.openModal}></i>
-                    </MDBBtn>
+                    )}
+                  </div>
+                </Modal>
+                <MDBBtn>
+                  <a style={{ color: "white" }} onClick={this.logout}>
+                    Logout
+                  </a>
+                </MDBBtn>
+                <MDBBtn>
+                  <i
+                    className="fas fa-user-circle fa-2x"
+                    onClick={this.openModal}
+                  ></i>
+                </MDBBtn>
               </Form>
             </div>
           </nav>
@@ -672,20 +821,30 @@ openModal() {
             type="text/css"
           />
           <link href="./css/landing-page.min.css" rel="stylesheet" />
-                 <nav className="navbar navbar-light bg-light static-top" style={{padding:'0%'}}>
-            <div className="container-fluid" style={{backgroundColor:'#0277bd',color:'white'}}>
-              <a className="navbar-brand" style={{'fontSize':'30px','fontFamily':'Acme',color:'white'}} href="/home">
+          <nav
+            className="navbar navbar-light bg-light static-top"
+            style={{ padding: "0%" }}
+          >
+            <div
+              className="container-fluid"
+              style={{ backgroundColor: "#0277bd", color: "white" }}
+            >
+              <a
+                className="navbar-brand"
+                style={{ fontSize: "30px", fontFamily: "Acme", color: "white" }}
+                href="/home"
+              >
                 CityScanner
               </a>
               <Form>
-               <MDBBtn>
-                <a
-                  onClick={this.changeState1}
-                  show={this.state.isLogin}
-                  style={{color:'white'}}
-                >
-                  Login
-                </a>
+                <MDBBtn>
+                  <a
+                    onClick={this.changeState1}
+                    show={this.state.isLogin}
+                    style={{ color: "white" }}
+                  >
+                    Login
+                  </a>
                 </MDBBtn>
                 <Modal
                   style={{ zIndex: 50000 }}
@@ -728,17 +887,15 @@ openModal() {
                   </Form>
                 </Modal>
                 &nbsp;&nbsp;&nbsp;
-                               <MDBBtn>
-
-                <a
-                  onClick={this.changeState2}
-                  show={this.state.isLogin}
-                  style={{color:'white'}}
-                >
-                  Sign Up
-                </a>
-                               </MDBBtn>
-
+                <MDBBtn>
+                  <a
+                    onClick={this.changeState2}
+                    show={this.state.isLogin}
+                    style={{ color: "white" }}
+                  >
+                    Sign Up
+                  </a>
+                </MDBBtn>
                 <Modal
                   style={{ zIndex: 50000 }}
                   show={this.state.showModal2}

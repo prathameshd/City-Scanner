@@ -215,13 +215,17 @@ body,
 
 .dislike:hover,
 .like:hover {
-  color: #2EBDD1;
-  transition: all .2s ease-in-out;
+  color: #2ebdd1;
+  transition: all 0.2s ease-in-out;
   transform: scale(1.1);
 }
 
 .active {
-  color: #2EBDD1;
+  color: #2ebdd1;
+}
+
+.myClass {
+  height: 470px !important;
 }
 #style-1::-webkit-scrollbar-track
 {
