@@ -311,7 +311,7 @@ class Events extends Component {
       window.location.href = "/home";
     } else if (this.state.lat != " " && this.state.long != " ") {
       return (
-        <div className="containter-fluid" style={{width:'100%',marginLeft:'1%'}}>
+        <div className="containter-fluid" style={{width:'90%',marginLeft:'5%'}}>
         <div className="row">
 
                   <div className="col-sm-12" style={{textAlign:'center',paddingTop:'2%',paddingBottom:'1%'}}><font size="6">Events happening around {ls.get("city")}</font>
@@ -320,18 +320,17 @@ class Events extends Component {
         </div>
 
         <div className="row">
-					<div className="col-sm-12">
+					<div className="col-sm-10">
         <Tabs defaultActiveKey="home" id="uncontrolled-tab-example">
 		  <Tab eventKey="home" title="Explore">
       <div className="row">
-      <div style={{backgroundColor: "#eceff1",paddingTop:'1%' }}>
             {this.state.events.map((el, i) => (
               <div
                 style={{
                   display: "inline-block",
                   marginBottom: 5,
                   marginRight: 12,
-                  marginLeft: 180,
+                  marginLeft: 90,
                   paddingTop: "10px",
                   fontColor: "black"
                 }}
@@ -379,16 +378,11 @@ class Events extends Component {
                 </Card>
               </div>
             ))}
-            </div>
           </div>
 
           </Tab>
 		  <Tab eventKey="profile" title="Events Around You">
-
-
-
-
-<div className="row">
+      <div className="row">
             {this.state.userEvents.map((el, i) => (
               <div
                 style={{
@@ -408,8 +402,9 @@ class Events extends Component {
                           <div className="col-sm-5">
                             <img
                               className="d-block w-100"
-                              src=""
+                              src={Events2}
                               alt=""
+                              style={{paddingTop:"13%", paddingRight:"10%"}}
                             />
                           </div>
                           <div className="col-sm-7" style={{ marginTop: 10 }}>
@@ -449,12 +444,6 @@ class Events extends Component {
               </div>
             ))}
           </div>
-
-
-
-
-
-
 		  </Tab>
 			</Tabs>
 			</div>
