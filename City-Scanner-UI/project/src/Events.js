@@ -9,6 +9,7 @@ import ls from "local-storage";
 import { Form, Button, Col, Nav, Navbar, useState,Tab,Tabs} from "react-bootstrap";
 import Modal from 'react-bootstrap/Modal';
 import { MDBCol, MDBBtn } from "mdbreact";
+import Events2 from "./event2.jpg"
 
 
 class Events extends Component {
@@ -342,7 +343,7 @@ class Events extends Component {
                           <div className="col-sm-5">
                             <img
                               className="d-block w-100"
-                              src=""
+                              src={Events2}
                               alt=""
                             />
                           </div>
