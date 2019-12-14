@@ -46,7 +46,8 @@ export default class Dashboard extends Component {
             style={{
               position: "relative",
               marginLeft: "25%",
-              marginBottom: "1%"
+              marginBottom: "1%",
+              marginTop: "1%"
             }}
           >
             <SearchBar />
@@ -153,7 +154,7 @@ export default class Dashboard extends Component {
                 color: "white"
               }}
             >
-              TOURIST SPOTS
+              PLACES TO VISIT
             </Typography>
           </div>
         </Link>
