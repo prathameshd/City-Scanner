@@ -537,7 +537,8 @@ sendNotifications()
           <div className="my-2"></div>
           <Form>
             <fieldset className="form-group">
-                <h3>Write a Post:</h3>
+            <h3>Write a Post</h3>
+                <h5>Share your experience to help other students </h5>
                 <textarea className="form-control" type="text" ref="comment" id="comment" name="comment" placeholder="write a comment..." rows="5"></textarea>
             </fieldset>
         <button className="btn btn-success pull-right" type="button" onClick={this.addComment}>Post</button>
@@ -548,8 +549,7 @@ sendNotifications()
         </div>:
         <div className="row">
         <font face="verdana" color="skyblue">
-         <h4> The residents of {ls.get("city")} will help you. <br/>Find their reviews about '{this.state.place_details.name}'.</h4>
-         <h3>LOGIN TO SEE POSTS</h3>
+        <h3>Please login to see reviews</h3>
          </font>
 
         </div>

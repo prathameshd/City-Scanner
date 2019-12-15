@@ -469,7 +469,7 @@ getCoordinates() {
         </div>
         </div>:
         <div className="row">
-        <h3>Login to see all posts</h3>
+        <h3>Please login to see reviews</h3>
         </div>
       }
         </div>
